@@ -1,5 +1,4 @@
 import { Metadata } from "next"
-import { getRegion } from "@lib/data/regions"
 import Hero from "@modules/home/components/hero"
 import UspBar from "@modules/home/components/usp-bar"
 import FeaturedProducts from "@modules/home/components/featured-products"
@@ -19,15 +18,12 @@ export default async function Home(props: {
   params: Promise<{ countryCode: string }>
 }) {
   const { countryCode } = await props.params
-  const region = await getRegion(countryCode)
-
-  if (!region) return null
 
   return (
     <div className="bg-wj-bg">
       <Hero />
       <UspBar />
-      <FeaturedProducts region={region} />
+      <FeaturedProducts countryCode={countryCode} />
       <AboutStrip />
       <MaterialsSection />
       <Testimonials />

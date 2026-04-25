@@ -1,49 +1,37 @@
-import { listProducts } from "@lib/data/products"
+import { listProductsWithSort } from "@lib/data/products"
 import { getProductPrice } from "@lib/util/get-product-price"
-import { HttpTypes } from "@medusajs/types"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import BrandButton from "@modules/common/components/brand-button"
 import ProductCard from "@modules/common/components/product-card"
 
-const FALLBACK_PRODUCTS = [
-  { name: "Classic Picnic Table", price: "From € 549", material: "Douglas Fir", tag: "Bestseller", href: "/store" },
-  { name: "Round Garden Table", price: "€ 849", material: "European Oak", tag: undefined, href: "/store" },
-  { name: "Garden Bench", price: "From € 349", material: "Douglas Fir", tag: undefined, href: "/store" },
-]
-
 type FeaturedProductsProps = {
-  region: HttpTypes.StoreRegion
+  countryCode: string
 }
 
-export default async function FeaturedProducts({ region }: FeaturedProductsProps) {
-  const { response } = await listProducts({
-    regionId: region.id,
-    queryParams: {
-      limit: 3,
-      fields: "*variants.calculated_price",
-    },
+export default async function FeaturedProducts({ countryCode }: FeaturedProductsProps) {
+  const { response } = await listProductsWithSort({
+    page: 1,
+    queryParams: { limit: 3, fields: "*variants.calculated_price" },
+    sortBy: "created_at",
+    countryCode,
   }).catch(() => ({ response: { products: [], count: 0 } }))
 
-  const products = response.products
+  const cards = response.products.map((product) => {
+    const { cheapestPrice } = getProductPrice({ product })
+    return {
+      name: product.title,
+      price: cheapestPrice?.calculated_price ?? "—",
+      material: (product.metadata?.material as string) ?? undefined,
+      tag: (product.metadata?.tag as string) ?? undefined,
+      href: `/products/${product.handle}`,
+    }
+  })
 
-  const cards =
-    products.length > 0
-      ? products.map((product) => {
-          const { cheapestPrice } = getProductPrice({ product })
-          return {
-            name: product.title,
-            price: cheapestPrice?.calculated_price ?? "—",
-            material: (product.metadata?.material as string) ?? undefined,
-            tag: (product.metadata?.tag as string) ?? undefined,
-            href: `/products/${product.handle}`,
-          }
-        })
-      : FALLBACK_PRODUCTS
+  if (cards.length === 0) return null
 
   return (
     <div className="py-20 sm:py-24">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-8 lg:px-12">
-        {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10 sm:mb-12">
           <div>
             <div className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-wood mb-2.5">
@@ -60,7 +48,6 @@ export default async function FeaturedProducts({ region }: FeaturedProductsProps
           </LocalizedClientLink>
         </div>
 
-        {/* Product grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
           {cards.map((card) => (
             <ProductCard key={card.name} {...card} />

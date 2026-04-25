@@ -4,8 +4,8 @@ import { SortOptions } from "@modules/store/components/refinement-list/sort-prod
 import StoreTemplate from "@modules/store/templates"
 
 export const metadata: Metadata = {
-  title: "Store",
-  description: "Explore all of our products.",
+  title: "Shop — WJ Houtbouw",
+  description: "Three handcrafted outdoor furniture products, refined since 2009. Picnic tables, garden benches and round garden tables.",
 }
 
 type Params = {
