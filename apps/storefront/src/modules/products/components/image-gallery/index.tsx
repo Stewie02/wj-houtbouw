@@ -1,38 +1,60 @@
-import { HttpTypes } from "@medusajs/types"
-import { Container } from "@modules/common/components/ui"
+"use client"
+
+import { useState } from "react"
 import Image from "next/image"
+import { HttpTypes } from "@medusajs/types"
+import PlaceholderImage from "@modules/common/components/placeholder-image"
 
 type ImageGalleryProps = {
   images: HttpTypes.StoreProductImage[]
 }
 
 const ImageGallery = ({ images }: ImageGalleryProps) => {
+  const [activeIndex, setActiveIndex] = useState(0)
+  const thumbs = images.length > 0 ? images.slice(0, 4) : Array(4).fill(null)
+  const activeImage = images[activeIndex] ?? null
+
   return (
-    <div className="flex items-start relative">
-      <div className="flex flex-col flex-1 small:mx-16 gap-y-4">
-        {images.map((image, index) => {
-          return (
-            <Container
-              key={image.id}
-              className="relative aspect-[29/34] w-full overflow-hidden bg-ui-bg-subtle"
-              id={image.id}
-            >
-              {!!image.url && (
-                <Image
-                  src={image.url}
-                  priority={index <= 2 ? true : false}
-                  className="absolute inset-0 rounded-rounded"
-                  alt={`Product image ${index + 1}`}
-                  fill
-                  sizes="(max-width: 576px) 280px, (max-width: 768px) 360px, (max-width: 992px) 480px, 800px"
-                  style={{
-                    objectFit: "cover",
-                  }}
-                />
-              )}
-            </Container>
-          )
-        })}
+    <div>
+      {/* Main image */}
+      <div className="relative aspect-square border border-wj-border overflow-hidden mb-3">
+        {activeImage?.url ? (
+          <Image
+            src={activeImage.url}
+            alt="Product image"
+            fill
+            className="object-cover"
+            priority
+            sizes="(max-width: 1024px) 100vw, 50vw"
+          />
+        ) : (
+          <PlaceholderImage label="Main product shot" />
+        )}
+      </div>
+
+      {/* Thumbnails */}
+      <div className="grid grid-cols-4 gap-2">
+        {thumbs.map((img, i) => (
+          <button
+            key={i}
+            onClick={() => img && setActiveIndex(i)}
+            className={`relative aspect-square overflow-hidden border-2 transition-colors ${
+              activeIndex === i ? "border-wj-green" : "border-wj-border hover:border-wj-muted"
+            }`}
+          >
+            {img?.url ? (
+              <Image
+                src={img.url}
+                alt={`Product thumbnail ${i + 1}`}
+                fill
+                className="object-cover"
+                sizes="120px"
+              />
+            ) : (
+              <PlaceholderImage label={`View ${i + 1}`} />
+            )}
+          </button>
+        ))}
       </div>
     </div>
   )

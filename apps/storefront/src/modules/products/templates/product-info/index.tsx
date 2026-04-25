@@ -1,38 +1,54 @@
 import { HttpTypes } from "@medusajs/types"
-import { Heading, Text } from "@modules/common/components/ui"
-import LocalizedClientLink from "@modules/common/components/localized-client-link"
+import BrandTag from "@modules/common/components/brand-tag"
+import StarRating from "@modules/common/components/star-rating"
 
 type ProductInfoProps = {
   product: HttpTypes.StoreProduct
 }
 
 const ProductInfo = ({ product }: ProductInfoProps) => {
-  return (
-    <div id="product-info">
-      <div className="flex flex-col gap-y-4 lg:max-w-[500px] mx-auto">
-        {product.collection && (
-          <LocalizedClientLink
-            href={`/collections/${product.collection.handle}`}
-            className="text-medium text-ui-fg-muted hover:text-ui-fg-subtle"
-          >
-            {product.collection.title}
-          </LocalizedClientLink>
-        )}
-        <Heading
-          level="h2"
-          className="text-3xl leading-10 text-ui-fg-base"
-          data-testid="product-title"
-        >
-          {product.title}
-        </Heading>
+  const material =
+    (product.metadata?.material as string) ?? product.material ?? null
+  const tag = (product.metadata?.tag as string) ?? null
 
-        <Text
-          className="text-medium text-ui-fg-subtle whitespace-pre-line"
+  return (
+    <div id="product-info" className="pt-2">
+      {/* Tags */}
+      <div className="flex flex-wrap gap-2 mb-4">
+        {tag && <BrandTag>{tag}</BrandTag>}
+        <BrandTag variant="wood">In stock</BrandTag>
+      </div>
+
+      {/* Title */}
+      <h1
+        className="font-display font-bold text-[36px] sm:text-[40px] text-wj-text tracking-[-0.02em] leading-tight"
+        data-testid="product-title"
+      >
+        {product.title}
+      </h1>
+
+      {/* Material */}
+      {material && (
+        <div className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-muted mt-2 mb-4">
+          {material} · FSC Certified
+        </div>
+      )}
+
+      {/* Rating */}
+      <div className="flex items-center gap-2.5 mb-6">
+        <StarRating />
+        <span className="font-body text-[13px] text-wj-muted">4.9 · 124 reviews</span>
+      </div>
+
+      {/* Description */}
+      {product.description && (
+        <p
+          className="font-body text-[15px] text-wj-muted leading-[1.75]"
           data-testid="product-description"
         >
           {product.description}
-        </Text>
-      </div>
+        </p>
+      )}
     </div>
   )
 }

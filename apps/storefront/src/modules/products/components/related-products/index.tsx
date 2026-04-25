@@ -1,69 +1,81 @@
 import { listProducts } from "@lib/data/products"
 import { getRegion } from "@lib/data/regions"
+import { getProductPrice } from "@lib/util/get-product-price"
 import { HttpTypes } from "@medusajs/types"
-import Product from "../product-preview"
+import LocalizedClientLink from "@modules/common/components/localized-client-link"
+import BrandButton from "@modules/common/components/brand-button"
+import PlaceholderImage from "@modules/common/components/placeholder-image"
 
 type RelatedProductsProps = {
   product: HttpTypes.StoreProduct
   countryCode: string
 }
 
-export default async function RelatedProducts({
-  product,
-  countryCode,
-}: RelatedProductsProps) {
+export default async function RelatedProducts({ product, countryCode }: RelatedProductsProps) {
   const region = await getRegion(countryCode)
+  if (!region) return null
 
-  if (!region) {
-    return null
+  const queryParams: HttpTypes.StoreProductListParams = {
+    region_id: region.id,
+    is_giftcard: false,
   }
+  if (product.collection_id) queryParams.collection_id = [product.collection_id]
+  if (product.tags) queryParams.tag_id = product.tags.map((t) => t.id).filter(Boolean) as string[]
 
-  // edit this function to define your related products logic
-  const queryParams: HttpTypes.StoreProductListParams = {}
-  if (region?.id) {
-    queryParams.region_id = region.id
-  }
-  if (product.collection_id) {
-    queryParams.collection_id = [product.collection_id]
-  }
-  if (product.tags) {
-    queryParams.tag_id = product.tags
-      .map((t) => t.id)
-      .filter(Boolean) as string[]
-  }
-  queryParams.is_giftcard = false
+  const related = await listProducts({ queryParams, countryCode })
+    .then(({ response }) => response.products.filter((p) => p.id !== product.id).slice(0, 2))
+    .catch(() => [])
 
-  const products = await listProducts({
-    queryParams,
-    countryCode,
-  }).then(({ response }) => {
-    return response.products.filter(
-      (responseProduct) => responseProduct.id !== product.id
-    )
-  })
-
-  if (!products.length) {
-    return null
-  }
+  if (!related.length) return null
 
   return (
-    <div className="product-page-constraint">
-      <div className="flex flex-col items-center text-center mb-16">
-        <span className="text-base-regular text-gray-600 mb-6">
-          Related products
-        </span>
-        <p className="text-2xl-regular text-ui-fg-base max-w-lg">
-          You might also want to check out these products.
-        </p>
-      </div>
+    <div className="py-16 sm:py-20 bg-wj-surface">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-8 lg:px-12">
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
+          <h2 className="font-display font-bold text-[28px] sm:text-[34px] text-wj-text tracking-[-0.02em]">
+            Complete your setup
+          </h2>
+          <LocalizedClientLink href="/store">
+            <BrandButton variant="outline" className="shrink-0">View all products</BrandButton>
+          </LocalizedClientLink>
+        </div>
 
-      <ul className="grid grid-cols-2 small:grid-cols-3 medium:grid-cols-4 gap-x-6 gap-y-8">
-        {products.map((product) => (
-          <li key={product.id}>
-            <Product region={region} product={product} />
-          </li>
-        ))}
-      </ul>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+          {related.map((p) => {
+            const { cheapestPrice } = getProductPrice({ product: p })
+            const material = (p.metadata?.material as string) ?? p.material ?? null
+            return (
+              <LocalizedClientLink key={p.id} href={`/products/${p.handle}`}>
+                <div className="bg-wj-white border border-wj-border grid grid-cols-[200px_1fr] overflow-hidden hover:shadow-md transition-shadow">
+                  <div className="relative h-full min-h-[160px]">
+                    <PlaceholderImage label={p.title} />
+                  </div>
+                  <div className="p-7 flex flex-col justify-between">
+                    <div>
+                      {material && (
+                        <div className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-muted mb-1.5">
+                          {material}
+                        </div>
+                      )}
+                      <div className="font-display font-semibold text-[20px] sm:text-[22px] text-wj-text mb-2">
+                        {p.title}
+                      </div>
+                      {cheapestPrice && (
+                        <div className="font-display font-bold text-[24px] sm:text-[26px] text-wj-green tracking-[-0.02em]">
+                          {cheapestPrice.calculated_price}
+                        </div>
+                      )}
+                    </div>
+                    <div className="font-body font-medium text-[13px] text-wj-green mt-4">
+                      Configure &amp; order →
+                    </div>
+                  </div>
+                </div>
+              </LocalizedClientLink>
+            )
+          })}
+        </div>
+      </div>
     </div>
   )
 }
