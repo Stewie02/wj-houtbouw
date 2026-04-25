@@ -1,41 +1,38 @@
 import { Metadata } from "next"
-
-import FeaturedProducts from "@modules/home/components/featured-products"
-import Hero from "@modules/home/components/hero"
-import { listCollections } from "@lib/data/collections"
 import { getRegion } from "@lib/data/regions"
+import Hero from "@modules/home/components/hero"
+import UspBar from "@modules/home/components/usp-bar"
+import FeaturedProducts from "@modules/home/components/featured-products"
+import AboutStrip from "@modules/home/components/about-strip"
+import MaterialsSection from "@modules/home/components/materials-section"
+import Testimonials from "@modules/home/components/testimonials"
+import BlogPreview from "@modules/home/components/blog-preview"
+import CtaBanner from "@modules/home/components/cta-banner"
 
 export const metadata: Metadata = {
-  title: "Medusa Next.js Starter Template",
+  title: "WJ Houtbouw — Handcrafted Outdoor Furniture",
   description:
-    "A performant frontend ecommerce starter template with Next.js 15 and Medusa.",
+    "Premium picnic tables and outdoor furniture crafted from sustainably sourced European timber. Built to weather every season.",
 }
 
 export default async function Home(props: {
   params: Promise<{ countryCode: string }>
 }) {
-  const params = await props.params
-
-  const { countryCode } = params
-
+  const { countryCode } = await props.params
   const region = await getRegion(countryCode)
 
-  const { collections } = await listCollections({
-    fields: "id, handle, title",
-  })
-
-  if (!collections || !region) {
-    return null
-  }
+  if (!region) return null
 
   return (
-    <>
+    <div className="bg-wj-bg">
       <Hero />
-      <div className="py-12">
-        <ul className="flex flex-col gap-x-6">
-          <FeaturedProducts collections={collections} region={region} />
-        </ul>
-      </div>
-    </>
+      <UspBar />
+      <FeaturedProducts region={region} />
+      <AboutStrip />
+      <MaterialsSection />
+      <Testimonials />
+      <BlogPreview />
+      <CtaBanner />
+    </div>
   )
 }
