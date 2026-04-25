@@ -1,9 +1,7 @@
 "use client"
 
-import { Table, Text, clx } from "@modules/common/components/ui"
 import { updateLineItem } from "@lib/data/cart"
 import { HttpTypes } from "@medusajs/types"
-import CartItemSelect from "@modules/cart/components/cart-item-select"
 import ErrorMessage from "@modules/checkout/components/error-message"
 import DeleteButton from "@modules/common/components/delete-button"
 import LineItemOptions from "@modules/common/components/line-item-options"
@@ -11,7 +9,7 @@ import LineItemPrice from "@modules/common/components/line-item-price"
 import LineItemUnitPrice from "@modules/common/components/line-item-unit-price"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import Spinner from "@modules/common/icons/spinner"
-import Thumbnail from "@modules/products/components/thumbnail"
+import PlaceholderImage from "@modules/common/components/placeholder-image"
 import { useState } from "react"
 
 type ItemProps = {
@@ -27,117 +25,93 @@ const Item = ({ item, type = "full", currencyCode }: ItemProps) => {
   const changeQuantity = async (quantity: number) => {
     setError(null)
     setUpdating(true)
-
-    await updateLineItem({
-      lineId: item.id,
-      quantity,
-    })
-      .catch((err) => {
-        setError(err.message)
-      })
-      .finally(() => {
-        setUpdating(false)
-      })
+    await updateLineItem({ lineId: item.id, quantity })
+      .catch((err) => setError(err.message))
+      .finally(() => setUpdating(false))
   }
 
-  // TODO: Update this to grab the actual max inventory
-  const maxQtyFromInventory = 10
-  const maxQuantity = item.variant?.manage_inventory ? 10 : maxQtyFromInventory
+  const maxQuantity = 10
+
+  if (type === "preview") {
+    return (
+      <div className="flex gap-3 items-center py-2" data-testid="product-row">
+        <div className="w-12 h-12 shrink-0 border border-wj-border overflow-hidden">
+          <PlaceholderImage label={item.product_title ?? ""} />
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="font-body text-[13px] font-medium text-wj-text truncate">{item.product_title}</p>
+          <LineItemOptions variant={item.variant} data-testid="product-variant" />
+        </div>
+        <div className="text-right shrink-0">
+          <p className="font-body text-[12px] text-wj-muted">{item.quantity}×</p>
+          <LineItemPrice item={item} style="tight" currencyCode={currencyCode} />
+        </div>
+      </div>
+    )
+  }
 
   return (
-    <Table.Row className="w-full" data-testid="product-row">
-      <Table.Cell className="!pl-0 p-4 w-24">
-        <LocalizedClientLink
-          href={`/products/${item.product_handle}`}
-          className={clx("flex", {
-            "w-16": type === "preview",
-            "small:w-24 w-12": type === "full",
-          })}
-        >
-          <Thumbnail
-            thumbnail={item.thumbnail}
-            images={item.variant?.product?.images}
-            size="square"
-          />
+    <div className="py-6 grid grid-cols-1 sm:grid-cols-[1fr_120px_80px_100px] gap-4 items-center" data-testid="product-row">
+      {/* Product info */}
+      <div className="flex gap-4 items-center">
+        <LocalizedClientLink href={`/products/${item.product_handle}`} className="w-20 h-20 shrink-0 border border-wj-border overflow-hidden">
+          <PlaceholderImage label={item.product_title ?? ""} />
         </LocalizedClientLink>
-      </Table.Cell>
-
-      <Table.Cell className="text-left">
-        <Text
-          className="txt-medium-plus text-ui-fg-base"
-          data-testid="product-title"
-        >
-          {item.product_title}
-        </Text>
-        <LineItemOptions variant={item.variant} data-testid="product-variant" />
-      </Table.Cell>
-
-      {type === "full" && (
-        <Table.Cell>
-          <div className="flex gap-2 items-center w-28">
+        <div className="flex-1 min-w-0">
+          <LocalizedClientLink href={`/products/${item.product_handle}`}>
+            <p className="font-body font-semibold text-[15px] text-wj-text hover:text-wj-green transition-colors" data-testid="product-title">
+              {item.product_title}
+            </p>
+          </LocalizedClientLink>
+          <LineItemOptions variant={item.variant} data-testid="product-variant" />
+          <span className="hidden sm:inline-flex mt-1">
             <DeleteButton id={item.id} data-testid="product-delete-button" />
-            <CartItemSelect
-              value={item.quantity}
-              onChange={(value) => changeQuantity(parseInt(value.target.value))}
-              className="w-14 h-10 p-4"
-              data-testid="product-select-button"
-            >
-              {/* TODO: Update this with the v2 way of managing inventory */}
-              {Array.from(
-                {
-                  length: Math.min(maxQuantity, 10),
-                },
-                (_, i) => (
-                  <option value={i + 1} key={i}>
-                    {i + 1}
-                  </option>
-                )
-              )}
+          </span>
+        </div>
+      </div>
 
-              <option value={1} key={1}>
-                1
-              </option>
-            </CartItemSelect>
-            {updating && <Spinner />}
-          </div>
+      {/* Quantity */}
+      <div className="flex items-center gap-2 sm:justify-center">
+        <div className="flex items-center border border-wj-border">
+          <button
+            onClick={() => item.quantity > 1 && changeQuantity(item.quantity - 1)}
+            disabled={updating || item.quantity <= 1}
+            className="w-8 h-8 flex items-center justify-center font-body text-[14px] text-wj-text hover:bg-wj-surface transition-colors disabled:opacity-40"
+          >
+            −
+          </button>
+          <span className="w-8 h-8 flex items-center justify-center font-body text-[14px] text-wj-text border-x border-wj-border">
+            {updating ? <Spinner /> : item.quantity}
+          </span>
+          <button
+            onClick={() => changeQuantity(item.quantity + 1)}
+            disabled={updating || item.quantity >= maxQuantity}
+            className="w-8 h-8 flex items-center justify-center font-body text-[14px] text-wj-text hover:bg-wj-surface transition-colors disabled:opacity-40"
+          >
+            +
+          </button>
+        </div>
+        <div className="sm:hidden">
+          <DeleteButton id={item.id} data-testid="product-delete-button" />
+        </div>
+      </div>
+
+      {/* Unit price */}
+      <div className="hidden sm:block text-right">
+        <LineItemUnitPrice item={item} style="tight" currencyCode={currencyCode} />
+      </div>
+
+      {/* Total */}
+      <div className="text-right font-body font-semibold text-[15px] text-wj-text">
+        <LineItemPrice item={item} style="tight" currencyCode={currencyCode} />
+      </div>
+
+      {error && (
+        <div className="col-span-full">
           <ErrorMessage error={error} data-testid="product-error-message" />
-        </Table.Cell>
+        </div>
       )}
-
-      {type === "full" && (
-        <Table.Cell className="hidden small:table-cell">
-          <LineItemUnitPrice
-            item={item}
-            style="tight"
-            currencyCode={currencyCode}
-          />
-        </Table.Cell>
-      )}
-
-      <Table.Cell className="!pr-0">
-        <span
-          className={clx("!pr-0", {
-            "flex flex-col items-end h-full justify-center": type === "preview",
-          })}
-        >
-          {type === "preview" && (
-            <span className="flex gap-x-1 ">
-              <Text className="text-ui-fg-muted">{item.quantity}x </Text>
-              <LineItemUnitPrice
-                item={item}
-                style="tight"
-                currencyCode={currencyCode}
-              />
-            </span>
-          )}
-          <LineItemPrice
-            item={item}
-            style="tight"
-            currencyCode={currencyCode}
-          />
-        </span>
-      </Table.Cell>
-    </Table.Row>
+    </div>
   )
 }
 
