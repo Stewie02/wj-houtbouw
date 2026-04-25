@@ -20,6 +20,21 @@ module.exports = {
         padding: "padding-top padding-right padding-bottom padding-left",
       },
       colors: {
+        wj: {
+          bg: "#F7F3EE",
+          surface: "#EDE9E3",
+          "surface-alt": "#E4DED6",
+          text: "#1A1410",
+          muted: "#7B6F65",
+          green: "#2B4D1A",
+          "green-hover": "#3A6624",
+          "green-light": "#EBF0E6",
+          wood: "#C4843A",
+          "wood-light": "#F5EAD9",
+          border: "#D5CFC7",
+          white: "#FEFCF9",
+          dark: "#12100D",
+        },
         grey: {
           0: "#FFFFFF",
           5: "#F9FAFB",
@@ -68,6 +83,8 @@ module.exports = {
           "Ubuntu",
           "sans-serif",
         ],
+        display: ["var(--font-playfair)", "Georgia", "serif"],
+        body: ["var(--font-dm-sans)", "system-ui", "sans-serif"],
       },
       keyframes: {
         ring: {
