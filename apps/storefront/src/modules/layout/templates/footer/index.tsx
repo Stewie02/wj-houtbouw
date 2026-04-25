@@ -1,157 +1,122 @@
-import { listCategories } from "@lib/data/categories";
-import { listCollections } from "@lib/data/collections";
-import { Text, clx } from "@modules/common/components/ui";
+import LocalizedClientLink from "@modules/common/components/localized-client-link"
 
-import LocalizedClientLink from "@modules/common/components/localized-client-link";
-import MedusaCTA from "@modules/layout/components/medusa-cta";
+const FOOTER_COLS = [
+  {
+    title: "Shop",
+    links: [
+      { label: "Picnic Tables", href: "/store" },
+      { label: "Garden Benches", href: "/store" },
+      { label: "Children's Furniture", href: "/store" },
+      { label: "Accessories", href: "/store" },
+      { label: "New arrivals", href: "/store" },
+    ],
+  },
+  {
+    title: "Company",
+    links: [
+      { label: "About us", href: "/about" },
+      { label: "Sustainability", href: "/about" },
+      { label: "Craftsmanship", href: "/about" },
+      { label: "Press", href: "/about" },
+    ],
+  },
+  {
+    title: "Support",
+    links: [
+      { label: "FAQ", href: "/contact" },
+      { label: "Shipping & delivery", href: "/contact" },
+      { label: "Returns", href: "/contact" },
+      { label: "Care guide", href: "/contact" },
+      { label: "Contact us", href: "/contact" },
+    ],
+  },
+  {
+    title: "Legal",
+    links: [
+      { label: "Privacy Policy", href: "/legal" },
+      { label: "Terms & Conditions", href: "/legal" },
+      { label: "Cookie Policy", href: "/legal" },
+    ],
+  },
+]
 
-export default async function Footer() {
-  const { collections } = await listCollections({
-    fields: "*products",
-  });
-  const productCategories = await listCategories();
+const SOCIALS = ["Instagram", "Pinterest", "Facebook"]
 
+export default function Footer() {
   return (
-    <footer className="border-t border-ui-border-base w-full">
-      <div className="content-container flex flex-col w-full">
-        <div className="flex flex-col gap-y-6 xsmall:flex-row items-start justify-between py-40">
-          <div>
-            <LocalizedClientLink
-              href="/"
-              className="txt-compact-xlarge-plus text-ui-fg-subtle hover:text-ui-fg-base uppercase"
-            >
-              Medusa Store
+    <footer className="bg-wj-dark text-wj-white">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-8 lg:px-12 pt-16 pb-12 lg:pt-[72px] lg:pb-12">
+
+        {/* Main grid */}
+        <div className="grid grid-cols-2 gap-10 sm:grid-cols-3 lg:grid-cols-[2fr_1fr_1fr_1fr_1fr] lg:gap-12 mb-16">
+
+          {/* Brand column */}
+          <div className="col-span-2 sm:col-span-3 lg:col-span-1">
+            <LocalizedClientLink href="/" className="flex items-center gap-2.5 mb-5">
+              <div className="w-9 h-9 bg-wj-green flex items-center justify-center shrink-0">
+                <svg width="20" height="20" viewBox="0 0 18 18" fill="none">
+                  <rect x="2" y="8" width="14" height="2.5" fill="#FEFCF9" />
+                  <rect x="4" y="4" width="10" height="2" fill="#FEFCF9" opacity="0.7" />
+                  <rect x="6" y="12.5" width="2.5" height="4" fill="#FEFCF9" />
+                  <rect x="9.5" y="12.5" width="2.5" height="4" fill="#FEFCF9" />
+                </svg>
+              </div>
+              <div className="font-display font-semibold text-[18px] text-wj-white">
+                WJ Houtbouw
+              </div>
             </LocalizedClientLink>
-          </div>
-          <div className="text-small-regular gap-10 md:gap-x-16 grid grid-cols-2 sm:grid-cols-3">
-            {productCategories && productCategories?.length > 0 && (
-              <div className="flex flex-col gap-y-2">
-                <span className="txt-small-plus txt-ui-fg-base">
-                  Categories
-                </span>
-                <ul
-                  className="grid grid-cols-1 gap-2"
-                  data-testid="footer-categories"
-                >
-                  {productCategories?.slice(0, 6).map((c) => {
-                    if (c.parent_category) {
-                      return;
-                    }
-
-                    const children =
-                      c.category_children?.map((child) => ({
-                        name: child.name,
-                        handle: child.handle,
-                        id: child.id,
-                      })) || null;
-
-                    return (
-                      <li
-                        className="flex flex-col gap-2 text-ui-fg-subtle txt-small"
-                        key={c.id}
-                      >
-                        <LocalizedClientLink
-                          className={clx(
-                            "hover:text-ui-fg-base",
-                            children && "txt-small-plus"
-                          )}
-                          href={`/categories/${c.handle}`}
-                          data-testid="category-link"
-                        >
-                          {c.name}
-                        </LocalizedClientLink>
-                        {children && (
-                          <ul className="grid grid-cols-1 ml-3 gap-2">
-                            {children &&
-                              children.map((child) => (
-                                <li key={child.id}>
-                                  <LocalizedClientLink
-                                    className="hover:text-ui-fg-base"
-                                    href={`/categories/${child.handle}`}
-                                    data-testid="category-link"
-                                  >
-                                    {child.name}
-                                  </LocalizedClientLink>
-                                </li>
-                              ))}
-                          </ul>
-                        )}
-                      </li>
-                    );
-                  })}
-                </ul>
+            <p className="font-body text-[14px] text-[#9A8F85] leading-[1.7] max-w-[240px]">
+              Handcrafted outdoor furniture built to last generations. Made in the Netherlands from sustainably sourced timber.
+            </p>
+            <div className="mt-7">
+              <div className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-[#6B6058] mb-2.5">
+                Follow us
               </div>
-            )}
-            {collections && collections.length > 0 && (
-              <div className="flex flex-col gap-y-2">
-                <span className="txt-small-plus txt-ui-fg-base">
-                  Collections
-                </span>
-                <ul
-                  className={clx(
-                    "grid grid-cols-1 gap-2 text-ui-fg-subtle txt-small",
-                    {
-                      "grid-cols-2": (collections?.length || 0) > 3,
-                    }
-                  )}
-                >
-                  {collections?.slice(0, 6).map((c) => (
-                    <li key={c.id}>
-                      <LocalizedClientLink
-                        className="hover:text-ui-fg-base"
-                        href={`/collections/${c.handle}`}
-                      >
-                        {c.title}
-                      </LocalizedClientLink>
-                    </li>
-                  ))}
-                </ul>
+              <div className="flex flex-wrap gap-3">
+                {SOCIALS.map((s) => (
+                  <div
+                    key={s}
+                    className="font-body font-semibold text-[10px] tracking-[0.08em] uppercase text-[#9A8F85] border border-[#3A3530] px-[10px] py-1.5 cursor-pointer hover:text-wj-white transition-colors"
+                  >
+                    {s}
+                  </div>
+                ))}
               </div>
-            )}
-            <div className="flex flex-col gap-y-2">
-              <span className="txt-small-plus txt-ui-fg-base">Medusa</span>
-              <ul className="grid grid-cols-1 gap-y-2 text-ui-fg-subtle txt-small">
-                <li>
-                  <a
-                    href="https://github.com/medusajs"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="hover:text-ui-fg-base"
-                  >
-                    GitHub
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://docs.medusajs.com"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="hover:text-ui-fg-base"
-                  >
-                    Documentation
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://github.com/medusajs/dtc-starter"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="hover:text-ui-fg-base"
-                  >
-                    Source code
-                  </a>
-                </li>
-              </ul>
             </div>
           </div>
+
+          {/* Link columns */}
+          {FOOTER_COLS.map((col) => (
+            <div key={col.title}>
+              <div className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-[#6B6058] mb-[18px]">
+                {col.title}
+              </div>
+              <ul className="flex flex-col gap-3">
+                {col.links.map((link) => (
+                  <li key={link.label}>
+                    <LocalizedClientLink
+                      href={link.href}
+                      className="font-body text-[14px] text-[#9A8F85] hover:text-wj-white transition-colors"
+                    >
+                      {link.label}
+                    </LocalizedClientLink>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
-        <div className="flex w-full mb-16 justify-between text-ui-fg-muted">
-          <Text className="txt-compact-small">
-            © {new Date().getFullYear()} Medusa Store. All rights reserved.
-          </Text>
-          <MedusaCTA />
+
+        {/* Bottom bar */}
+        <div className="border-t border-[#2A2520] pt-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+          <span className="font-body text-[13px] text-[#6B6058]">
+            © {new Date().getFullYear()} WJ Houtbouw B.V. All rights reserved.
+          </span>
+          <span className="font-body text-[13px] text-[#6B6058]">
+            KVK 12345678 · Handmade in the Netherlands 🇳🇱
+          </span>
         </div>
       </div>
     </footer>
-  );
+  )
 }
