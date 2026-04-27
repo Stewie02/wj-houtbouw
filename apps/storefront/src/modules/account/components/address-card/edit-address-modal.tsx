@@ -11,7 +11,8 @@ import CountrySelect from "@modules/checkout/components/country-select"
 import { SubmitButton } from "@modules/checkout/components/submit-button"
 import Input from "@modules/common/components/input"
 import Modal from "@modules/common/components/modal"
-import { Button, Heading, Text, clx } from "@modules/common/components/ui"
+import { Heading, Text, clx } from "@modules/common/components/ui"
+import BrandButton from "@modules/common/components/brand-button"
 import Spinner from "@modules/common/icons/spinner"
 import React, { useActionState, useEffect, useState } from "react"
 
@@ -63,32 +64,23 @@ const EditAddress: React.FC<EditAddressProps> = ({
     <>
       <div
         className={clx(
-          "border rounded-rounded p-5 min-h-[220px] h-full w-full flex flex-col justify-between transition-colors",
-          {
-            "border-gray-900": isActive,
-          }
+          "border p-5 min-h-[180px] h-full w-full flex flex-col justify-between transition-colors bg-wj-white",
+          isActive ? "border-wj-green" : "border-wj-border"
         )}
         data-testid="address-container"
       >
-        <div className="flex flex-col">
-          <Heading
-            className="text-left text-base-semi"
-            data-testid="address-name"
-          >
+        <div className="flex flex-col gap-1">
+          <p className="font-body font-semibold text-[14px] text-wj-text" data-testid="address-name">
             {address.first_name} {address.last_name}
-          </Heading>
+          </p>
           {address.company && (
-            <Text
-              className="txt-compact-small text-ui-fg-base"
-              data-testid="address-company"
-            >
+            <p className="font-body text-[13px] text-wj-muted" data-testid="address-company">
               {address.company}
-            </Text>
+            </p>
           )}
-          <Text className="flex flex-col text-left text-base-regular mt-2">
+          <div className="font-body text-[13px] text-wj-muted mt-1 flex flex-col">
             <span data-testid="address-address">
-              {address.address_1}
-              {address.address_2 && <span>, {address.address_2}</span>}
+              {address.address_1}{address.address_2 && `, ${address.address_2}`}
             </span>
             <span data-testid="address-postal-city">
               {address.postal_code}, {address.city}
@@ -97,23 +89,23 @@ const EditAddress: React.FC<EditAddressProps> = ({
               {address.province && `${address.province}, `}
               {address.country_code?.toUpperCase()}
             </span>
-          </Text>
+          </div>
         </div>
-        <div className="flex items-center gap-x-4">
+        <div className="flex items-center gap-4 mt-4 pt-4 border-t border-wj-border">
           <button
-            className="text-small-regular text-ui-fg-base flex items-center gap-x-2"
+            className="font-body text-[13px] font-medium text-wj-green hover:underline flex items-center gap-1.5"
             onClick={open}
             data-testid="address-edit-button"
           >
-            <Edit />
+            <Edit className="w-3.5 h-3.5" />
             Edit
           </button>
           <button
-            className="text-small-regular text-ui-fg-base flex items-center gap-x-2"
+            className="font-body text-[13px] text-wj-muted hover:text-red-600 transition-colors flex items-center gap-1.5"
             onClick={removeAddress}
             data-testid="address-delete-button"
           >
-            {removing ? <Spinner /> : <Trash />}
+            {removing ? <Spinner /> : <Trash className="w-3.5 h-3.5" />}
             Remove
           </button>
         </div>
@@ -216,16 +208,15 @@ const EditAddress: React.FC<EditAddressProps> = ({
           </Modal.Body>
           <Modal.Footer>
             <div className="flex gap-3 mt-6">
-              <Button
+              <BrandButton
                 type="reset"
-                variant="secondary"
+                variant="outline"
                 onClick={close}
-                className="h-10"
                 data-testid="cancel-button"
               >
                 Cancel
-              </Button>
-              <SubmitButton data-testid="save-button">Save</SubmitButton>
+              </BrandButton>
+              <SubmitButton data-testid="save-button">Save address</SubmitButton>
             </div>
           </Modal.Footer>
         </form>

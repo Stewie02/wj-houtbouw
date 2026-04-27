@@ -1,43 +1,32 @@
 "use client"
 
-import { Button } from "@modules/common/components/ui"
-
 import OrderCard from "../order-card"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
+import BrandButton from "@modules/common/components/brand-button"
 import { HttpTypes } from "@medusajs/types"
 
 const OrderOverview = ({ orders }: { orders: HttpTypes.StoreOrder[] }) => {
   if (orders?.length) {
     return (
-      <div className="flex flex-col gap-y-8 w-full">
-        {orders.map((o) => (
-          <div
-            key={o.id}
-            className="border-b border-gray-200 pb-6 last:pb-0 last:border-none"
-          >
-            <OrderCard order={o} />
-          </div>
+      <div className="flex flex-col gap-6 w-full">
+        {orders.map((order) => (
+          <OrderCard key={order.id} order={order} />
         ))}
       </div>
     )
   }
 
   return (
-    <div
-      className="w-full flex flex-col items-center gap-y-4"
-      data-testid="no-orders-container"
-    >
-      <h2 className="text-large-semi">Nothing to see here</h2>
-      <p className="text-base-regular">
-        You don&apos;t have any orders yet, let us change that {":)"}
+    <div className="bg-wj-white border border-wj-border p-12 flex flex-col items-center text-center gap-4" data-testid="no-orders-container">
+      <h2 className="font-display font-bold text-[22px] text-wj-text tracking-[-0.01em]">
+        No orders yet
+      </h2>
+      <p className="font-body text-[14px] text-wj-muted max-w-xs">
+        You haven&apos;t placed any orders. Browse our collection to find something you&apos;ll love.
       </p>
-      <div className="mt-4">
-        <LocalizedClientLink href="/" passHref>
-          <Button data-testid="continue-shopping-button">
-            Continue shopping
-          </Button>
-        </LocalizedClientLink>
-      </div>
+      <LocalizedClientLink href="/store">
+        <BrandButton data-testid="continue-shopping-button">Start shopping</BrandButton>
+      </LocalizedClientLink>
     </div>
   )
 }

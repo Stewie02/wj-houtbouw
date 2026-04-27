@@ -13,50 +13,45 @@ const Login = ({ setCurrentView }: Props) => {
   const [message, formAction] = useActionState(login, null)
 
   return (
-    <div
-      className="max-w-sm w-full flex flex-col items-center"
-      data-testid="login-page"
-    >
-      <h1 className="text-large-semi uppercase mb-6">Welcome back</h1>
-      <p className="text-center text-base-regular text-ui-fg-base mb-8">
-        Sign in to access an enhanced shopping experience.
+    <div data-testid="login-page">
+      <h2 className="font-display font-bold text-[26px] text-wj-text tracking-[-0.02em] mb-2">
+        Sign in
+      </h2>
+      <p className="font-body text-[14px] text-wj-muted mb-8">
+        Welcome back. Sign in to manage your orders and account.
       </p>
-      <form className="w-full" action={formAction}>
-        <div className="flex flex-col w-full gap-y-2">
-          <Input
-            label="Email"
-            name="email"
-            type="email"
-            title="Enter a valid email address."
-            autoComplete="email"
-            required
-            data-testid="email-input"
-          />
-          <Input
-            label="Password"
-            name="password"
-            type="password"
-            autoComplete="current-password"
-            required
-            data-testid="password-input"
-          />
-        </div>
+
+      <form className="flex flex-col gap-4" action={formAction}>
+        <Input
+          label="Email"
+          name="email"
+          type="email"
+          autoComplete="email"
+          required
+          data-testid="email-input"
+        />
+        <Input
+          label="Password"
+          name="password"
+          type="password"
+          autoComplete="current-password"
+          required
+          data-testid="password-input"
+        />
         <ErrorMessage error={message} data-testid="login-error-message" />
-        <SubmitButton data-testid="sign-in-button" className="w-full mt-6">
-          Sign in
-        </SubmitButton>
+        <SubmitButton data-testid="sign-in-button">Sign in</SubmitButton>
       </form>
-      <span className="text-center text-ui-fg-base text-small-regular mt-6">
-        Not a member?{" "}
+
+      <p className="font-body text-[13px] text-wj-muted text-center mt-6">
+        Don&apos;t have an account?{" "}
         <button
           onClick={() => setCurrentView(LOGIN_VIEW.REGISTER)}
-          className="underline"
+          className="text-wj-green font-medium hover:underline"
           data-testid="register-button"
         >
-          Join us
+          Create one
         </button>
-        .
-      </span>
+      </p>
     </div>
   )
 }

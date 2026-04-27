@@ -1,9 +1,9 @@
 import { Disclosure } from "@headlessui/react"
-import { Badge, Button, clx } from "@modules/common/components/ui"
+import { clx } from "@modules/common/components/ui"
 import { useEffect } from "react"
-
 import useToggleState from "@lib/hooks/use-toggle-state"
 import { useFormStatus } from "react-dom"
+import BrandButton from "@modules/common/components/brand-button"
 
 type AccountInfoProps = {
   label: string
@@ -13,7 +13,7 @@ type AccountInfoProps = {
   errorMessage?: string
   clearState: () => void
   children?: React.ReactNode
-  'data-testid'?: string
+  "data-testid"?: string
 }
 
 const AccountInfo = ({
@@ -24,10 +24,9 @@ const AccountInfo = ({
   clearState,
   errorMessage = "An error occurred, please try again",
   children,
-  'data-testid': dataTestid
+  "data-testid": dataTestid,
 }: AccountInfoProps) => {
   const { state, close, toggle } = useToggleState()
-
   const { pending } = useFormStatus()
 
   const handleToggle = () => {
@@ -36,98 +35,83 @@ const AccountInfo = ({
   }
 
   useEffect(() => {
-    if (isSuccess) {
-      close()
-    }
+    if (isSuccess) close()
   }, [isSuccess, close])
 
   return (
-    <div className="text-small-regular" data-testid={dataTestid}>
-      <div className="flex items-end justify-between">
-        <div className="flex flex-col">
-          <span className="uppercase text-ui-fg-base">{label}</span>
-          <div className="flex items-center flex-1 basis-0 justify-end gap-x-4">
-            {typeof currentInfo === "string" ? (
-              <span className="font-semibold" data-testid="current-info">{currentInfo}</span>
-            ) : (
-              currentInfo
-            )}
+    <div className="border-b border-wj-border py-5" data-testid={dataTestid}>
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-muted mb-1">
+            {label}
+          </p>
+          <div className="font-body text-[14px] text-wj-text" data-testid="current-info">
+            {currentInfo}
           </div>
         </div>
-        <div>
-          <Button
-            variant="secondary"
-            className="w-[100px] min-h-[25px] py-1"
-            onClick={handleToggle}
-            type={state ? "reset" : "button"}
-            data-testid="edit-button"
-            data-active={state}
-          >
-            {state ? "Cancel" : "Edit"}
-          </Button>
-        </div>
+        <button
+          onClick={handleToggle}
+          type={state ? "reset" : "button"}
+          className="font-body text-[13px] font-medium text-wj-green hover:underline shrink-0"
+          data-testid="edit-button"
+          data-active={state}
+        >
+          {state ? "Cancel" : "Edit"}
+        </button>
       </div>
 
-      {/* Success state */}
+      {/* Success */}
       <Disclosure>
         <Disclosure.Panel
           static
-          className={clx(
-            "transition-[max-height,opacity] duration-300 ease-in-out overflow-hidden",
-            {
-              "max-h-[1000px] opacity-100": isSuccess,
-              "max-h-0 opacity-0": !isSuccess,
-            }
-          )}
+          className={clx("transition-[max-height,opacity] duration-300 overflow-hidden", {
+            "max-h-[100px] opacity-100": isSuccess,
+            "max-h-0 opacity-0": !isSuccess,
+          })}
           data-testid="success-message"
         >
-          <Badge className="p-2 my-4" color="green">
-            <span>{label} updated succesfully</span>
-          </Badge>
+          <p className="font-body text-[13px] text-wj-green bg-wj-green-light px-3 py-2 mt-3">
+            {label} updated successfully
+          </p>
         </Disclosure.Panel>
       </Disclosure>
 
-      {/* Error state  */}
+      {/* Error */}
       <Disclosure>
         <Disclosure.Panel
           static
-          className={clx(
-            "transition-[max-height,opacity] duration-300 ease-in-out overflow-hidden",
-            {
-              "max-h-[1000px] opacity-100": isError,
-              "max-h-0 opacity-0": !isError,
-            }
-          )}
+          className={clx("transition-[max-height,opacity] duration-300 overflow-hidden", {
+            "max-h-[100px] opacity-100": isError,
+            "max-h-0 opacity-0": !isError,
+          })}
           data-testid="error-message"
         >
-          <Badge className="p-2 my-4" color="red">
-            <span>{errorMessage}</span>
-          </Badge>
+          <p className="font-body text-[13px] text-red-700 bg-red-50 px-3 py-2 mt-3">
+            {errorMessage}
+          </p>
         </Disclosure.Panel>
       </Disclosure>
 
+      {/* Edit form */}
       <Disclosure>
         <Disclosure.Panel
           static
-          className={clx(
-            "transition-[max-height,opacity] duration-300 ease-in-out overflow-visible",
-            {
-              "max-h-[1000px] opacity-100": state,
-              "max-h-0 opacity-0": !state,
-            }
-          )}
+          className={clx("transition-[max-height,opacity] duration-300 overflow-visible", {
+            "max-h-[1000px] opacity-100": state,
+            "max-h-0 opacity-0": !state,
+          })}
         >
-          <div className="flex flex-col gap-y-2 py-4">
-            <div>{children}</div>
-            <div className="flex items-center justify-end mt-2">
-              <Button
-                isLoading={pending}
-                className="w-full small:max-w-[140px]"
+          <div className="flex flex-col gap-4 pt-4">
+            {children}
+            <div className="flex justify-end">
+              <BrandButton
+                size="sm"
                 type="submit"
+                disabled={pending}
                 data-testid="save-button"
               >
-                Save changes
-              </Button>
+                {pending ? "Saving…" : "Save changes"}
+              </BrandButton>
             </div>
           </div>
         </Disclosure.Panel>

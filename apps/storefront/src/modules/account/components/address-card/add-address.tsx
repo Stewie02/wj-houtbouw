@@ -1,7 +1,8 @@
 "use client"
 
 import { Plus } from "@medusajs/icons"
-import { Button, Heading } from "@modules/common/components/ui"
+import { Heading } from "@modules/common/components/ui"
+import BrandButton from "@modules/common/components/brand-button"
 import { useActionState, useEffect, useState } from "react"
 
 import { addCustomerAddress } from "@lib/data/customer"
@@ -48,12 +49,12 @@ const AddAddress = ({
   return (
     <>
       <button
-        className="border border-ui-border-base rounded-rounded p-5 min-h-[220px] h-full w-full flex flex-col justify-between"
+        className="border border-wj-border border-dashed p-5 min-h-[180px] h-full w-full flex flex-col items-center justify-center gap-3 hover:border-wj-green hover:bg-wj-green-light transition-colors"
         onClick={open}
         data-testid="add-address-button"
       >
-        <span className="text-base-semi">New address</span>
-        <Plus />
+        <Plus className="text-wj-muted w-5 h-5" />
+        <span className="font-body text-[13px] font-medium text-wj-muted">Add new address</span>
       </button>
 
       <Modal isOpen={state} close={close} data-testid="add-address-modal">
@@ -145,16 +146,15 @@ const AddAddress = ({
           </Modal.Body>
           <Modal.Footer>
             <div className="flex gap-3 mt-6">
-              <Button
+              <BrandButton
                 type="reset"
-                variant="secondary"
+                variant="outline"
                 onClick={close}
-                className="h-10"
                 data-testid="cancel-button"
               >
                 Cancel
-              </Button>
-              <SubmitButton data-testid="save-button">Save</SubmitButton>
+              </BrandButton>
+              <SubmitButton data-testid="save-button">Save address</SubmitButton>
             </div>
           </Modal.Footer>
         </form>
