@@ -1,9 +1,7 @@
 import { HttpTypes } from "@medusajs/types"
-import { Table, Text } from "@modules/common/components/ui"
+import { convertToLocale } from "@lib/util/money"
 
 import LineItemOptions from "@modules/common/components/line-item-options"
-import LineItemPrice from "@modules/common/components/line-item-price"
-import LineItemUnitPrice from "@modules/common/components/line-item-unit-price"
 import Thumbnail from "@modules/products/components/thumbnail"
 
 type ItemProps = {
@@ -12,45 +10,39 @@ type ItemProps = {
 }
 
 const Item = ({ item, currencyCode }: ItemProps) => {
+  const unitPrice = convertToLocale({
+    amount: item.unit_price ?? 0,
+    currency_code: currencyCode,
+  })
+  const total = convertToLocale({
+    amount: item.total ?? 0,
+    currency_code: currencyCode,
+  })
+
   return (
-    <Table.Row className="w-full" data-testid="product-row">
-      <Table.Cell className="!pl-0 p-4 w-24">
-        <div className="flex w-16">
-          <Thumbnail thumbnail={item.thumbnail} size="square" />
+    <div className="flex gap-4 py-5 first:pt-0 last:pb-0" data-testid="product-row">
+      <div className="w-20 h-20 flex-shrink-0 bg-wj-surface overflow-hidden">
+        <Thumbnail thumbnail={item.thumbnail} size="square" />
+      </div>
+      <div className="flex flex-1 justify-between gap-4 min-w-0">
+        <div className="min-w-0">
+          <p
+            className="font-body font-medium text-[14px] text-wj-text truncate"
+            data-testid="product-name"
+          >
+            {item.product_title}
+          </p>
+          <LineItemOptions variant={item.variant} data-testid="product-variant" />
+          <p className="font-body text-[13px] text-wj-muted mt-1">
+            Qty: <span data-testid="product-quantity">{item.quantity}</span>
+          </p>
         </div>
-      </Table.Cell>
-
-      <Table.Cell className="text-left">
-        <Text
-          className="txt-medium-plus text-ui-fg-base"
-          data-testid="product-name"
-        >
-          {item.product_title}
-        </Text>
-        <LineItemOptions variant={item.variant} data-testid="product-variant" />
-      </Table.Cell>
-
-      <Table.Cell className="!pr-0">
-        <span className="!pr-0 flex flex-col items-end h-full justify-center">
-          <span className="flex gap-x-1 ">
-            <Text className="text-ui-fg-muted">
-              <span data-testid="product-quantity">{item.quantity}</span>x{" "}
-            </Text>
-            <LineItemUnitPrice
-              item={item}
-              style="tight"
-              currencyCode={currencyCode}
-            />
-          </span>
-
-          <LineItemPrice
-            item={item}
-            style="tight"
-            currencyCode={currencyCode}
-          />
-        </span>
-      </Table.Cell>
-    </Table.Row>
+        <div className="text-right flex-shrink-0">
+          <p className="font-body text-[13px] text-wj-muted">{unitPrice} each</p>
+          <p className="font-body font-semibold text-[15px] text-wj-text mt-1">{total}</p>
+        </div>
+      </div>
+    </div>
   )
 }
 
