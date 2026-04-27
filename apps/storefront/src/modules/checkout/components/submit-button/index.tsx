@@ -1,13 +1,11 @@
 "use client"
 
-import { Button } from "@modules/common/components/ui"
+import BrandButton from "@modules/common/components/brand-button"
 import React from "react"
 import { useFormStatus } from "react-dom"
 
 export function SubmitButton({
   children,
-  variant = "primary",
-  size = "medium",
   className,
   "data-testid": dataTestId,
 }: {
@@ -20,15 +18,15 @@ export function SubmitButton({
   const { pending } = useFormStatus()
 
   return (
-    <Button
-      size={size}
-      className={className}
+    <BrandButton
       type="submit"
-      isLoading={pending}
-      variant={variant || "primary"}
+      size="lg"
+      full
+      disabled={pending}
+      className={className}
       data-testid={dataTestId}
     >
-      {children}
-    </Button>
+      {pending ? "Processing…" : children}
+    </BrandButton>
   )
 }
