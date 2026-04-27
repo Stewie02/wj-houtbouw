@@ -80,7 +80,7 @@ export default function ProductActions({ product, disabled }: ProductActionsProp
     setIsAdding(false)
   }
 
-  const buttonLabel = !selectedVariant && !options
+  const buttonLabel = !selectedVariant
     ? "Select variant"
     : !inStock || !isValidVariant
     ? "Out of stock"
