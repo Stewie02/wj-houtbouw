@@ -1512,6 +1512,7 @@ __metadata:
     "@medusajs/admin-sdk": "npm:2.14.0"
     "@medusajs/admin-shared": "npm:2.14.0"
     "@medusajs/caching": "npm:2.14.0"
+    "@medusajs/caching-redis": "npm:2.14.0"
     "@medusajs/cli": "npm:2.14.0"
     "@medusajs/dashboard": "npm:2.14.0"
     "@medusajs/draft-order": "npm:2.14.0"
