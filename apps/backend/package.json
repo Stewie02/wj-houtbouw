@@ -14,6 +14,7 @@
   ],
   "scripts": {
     "build": "medusa build",
+    "predeploy": "medusa db:migrate",
     "start": "medusa start",
     "dev": "medusa develop",
     "test:integration:http": "TEST_TYPE=integration:http NODE_OPTIONS=--experimental-vm-modules jest --silent=false --runInBand --forceExit",
@@ -24,6 +25,7 @@
     "@medusajs/admin-sdk": "2.14.0",
     "@medusajs/admin-shared": "2.14.0",
     "@medusajs/caching": "2.14.0",
+    "@medusajs/caching-redis": "2.14.0",
     "@medusajs/cli": "2.14.0",
     "@medusajs/dashboard": "2.14.0",
     "@medusajs/draft-order": "2.14.0",

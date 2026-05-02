@@ -1,0 +1,2 @@
+web: MEDUSA_WORKER_MODE=server npm run start
+worker: MEDUSA_WORKER_MODE=worker npm run start
