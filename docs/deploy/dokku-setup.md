@@ -21,8 +21,8 @@ dokku apps:create medusa-storefront
 ## 3. Point each app to its Dockerfile
 
 ```bash
-dokku config:set medusa-backend   DOKKU_DOCKERFILE_PATH=apps/backend/Dockerfile
-dokku config:set medusa-storefront DOKKU_DOCKERFILE_PATH=apps/storefront/Dockerfile
+dokku builder-dockerfile:set medusa-backend   dockerfile-path apps/backend/Dockerfile
+dokku builder-dockerfile:set medusa-storefront dockerfile-path apps/storefront/Dockerfile
 ```
 
 ## 4. Provision databases and link
