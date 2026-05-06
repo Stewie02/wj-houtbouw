@@ -24,9 +24,9 @@ RUN yarn build
 FROM node:20-alpine
 WORKDIR /app
 COPY --from=builder /app/apps/storefront/.next/standalone ./
-COPY --from=builder /app/apps/storefront/.next/static ./.next/static
-COPY --from=builder /app/apps/storefront/public ./public
+COPY --from=builder /app/apps/storefront/.next/static ./apps/storefront/.next/static
+COPY --from=builder /app/apps/storefront/public ./apps/storefront/public
 EXPOSE 8000
 ENV PORT=8000
 ENV HOSTNAME=0.0.0.0
-CMD ["node", "server.js"]
+CMD ["node", "apps/storefront/server.js"]
