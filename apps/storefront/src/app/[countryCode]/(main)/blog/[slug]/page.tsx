@@ -3,14 +3,10 @@ import { notFound } from "next/navigation"
 import Image from "next/image"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import BrandTag from "@modules/common/components/brand-tag"
-import { BLOG_POSTS, getBlogPost } from "@lib/data/blog"
+import { getBlogPost } from "@lib/data/blog"
 
 type Props = {
   params: Promise<{ slug: string; countryCode: string }>
-}
-
-export async function generateStaticParams() {
-  return BLOG_POSTS.map((post) => ({ slug: post.slug }))
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

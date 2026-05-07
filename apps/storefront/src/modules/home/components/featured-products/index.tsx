@@ -38,12 +38,12 @@ export default async function FeaturedProducts({ countryCode }: FeaturedProducts
               Onze collectie
             </div>
             <h2 className="font-display font-bold text-[36px] sm:text-[42px] text-wj-text tracking-[-0.02em]">
-              Bestselling tables
+              Onze collectie
             </h2>
           </div>
           <LocalizedClientLink href="/store">
             <BrandButton variant="outline" className="shrink-0">
-              View all products
+              Producten bekijken
             </BrandButton>
           </LocalizedClientLink>
         </div>
