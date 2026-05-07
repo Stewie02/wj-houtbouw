@@ -65,10 +65,10 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Achter de schermen",
     date: "Mei 2026",
     excerpt:
-      "Elk stuk meubilair dat WJ Houtbouw verlaat heeft een reis gemaakt. Van ruwe plank tot afgewerkt product, elke stap wordt met zorg gezet. Geen fabriekswerk, geen shortcuts.",
+      "Elk stuk meubilair dat W&J Houtbouw verlaat heeft een reis gemaakt. Van ruwe plank tot afgewerkt product, elke stap wordt met zorg gezet. Geen fabriekswerk, geen shortcuts.",
     sections: [
       {
-        body: "Elk stuk meubilair dat WJ Houtbouw verlaat heeft een reis gemaakt. Van ruwe plank tot afgewerkt product, elke stap wordt met zorg gezet. Geen fabriekswerk, geen shortcuts. Dit is hoe het bij ons gaat.",
+        body: "Elk stuk meubilair dat W&J Houtbouw verlaat heeft een reis gemaakt. Van ruwe plank tot afgewerkt product, elke stap wordt met zorg gezet. Geen fabriekswerk, geen shortcuts. Dit is hoe het bij ons gaat.",
       },
       {
         heading: "Stap 1 — Het hout",
