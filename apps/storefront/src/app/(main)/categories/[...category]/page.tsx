@@ -1,7 +1,7 @@
 import { Metadata } from "next"
 import { notFound } from "next/navigation"
 
-import { getCategoryByHandle, listCategories } from "@lib/data/categories"
+import { getCategoryByHandle } from "@lib/data/categories"
 import { HttpTypes } from "@medusajs/types"
 import CategoryTemplate from "@modules/categories/templates"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
@@ -12,18 +12,6 @@ type Props = {
     sortBy?: SortOptions
     page?: string
   }>
-}
-
-export async function generateStaticParams() {
-  const product_categories = await listCategories()
-
-  if (!product_categories) {
-    return []
-  }
-
-  return product_categories.map((category: HttpTypes.StoreProductCategory) => ({
-    category: [category.handle],
-  }))
 }
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
