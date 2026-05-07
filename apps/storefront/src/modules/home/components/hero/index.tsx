@@ -4,9 +4,9 @@ import BrandTag from "@modules/common/components/brand-tag"
 import PlaceholderImage from "@modules/common/components/placeholder-image"
 
 const STATS = [
-  { value: "15+", label: "Years of craft" },
-  { value: "2,400+", label: "Happy customers" },
-  { value: "100%", label: "Dutch made" },
+  { value: "6+", label: "jaar vakmanschap" },
+  { value: "FSC 100%", label: "gecertificeerd hout" },
+  { value: "Dutch", label: "made" },
 ]
 
 const Hero = () => {
@@ -30,28 +30,28 @@ const Hero = () => {
       <div className="relative max-w-[1280px] mx-auto px-4 sm:px-8 lg:px-12 flex items-center w-full">
         <div className="max-w-[620px]">
           <BrandTag variant="wood" className="bg-[rgba(196,132,58,0.2)] text-wj-wood">
-            Handcrafted in the Netherlands
+            Vakmanschap uit Nederland
           </BrandTag>
 
           <h1
             className="mt-4 font-display font-bold text-wj-white leading-[1.05] tracking-[-0.02em]
               text-[44px] sm:text-[56px] lg:text-[68px]"
           >
-            Built for the{" "}
+            Buiten leven begint met de juiste{" "}
             <span className="font-display font-normal italic text-wj-wood">
-              long haul.
+              kwaliteit.
             </span>
           </h1>
 
           <p className="mt-6 font-body text-[16px] sm:text-[18px] text-[rgba(254,252,249,0.75)] leading-[1.65] max-w-[480px]">
-            Premium picnic tables and outdoor furniture crafted from sustainably
-            sourced European timber. Built to weather every season.
+            Robuust buitenmeubilair van Douglas hout, met de hand gemaakt in
+            Nederland. Voor wie niet inlevert op kwaliteit.
           </p>
 
           <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row gap-4">
             <LocalizedClientLink href="/store">
               <BrandButton size="lg" className="w-full sm:w-auto">
-                Browse the collection
+                Bekijk producten
               </BrandButton>
             </LocalizedClientLink>
             <LocalizedClientLink href="/about">
@@ -60,7 +60,7 @@ const Hero = () => {
                 variant="outline"
                 className="w-full sm:w-auto !border-[rgba(254,252,249,0.5)] !text-wj-white hover:!bg-[rgba(254,252,249,0.1)]"
               >
-                Our story
+                Ons verhaal
               </BrandButton>
             </LocalizedClientLink>
           </div>

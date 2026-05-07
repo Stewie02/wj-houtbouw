@@ -1,3 +1,4 @@
+// Not used on the homepage for now
 import StarRating from "@modules/common/components/star-rating"
 
 const TESTIMONIALS = [

@@ -4,7 +4,6 @@ import UspBar from "@modules/home/components/usp-bar"
 import FeaturedProducts from "@modules/home/components/featured-products"
 import AboutStrip from "@modules/home/components/about-strip"
 import MaterialsSection from "@modules/home/components/materials-section"
-import Testimonials from "@modules/home/components/testimonials"
 import BlogPreview from "@modules/home/components/blog-preview"
 import CtaBanner from "@modules/home/components/cta-banner"
 
@@ -26,7 +25,6 @@ export default async function Home(props: {
       <FeaturedProducts countryCode={countryCode} />
       <AboutStrip />
       <MaterialsSection />
-      <Testimonials />
       <BlogPreview />
       <CtaBanner />
     </div>

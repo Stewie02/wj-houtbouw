@@ -35,7 +35,7 @@ export default async function FeaturedProducts({ countryCode }: FeaturedProducts
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10 sm:mb-12">
           <div>
             <div className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-wood mb-2.5">
-              Our collection
+              Onze collectie
             </div>
             <h2 className="font-display font-bold text-[36px] sm:text-[42px] text-wj-text tracking-[-0.02em]">
               Bestselling tables

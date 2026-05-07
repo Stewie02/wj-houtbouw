@@ -1,8 +1,8 @@
 const USPS = [
-  { title: "Sustainably sourced", sub: "FSC-certified European timber" },
-  { title: "Free delivery", sub: "On all orders over €500" },
-  { title: "10-year guarantee", sub: "Built to last, guaranteed" },
-  { title: "Dutch craftsmanship", sub: "Made in our own workshop" },
+  { title: "Duurzaam hout", sub: "FSC-gecertificeerd Europees hout" },
+  { title: "Op maat gemaakt", sub: "Elke order naar jouw wensen" },
+  { title: "5 jaar garantie", sub: "Gebouwd om te blijven" },
+  { title: "Nederlands vakmanschap", sub: "Gemaakt in eigen werkplaats" },
 ]
 
 const UspBar = () => {

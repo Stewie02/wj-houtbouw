@@ -3,23 +3,23 @@ import PlaceholderImage from "@modules/common/components/placeholder-image"
 const MATERIALS = [
   {
     num: "01",
-    name: "Douglas Fir",
-    desc: "Warm, strong, and naturally resinous. Used in our Classic Picnic Table and Garden Bench — our most popular timber for its durability and classic look.",
-    note: "From €349",
+    name: "Poedergecoat staal",
+    desc: "De frames van ons meubilair zijn voorzien van een tweelaagse poedercoating. Roestwerend en gebouwd voor alle weersomstandigheden. Strak in combinatie met het warme Douglas hout.",
+    note: "Op elk product",
     dark: false,
   },
   {
     num: "02",
-    name: "European Oak",
-    desc: "Dense grain and outstanding weather resistance. The timber we chose for our Round Garden Table — our premium option for those who want it all.",
-    note: "From €849",
+    name: "Douglas hout",
+    desc: "Douglas spar groeit van nature in de bossen van Noord-Amerika en West-Europa. Harsrijk, sterk en van nature weerbestendig zonder verduurzamingsmiddelen. Bij goed onderhoud gaat Douglas meubilair gemiddeld 20 jaar mee.",
+    note: "Onze basis",
     dark: true,
   },
   {
     num: "03",
-    name: "FSC Certified",
-    desc: "Both timbers are sourced exclusively from FSC-certified European forests managed for long-term sustainability. Same supplier since 2009.",
-    note: "Both products",
+    name: "Gemaakt in Drachten",
+    desc: "Elk stuk wordt met de hand gemaakt in onze werkplaats in Drachten. Van zaag tot schroef, wij maken het zelf. Geen tussenhandel, geen fabriekswerk.",
+    note: "Altijd persoonlijk",
     dark: false,
   },
 ]
@@ -31,10 +31,10 @@ const MaterialsSection = () => {
         {/* Header */}
         <div className="text-center mb-12 sm:mb-14">
           <div className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-muted mb-2.5">
-            What we build with
+            Waar we mee bouwen
           </div>
           <h2 className="font-display font-bold text-[30px] sm:text-[38px] text-wj-text tracking-[-0.02em]">
-            Three exceptional timbers
+            Vakmanschap begint bij het materiaal
           </h2>
         </div>
 
@@ -43,10 +43,15 @@ const MaterialsSection = () => {
           {MATERIALS.map((m) => (
             <div
               key={m.name}
-              className={`p-10 sm:p-12 ${m.dark ? "bg-wj-green" : "bg-wj-surface"}`}
+              className={`p-10 sm:p-12 ${
+                m.dark ? "bg-wj-green" : "bg-wj-surface"
+              }`}
             >
               <div className="mb-6 h-[120px] opacity-70">
-                <PlaceholderImage label={`${m.name} timber texture`} dark={m.dark} />
+                <PlaceholderImage
+                  label={`${m.name} timber texture`}
+                  dark={m.dark}
+                />
               </div>
               <div
                 className={`font-body font-semibold text-[11px] tracking-[0.08em] uppercase mb-2.5 ${
