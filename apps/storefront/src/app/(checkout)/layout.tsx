@@ -11,7 +11,7 @@ export default function CheckoutLayout({
       <div className="h-14 bg-wj-white border-b border-wj-border">
         <nav className="max-w-[1280px] mx-auto px-4 sm:px-8 lg:px-12 h-full flex items-center justify-between">
           <LocalizedClientLink
-            href="/cart"
+            href="/winkelwagen"
             className="font-body text-[13px] font-medium text-wj-muted hover:text-wj-text transition-colors flex items-center gap-1.5"
             data-testid="back-to-cart-link"
           >

@@ -13,16 +13,12 @@ export const metadata: Metadata = {
     "Premium picnic tables and outdoor furniture crafted from sustainably sourced European timber. Built to weather every season.",
 }
 
-export default async function Home(props: {
-  params: Promise<{ countryCode: string }>
-}) {
-  const { countryCode } = await props.params
-
+export default async function Home() {
   return (
     <div className="bg-wj-bg">
       <Hero />
       <UspBar />
-      <FeaturedProducts countryCode={countryCode} />
+      <FeaturedProducts />
       <AboutStrip />
       <MaterialsSection />
       <BlogPreview />

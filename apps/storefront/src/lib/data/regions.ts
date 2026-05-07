@@ -34,7 +34,9 @@ export const retrieveRegion = async (id: string) => {
 
 const regionMap = new Map<string, HttpTypes.StoreRegion>()
 
-export const getRegion = async (countryCode: string) => {
+export const getRegion = async () => {
+  const countryCode = process.env.NEXT_PUBLIC_DEFAULT_REGION || "nl"
+
   if (regionMap.has(countryCode)) {
     return regionMap.get(countryCode)
   }
@@ -51,9 +53,5 @@ export const getRegion = async (countryCode: string) => {
     })
   })
 
-  const region = countryCode
-    ? regionMap.get(countryCode)
-    : regionMap.get("us")
-
-  return region
+  return regionMap.get(countryCode) ?? null
 }

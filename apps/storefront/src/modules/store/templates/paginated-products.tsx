@@ -93,7 +93,7 @@ function ProductRow({ index, handle, title, description, material, tag, features
                 {priceFrom}
               </div>
             </div>
-            <LocalizedClientLink href={`/products/${handle}`}>
+            <LocalizedClientLink href={`/producten/${handle}`}>
               <BrandButton size="lg" className="w-full sm:w-auto">
                 Configure &amp; order
               </BrandButton>
@@ -112,16 +112,14 @@ export default async function PaginatedProducts({
   collectionId,
   categoryId,
   productsIds,
-  countryCode,
 }: {
   sortBy?: SortOptions
   page: number
   collectionId?: string
   categoryId?: string
   productsIds?: string[]
-  countryCode: string
 }) {
-  const region = await getRegion(countryCode)
+  const region = await getRegion()
   if (!region) return null
 
   const queryParams: PaginatedProductsParams = { limit: PRODUCT_LIMIT }
@@ -134,7 +132,6 @@ export default async function PaginatedProducts({
     page,
     queryParams: { ...queryParams, fields: "*variants.calculated_price" },
     sortBy,
-    countryCode,
   })
 
   const rows = products.map((product: HttpTypes.StoreProduct, i: number) => {
@@ -142,7 +139,7 @@ export default async function PaginatedProducts({
     const variantOptions = product.variants
       ?.flatMap((v) => v.options?.map((o) => o.value) ?? [])
       .filter(Boolean) as string[]
-    const uniqueSizes = [...new Set(variantOptions)].slice(0, 6)
+    const uniqueSizes = Array.from(new Set(variantOptions)).slice(0, 6)
 
     return {
       index: i,

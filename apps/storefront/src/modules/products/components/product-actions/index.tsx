@@ -7,7 +7,7 @@ import OptionSelect from "@modules/products/components/product-actions/option-se
 import ProductPrice from "../product-price"
 import MobileActions from "./mobile-actions"
 import { isEqual } from "lodash"
-import { useParams, usePathname, useSearchParams } from "next/navigation"
+import { usePathname, useSearchParams } from "next/navigation"
 import { useEffect, useMemo, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
 import BrandButton from "@modules/common/components/brand-button"
@@ -30,7 +30,6 @@ export default function ProductActions({ product, disabled }: ProductActionsProp
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
-  const countryCode = useParams().countryCode as string
 
   const [options, setOptions] = useState<Record<string, string | undefined>>({})
   const [isAdding, setIsAdding] = useState(false)
@@ -76,7 +75,7 @@ export default function ProductActions({ product, disabled }: ProductActionsProp
   const handleAddToCart = async () => {
     if (!selectedVariant?.id) return
     setIsAdding(true)
-    await addToCart({ variantId: selectedVariant.id, quantity: 1, countryCode })
+    await addToCart({ variantId: selectedVariant.id, quantity: 1 })
     setIsAdding(false)
   }
 

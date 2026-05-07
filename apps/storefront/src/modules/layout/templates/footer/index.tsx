@@ -4,11 +4,11 @@ const FOOTER_COLS = [
   {
     title: "Shop",
     links: [
-      { label: "Picnic Tables", href: "/store" },
-      { label: "Garden Benches", href: "/store" },
-      { label: "Children's Furniture", href: "/store" },
-      { label: "Accessories", href: "/store" },
-      { label: "New arrivals", href: "/store" },
+      { label: "Picnic Tables", href: "/winkel" },
+      { label: "Garden Benches", href: "/winkel" },
+      { label: "Children's Furniture", href: "/winkel" },
+      { label: "Accessories", href: "/winkel" },
+      { label: "New arrivals", href: "/winkel" },
     ],
   },
   {

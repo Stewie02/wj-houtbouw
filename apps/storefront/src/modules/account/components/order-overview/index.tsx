@@ -24,7 +24,7 @@ const OrderOverview = ({ orders }: { orders: HttpTypes.StoreOrder[] }) => {
       <p className="font-body text-[14px] text-wj-muted max-w-xs">
         You haven&apos;t placed any orders. Browse our collection to find something you&apos;ll love.
       </p>
-      <LocalizedClientLink href="/store">
+      <LocalizedClientLink href="/winkel">
         <BrandButton data-testid="continue-shopping-button">Start shopping</BrandButton>
       </LocalizedClientLink>
     </div>

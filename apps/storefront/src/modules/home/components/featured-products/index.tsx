@@ -4,16 +4,11 @@ import LocalizedClientLink from "@modules/common/components/localized-client-lin
 import BrandButton from "@modules/common/components/brand-button"
 import ProductCard from "@modules/common/components/product-card"
 
-type FeaturedProductsProps = {
-  countryCode: string
-}
-
-export default async function FeaturedProducts({ countryCode }: FeaturedProductsProps) {
+export default async function FeaturedProducts() {
   const { response } = await listProductsWithSort({
     page: 1,
     queryParams: { limit: 3, fields: "*variants.calculated_price" },
     sortBy: "created_at",
-    countryCode,
   }).catch(() => ({ response: { products: [], count: 0 } }))
 
   const cards = response.products.map((product) => {
@@ -23,7 +18,7 @@ export default async function FeaturedProducts({ countryCode }: FeaturedProducts
       price: cheapestPrice?.calculated_price ?? "—",
       material: (product.metadata?.material as string) ?? undefined,
       tag: (product.metadata?.tag as string) ?? undefined,
-      href: `/products/${product.handle}`,
+      href: `/producten/${product.handle}`,
     }
   })
 
@@ -41,7 +36,7 @@ export default async function FeaturedProducts({ countryCode }: FeaturedProducts
               Onze collectie
             </h2>
           </div>
-          <LocalizedClientLink href="/store">
+          <LocalizedClientLink href="/winkel">
             <BrandButton variant="outline" className="shrink-0">
               Producten bekijken
             </BrandButton>

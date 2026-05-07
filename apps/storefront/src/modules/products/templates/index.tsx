@@ -11,14 +11,12 @@ import Breadcrumb from "@modules/common/components/breadcrumb"
 type ProductTemplateProps = {
   product: HttpTypes.StoreProduct
   region: HttpTypes.StoreRegion
-  countryCode: string
   images: HttpTypes.StoreProductImage[]
 }
 
 const ProductTemplate: React.FC<ProductTemplateProps> = ({
   product,
   region,
-  countryCode,
   images,
 }) => {
   if (!product?.id) return notFound()
@@ -30,7 +28,7 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
         <Breadcrumb
           items={[
             { label: "Home", href: "/" },
-            { label: "Shop", href: "/store" },
+            { label: "Shop", href: "/winkel" },
             { label: product.title },
           ]}
         />

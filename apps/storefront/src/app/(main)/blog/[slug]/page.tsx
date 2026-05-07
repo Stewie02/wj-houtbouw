@@ -6,7 +6,7 @@ import BrandTag from "@modules/common/components/brand-tag"
 import { getBlogPost } from "@lib/data/blog"
 
 type Props = {
-  params: Promise<{ slug: string; countryCode: string }>
+  params: Promise<{ slug: string }>
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

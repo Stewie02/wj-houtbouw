@@ -56,7 +56,7 @@ const OrderSummary = ({ order }: OrderSummaryProps) => {
       </div>
 
       <LocalizedClientLink
-        href="/store"
+        href="/winkel"
         className="inline-flex items-center justify-center w-full font-body font-medium tracking-[0.04em] text-[14px] px-7 py-[13px] bg-wj-green text-wj-white border border-transparent transition-all duration-[180ms] hover:opacity-90 mt-2"
       >
         Continue shopping

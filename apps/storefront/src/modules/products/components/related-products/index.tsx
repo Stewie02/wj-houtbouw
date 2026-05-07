@@ -8,11 +8,10 @@ import PlaceholderImage from "@modules/common/components/placeholder-image"
 
 type RelatedProductsProps = {
   product: HttpTypes.StoreProduct
-  countryCode: string
 }
 
-export default async function RelatedProducts({ product, countryCode }: RelatedProductsProps) {
-  const region = await getRegion(countryCode)
+export default async function RelatedProducts({ product }: RelatedProductsProps) {
+  const region = await getRegion()
   if (!region) return null
 
   const queryParams: HttpTypes.StoreProductListParams = {
@@ -22,7 +21,7 @@ export default async function RelatedProducts({ product, countryCode }: RelatedP
   if (product.collection_id) queryParams.collection_id = [product.collection_id]
   if (product.tags) queryParams.tag_id = product.tags.map((t) => t.id).filter(Boolean) as string[]
 
-  const related = await listProducts({ queryParams, countryCode })
+  const related = await listProducts({ queryParams })
     .then(({ response }) => response.products.filter((p) => p.id !== product.id).slice(0, 2))
     .catch(() => [])
 
@@ -35,7 +34,7 @@ export default async function RelatedProducts({ product, countryCode }: RelatedP
           <h2 className="font-display font-bold text-[28px] sm:text-[34px] text-wj-text tracking-[-0.02em]">
             Complete your setup
           </h2>
-          <LocalizedClientLink href="/store">
+          <LocalizedClientLink href="/winkel">
             <BrandButton variant="outline" className="shrink-0">View all products</BrandButton>
           </LocalizedClientLink>
         </div>
@@ -45,7 +44,7 @@ export default async function RelatedProducts({ product, countryCode }: RelatedP
             const { cheapestPrice } = getProductPrice({ product: p })
             const material = (p.metadata?.material as string) ?? p.material ?? null
             return (
-              <LocalizedClientLink key={p.id} href={`/products/${p.handle}`}>
+              <LocalizedClientLink key={p.id} href={`/producten/${p.handle}`}>
                 <div className="bg-wj-white border border-wj-border grid grid-cols-[200px_1fr] overflow-hidden hover:shadow-md transition-shadow">
                   <div className="relative h-full min-h-[160px]">
                     <PlaceholderImage label={p.title} />

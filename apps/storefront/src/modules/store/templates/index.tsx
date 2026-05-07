@@ -16,11 +16,9 @@ const GUARANTEES = [
 const StoreTemplate = ({
   sortBy,
   page,
-  countryCode,
 }: {
   sortBy?: SortOptions
   page?: string
-  countryCode: string
 }) => {
   const pageNumber = page ? parseInt(page) : 1
 
@@ -49,7 +47,6 @@ const StoreTemplate = ({
           <PaginatedProducts
             sortBy={sortBy}
             page={pageNumber}
-            countryCode={countryCode}
           />
         </Suspense>
 

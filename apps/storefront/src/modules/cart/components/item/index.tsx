@@ -54,11 +54,11 @@ const Item = ({ item, type = "full", currencyCode }: ItemProps) => {
     <div className="py-6 grid grid-cols-1 sm:grid-cols-[1fr_120px_80px_100px] gap-4 items-center" data-testid="product-row">
       {/* Product info */}
       <div className="flex gap-4 items-center">
-        <LocalizedClientLink href={`/products/${item.product_handle}`} className="w-20 h-20 shrink-0 border border-wj-border overflow-hidden">
+        <LocalizedClientLink href={`/producten/${item.product_handle}`} className="w-20 h-20 shrink-0 border border-wj-border overflow-hidden">
           <PlaceholderImage label={item.product_title ?? ""} />
         </LocalizedClientLink>
         <div className="flex-1 min-w-0">
-          <LocalizedClientLink href={`/products/${item.product_handle}`}>
+          <LocalizedClientLink href={`/producten/${item.product_handle}`}>
             <p className="font-body font-semibold text-[15px] text-wj-text hover:text-wj-green transition-colors" data-testid="product-title">
               {item.product_title}
             </p>

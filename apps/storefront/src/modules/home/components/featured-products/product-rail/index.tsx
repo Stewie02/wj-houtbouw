@@ -15,7 +15,6 @@ export default async function ProductRail({
   const {
     response: { products: pricedProducts },
   } = await listProducts({
-    regionId: region.id,
     queryParams: {
       collection_id: collection.id,
       fields: "*variants.calculated_price",
@@ -30,7 +29,7 @@ export default async function ProductRail({
     <div className="content-container py-12 small:py-24">
       <div className="flex justify-between mb-8">
         <Text className="txt-xlarge">{collection.title}</Text>
-        <InteractiveLink href={`/collections/${collection.handle}`}>
+        <InteractiveLink href={`/collecties/${collection.handle}`}>
           View all
         </InteractiveLink>
       </div>

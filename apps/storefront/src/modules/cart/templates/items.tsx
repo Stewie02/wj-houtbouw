@@ -31,7 +31,7 @@ const ItemsTemplate = ({ cart }: ItemsTemplateProps) => {
       {/* Continue shopping */}
       <div className="pt-2">
         <LocalizedClientLink
-          href="/store"
+          href="/winkel"
           className="font-body text-[13px] font-medium text-wj-green hover:underline inline-flex items-center gap-1.5"
         >
           ← Continue shopping

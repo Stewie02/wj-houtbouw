@@ -60,7 +60,7 @@ const Overview = ({ customer, orders }: OverviewProps) => {
             Recent orders
           </h2>
           <LocalizedClientLink
-            href="/account/orders"
+            href="/account/bestellingen"
             className="font-body text-[13px] font-medium text-wj-green hover:underline"
           >
             View all
@@ -108,7 +108,7 @@ const Overview = ({ customer, orders }: OverviewProps) => {
               You haven&apos;t placed any orders yet.
             </p>
             <LocalizedClientLink
-              href="/store"
+              href="/winkel"
               className="font-body text-[13px] font-medium text-wj-green hover:underline mt-3 inline-block"
             >
               Start shopping →

@@ -13,6 +13,24 @@ const S3_PATHNAME = process.env.MEDUSA_CLOUD_S3_PATHNAME
  */
 const nextConfig = {
   output: "standalone",
+  async rewrites() {
+    return [
+      { source: "/winkel", destination: "/store" },
+      { source: "/producten/:handle", destination: "/products/:handle" },
+      { source: "/winkelwagen", destination: "/cart" },
+      { source: "/afrekenen", destination: "/checkout" },
+      { source: "/collecties/:handle", destination: "/collections/:handle" },
+      { source: "/categorieen/:path*", destination: "/categories/:path*" },
+      { source: "/bestelling/:id/bevestigd", destination: "/order/:id/confirmed" },
+      { source: "/bestelling/:id/overdracht/:token/accepteren", destination: "/order/:id/transfer/:token/accept" },
+      { source: "/bestelling/:id/overdracht/:token/weigeren", destination: "/order/:id/transfer/:token/decline" },
+      { source: "/bestelling/:id/overdracht/:token", destination: "/order/:id/transfer/:token" },
+      { source: "/account/profiel", destination: "/account/profile" },
+      { source: "/account/adressen", destination: "/account/addresses" },
+      { source: "/account/bestellingen/details/:id", destination: "/account/orders/details/:id" },
+      { source: "/account/bestellingen", destination: "/account/orders" },
+    ]
+  },
   reactStrictMode: true,
   logging: {
     fetches: {

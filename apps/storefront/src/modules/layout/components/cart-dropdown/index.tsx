@@ -83,7 +83,7 @@ const CartDropdown = ({
         <PopoverButton className="h-full">
           <LocalizedClientLink
             className="hover:text-ui-fg-base"
-            href="/cart"
+            href="/winkelwagen"
             data-testid="nav-cart-link"
           >{`Cart (${totalItems})`}</LocalizedClientLink>
         </PopoverButton>
@@ -121,7 +121,7 @@ const CartDropdown = ({
                         data-testid="cart-item"
                       >
                         <LocalizedClientLink
-                          href={`/products/${item.product_handle}`}
+                          href={`/producten/${item.product_handle}`}
                           className="w-24"
                         >
                           <Thumbnail
@@ -136,7 +136,7 @@ const CartDropdown = ({
                               <div className="flex flex-col overflow-ellipsis whitespace-nowrap mr-4 w-[180px]">
                                 <h3 className="text-base-regular overflow-hidden text-ellipsis">
                                   <LocalizedClientLink
-                                    href={`/products/${item.product_handle}`}
+                                    href={`/producten/${item.product_handle}`}
                                     data-testid="product-link"
                                   >
                                     {item.title}
@@ -191,7 +191,7 @@ const CartDropdown = ({
                       })}
                     </span>
                   </div>
-                  <LocalizedClientLink href="/cart" passHref>
+                  <LocalizedClientLink href="/winkelwagen" passHref>
                     <Button
                       className="w-full"
                       size="large"
@@ -210,7 +210,7 @@ const CartDropdown = ({
                   </div>
                   <span>Your shopping bag is empty.</span>
                   <div>
-                    <LocalizedClientLink href="/store">
+                    <LocalizedClientLink href="/winkel">
                       <>
                         <span className="sr-only">Go to all products page</span>
                         <Button onClick={close}>Explore products</Button>

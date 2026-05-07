@@ -11,7 +11,7 @@ const CtaBanner = () => {
         Stel je tafel online samen of neem contact op voor een offerte op maat.
       </p>
       <div className="flex flex-col sm:flex-row gap-4 justify-center">
-        <LocalizedClientLink href="/store">
+        <LocalizedClientLink href="/winkel">
           <BrandButton size="lg" variant="dark" className="w-full sm:w-auto">
             Bekijk de winkel
           </BrandButton>

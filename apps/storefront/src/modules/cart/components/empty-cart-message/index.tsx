@@ -17,7 +17,7 @@ const EmptyCartMessage = () => {
       <p className="font-body text-[15px] text-wj-muted max-w-[340px] mb-8 leading-[1.7]">
         Looks like you haven&apos;t added anything yet. Browse our collection of handcrafted wooden outdoor furniture.
       </p>
-      <LocalizedClientLink href="/store">
+      <LocalizedClientLink href="/winkel">
         <BrandButton size="lg">Explore products</BrandButton>
       </LocalizedClientLink>
     </div>

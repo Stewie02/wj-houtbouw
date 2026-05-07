@@ -49,7 +49,7 @@ const Hero = () => {
           </p>
 
           <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row gap-4">
-            <LocalizedClientLink href="/store">
+            <LocalizedClientLink href="/winkel">
               <BrandButton size="lg" className="w-full sm:w-auto">
                 Bekijk producten
               </BrandButton>

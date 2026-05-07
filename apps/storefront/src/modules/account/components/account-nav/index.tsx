@@ -1,7 +1,7 @@
 "use client"
 
 import { ArrowRightOnRectangle } from "@medusajs/icons"
-import { useParams, usePathname } from "next/navigation"
+import { usePathname } from "next/navigation"
 import { signout } from "@lib/data/customer"
 import { HttpTypes } from "@medusajs/types"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
@@ -15,17 +15,16 @@ const NAV_ITEMS = [
 
 const AccountNav = ({ customer }: { customer: HttpTypes.StoreCustomer | null }) => {
   const route = usePathname()
-  const { countryCode } = useParams() as { countryCode: string }
 
   const handleLogout = async () => {
-    await signout(countryCode)
+    await signout()
   }
 
   return (
     <>
       {/* Mobile: back link when inside a sub-page */}
       <div className="lg:hidden mb-6" data-testid="mobile-account-nav">
-        {route !== `/${countryCode}/account` && (
+        {route !== "/account" && (
           <LocalizedClientLink
             href="/account"
             className="font-body text-[13px] font-medium text-wj-green hover:underline flex items-center gap-1.5"
@@ -42,7 +41,7 @@ const AccountNav = ({ customer }: { customer: HttpTypes.StoreCustomer | null }) 
           My account
         </p>
         {NAV_ITEMS.map(({ href, label, testId }) => (
-          <AccountNavLink key={href} href={href} route={route} countryCode={countryCode} data-testid={testId}>
+          <AccountNavLink key={href} href={href} route={route} data-testid={testId}>
             {label}
           </AccountNavLink>
         ))}
@@ -59,7 +58,7 @@ const AccountNav = ({ customer }: { customer: HttpTypes.StoreCustomer | null }) 
 
       {/* Mobile: menu shown only on the account root */}
       <div className="lg:hidden" data-testid="mobile-account-menu">
-        {route === `/${countryCode}/account` && (
+        {route === "/account" && (
           <div className="flex flex-col divide-y divide-wj-border border-y border-wj-border">
             {NAV_ITEMS.slice(1).map(({ href, label, testId }) => (
               <LocalizedClientLink
@@ -91,13 +90,12 @@ const AccountNav = ({ customer }: { customer: HttpTypes.StoreCustomer | null }) 
 type AccountNavLinkProps = {
   href: string
   route: string
-  countryCode: string
   children: React.ReactNode
   "data-testid"?: string
 }
 
-const AccountNavLink = ({ href, route, countryCode, children, "data-testid": testId }: AccountNavLinkProps) => {
-  const active = route.split(countryCode)[1] === href
+const AccountNavLink = ({ href, route, children, "data-testid": testId }: AccountNavLinkProps) => {
+  const active = route === href
   return (
     <LocalizedClientLink
       href={href}

@@ -6,7 +6,7 @@ import LocalizedClientLink from "@modules/common/components/localized-client-lin
 import BrandButton from "@modules/common/components/brand-button"
 
 const NAV_LINKS = [
-  { href: "/store", label: "Shop" },
+  { href: "/winkel", label: "Shop" },
   { href: "/about", label: "About" },
   { href: "/blog", label: "Journal" },
   { href: "/contact", label: "Contact" },
@@ -76,7 +76,7 @@ const NavClient = ({ cartCount }: NavClientProps) => {
             Account
           </LocalizedClientLink>
           <CartIcon count={cartCount} />
-          <LocalizedClientLink href="/store">
+          <LocalizedClientLink href="/winkel">
             <BrandButton size="sm">Shop now</BrandButton>
           </LocalizedClientLink>
         </div>
@@ -137,7 +137,7 @@ const NavClient = ({ cartCount }: NavClientProps) => {
 
 const CartIcon = ({ count }: { count: number }) => (
   <LocalizedClientLink
-    href="/cart"
+    href="/winkelwagen"
     className="relative text-wj-text hover:text-wj-green transition-colors"
     data-testid="nav-cart-link"
   >
