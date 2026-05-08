@@ -49,7 +49,8 @@ dokku config:set medusa-backend \
   STORE_CORS=https://<storefront-domain> \
   ADMIN_CORS=https://<backend-domain> \
   AUTH_CORS=https://<backend-domain>,https://<storefront-domain> \
-  MEDUSA_BACKEND_URL=https://<backend-domain>
+  MEDUSA_BACKEND_URL=https://<backend-domain> \
+  STOREFRONT_URL=https://<storefront-domain>
 ```
 
 ## 6. Configure domains and SSL
