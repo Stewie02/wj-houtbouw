@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { revalidatePath } from "next/cache"
+import { revalidateTag } from "next/cache"
 
 export async function GET(req: NextRequest) {
   const tags = req.nextUrl.searchParams.get("tags")
@@ -8,17 +8,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "No tags provided" }, { status: 400 })
   }
 
-  await Promise.all(
-    tags.split(",").map(async (tag) => {
-      switch (tag.trim()) {
-        case "products":
-          revalidatePath("/", "page")
-          revalidatePath("/store", "page")
-          revalidatePath("/products/[handle]", "page")
-          break
-      }
-    })
-  )
+  tags.split(",").map((tag) => revalidateTag(tag.trim()))
 
   return NextResponse.json({ message: "Revalidated" }, { status: 200 })
 }
