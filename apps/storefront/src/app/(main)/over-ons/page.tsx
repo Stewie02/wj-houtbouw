@@ -170,18 +170,16 @@ export default function OverOnsPage() {
       </div>
 
       {/* CTA */}
-      <div className="bg-wj-dark">
-        <div className="max-w-[1280px] mx-auto px-4 sm:px-8 lg:px-12 py-16 sm:py-20 text-center">
-          <h2 className="font-display font-bold text-[28px] sm:text-[34px] text-wj-white tracking-[-0.02em] mb-4">
-            Benieuwd naar ons werk?
-          </h2>
-          <p className="font-body text-[15px] text-[#9A8F85] leading-[1.7] max-w-[400px] mx-auto mb-8">
-            Bekijk onze collectie robuust buitenmeubilair, handgemaakt in Drachten.
-          </p>
-          <LocalizedClientLink href="/winkel">
-            <BrandButton variant="solid" size="lg">Bekijk de collectie</BrandButton>
-          </LocalizedClientLink>
-        </div>
+      <div className="bg-wj-wood py-16 sm:py-20 px-4 sm:px-8 text-center">
+        <h2 className="font-display font-bold text-[36px] sm:text-[46px] text-wj-white tracking-[-0.02em] mb-4">
+          Benieuwd naar ons werk?
+        </h2>
+        <p className="font-body text-[15px] sm:text-[17px] text-[rgba(254,252,249,0.78)] mb-8 sm:mb-9">
+          Bekijk onze collectie robuust buitenmeubilair, handgemaakt in Drachten.
+        </p>
+        <LocalizedClientLink href="/winkel">
+          <BrandButton variant="dark" size="lg">Bekijk de collectie</BrandButton>
+        </LocalizedClientLink>
       </div>
     </div>
   )
