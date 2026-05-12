@@ -2,40 +2,25 @@ import LocalizedClientLink from "@modules/common/components/localized-client-lin
 
 const FOOTER_COLS = [
   {
-    title: "Shop",
+    title: "Bedrijf",
     links: [
-      { label: "Picnic Tables", href: "/winkel" },
-      { label: "Garden Benches", href: "/winkel" },
-      { label: "Children's Furniture", href: "/winkel" },
-      { label: "Accessories", href: "/winkel" },
-      { label: "New arrivals", href: "/winkel" },
+      { label: "Over ons", href: "/over-ons" },
+      { label: "Blog", href: "/blog" },
     ],
   },
   {
-    title: "Company",
+    title: "Klantenservice",
     links: [
-      { label: "About us", href: "/over-ons" },
-      { label: "Sustainability", href: "/over-ons" },
-      { label: "Craftsmanship", href: "/over-ons" },
-      { label: "Press", href: "/over-ons" },
+      { label: "Veelgestelde vragen", href: "/veelgestelde-vragen" },
+      { label: "Contact", href: "/contact" },
     ],
   },
   {
-    title: "Support",
+    title: "Juridisch",
     links: [
-      { label: "FAQ", href: "/veelgestelde-vragen" },
-      { label: "Shipping & delivery", href: "/contact" },
-      { label: "Returns", href: "/contact" },
-      { label: "Care guide", href: "/contact" },
-      { label: "Contact us", href: "/contact" },
-    ],
-  },
-  {
-    title: "Legal",
-    links: [
-      { label: "Privacy Policy", href: "/legal" },
-      { label: "Terms & Conditions", href: "/legal" },
-      { label: "Cookie Policy", href: "/legal" },
+      { label: "Privacybeleid", href: "/legal" },
+      { label: "Algemene voorwaarden", href: "/legal" },
+      { label: "Cookiebeleid", href: "/legal" },
     ],
   },
 ]
@@ -51,7 +36,7 @@ export default function Footer() {
       <div className="max-w-[1280px] mx-auto px-4 sm:px-8 lg:px-12 pt-16 pb-12 lg:pt-[72px] lg:pb-12">
 
         {/* Main grid */}
-        <div className="grid grid-cols-2 gap-10 sm:grid-cols-3 lg:grid-cols-[2fr_1fr_1fr_1fr_1fr] lg:gap-12 mb-16">
+        <div className="grid grid-cols-2 gap-10 sm:grid-cols-3 lg:grid-cols-[2fr_1fr_1fr_1fr] lg:gap-12 mb-16">
 
           {/* Brand column */}
           <div className="col-span-2 sm:col-span-3 lg:col-span-1">
@@ -69,11 +54,11 @@ export default function Footer() {
               </div>
             </LocalizedClientLink>
             <p className="font-body text-[14px] text-[#9A8F85] leading-[1.7] max-w-[240px]">
-              Handcrafted outdoor furniture built to last generations. Made in the Netherlands from sustainably sourced timber.
+              Handgemaakt buitenmeubilair om generaties mee te gaan. Gemaakt in Nederland van duurzaam hout.
             </p>
             <div className="mt-7">
               <div className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-[#6B6058] mb-2.5">
-                Follow us
+                Volg ons
               </div>
               <div className="flex flex-wrap gap-3">
                 {SOCIALS.map((s) => (
@@ -116,10 +101,10 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="border-t border-[#2A2520] pt-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
           <span className="font-body text-[13px] text-[#6B6058]">
-            © {new Date().getFullYear()} WJ Houtbouw B.V. All rights reserved.
+            © {new Date().getFullYear()} WJ Houtbouw B.V. Alle rechten voorbehouden.
           </span>
           <span className="font-body text-[13px] text-[#6B6058]">
-            KVK 12345678 · Handmade in the Netherlands 🇳🇱
+            KVK 12345678 · Handgemaakt in Nederland 🇳🇱
           </span>
         </div>
       </div>
