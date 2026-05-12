@@ -14,10 +14,10 @@ const FOOTER_COLS = [
   {
     title: "Company",
     links: [
-      { label: "About us", href: "/about" },
-      { label: "Sustainability", href: "/about" },
-      { label: "Craftsmanship", href: "/about" },
-      { label: "Press", href: "/about" },
+      { label: "About us", href: "/over-ons" },
+      { label: "Sustainability", href: "/over-ons" },
+      { label: "Craftsmanship", href: "/over-ons" },
+      { label: "Press", href: "/over-ons" },
     ],
   },
   {
@@ -40,7 +40,10 @@ const FOOTER_COLS = [
   },
 ]
 
-const SOCIALS = ["Instagram", "Pinterest", "Facebook"]
+const SOCIALS = [
+  { label: "Instagram", href: "https://www.instagram.com/wj_houtbouw/" },
+  { label: "Facebook", href: "https://www.facebook.com/people/WJ-Houtbouw/61585357975256/" },
+]
 
 export default function Footer() {
   return (
@@ -74,12 +77,15 @@ export default function Footer() {
               </div>
               <div className="flex flex-wrap gap-3">
                 {SOCIALS.map((s) => (
-                  <div
-                    key={s}
-                    className="font-body font-semibold text-[10px] tracking-[0.08em] uppercase text-[#9A8F85] border border-[#3A3530] px-[10px] py-1.5 cursor-pointer hover:text-wj-white transition-colors"
+                  <a
+                    key={s.label}
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-body font-semibold text-[10px] tracking-[0.08em] uppercase text-[#9A8F85] border border-[#3A3530] px-[10px] py-1.5 hover:text-wj-white transition-colors"
                   >
-                    {s}
-                  </div>
+                    {s.label}
+                  </a>
                 ))}
               </div>
             </div>

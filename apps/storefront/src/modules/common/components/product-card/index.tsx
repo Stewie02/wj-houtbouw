@@ -13,7 +13,13 @@ type ProductCardProps = {
   href: string
 }
 
-const ProductCard = ({ name, price, material, tag, href }: ProductCardProps) => {
+const ProductCard = ({
+  name,
+  price,
+  material,
+  tag,
+  href,
+}: ProductCardProps) => {
   const [hovered, setHovered] = useState(false)
 
   return (
@@ -58,7 +64,7 @@ const ProductCard = ({ name, price, material, tag, href }: ProductCardProps) => 
               className="font-body font-medium text-[12px] text-wj-muted transition-opacity duration-[180ms]"
               style={{ opacity: hovered ? 1 : 0 }}
             >
-              View product →
+              Product bekijken →
             </div>
           </div>
         </div>

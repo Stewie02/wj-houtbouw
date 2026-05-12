@@ -24,7 +24,7 @@ const AboutStrip = () => {
               kwaliteit, altijd persoonlijk contact.
             </p>
             <div className="mt-8">
-              <LocalizedClientLink href="/about">
+              <LocalizedClientLink href="/over-ons">
                 <BrandButton variant="outline">Ons verhaal</BrandButton>
               </LocalizedClientLink>
             </div>

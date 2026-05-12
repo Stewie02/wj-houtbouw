@@ -1,4 +1,11 @@
 import { CreditCard } from "@medusajs/icons"
+
+export const USPS = [
+  { title: "Duurzaam hout", description: "FSC-gecertificeerd Europees hout" },
+  { title: "Op maat gemaakt", description: "Elke order naar jouw wensen" },
+  { title: "5 jaar garantie", description: "Gebouwd om te blijven" },
+  { title: "Nederlands vakmanschap", description: "Gemaakt in eigen werkplaats" },
+]
 import Bancontact from "@modules/common/icons/bancontact"
 import Ideal from "@modules/common/icons/ideal"
 import PayPal from "@modules/common/icons/paypal"
