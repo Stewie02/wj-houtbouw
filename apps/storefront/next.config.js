@@ -16,6 +16,8 @@ const nextConfig = {
   async rewrites() {
     return [
       { source: "/winkel", destination: "/store" },
+      { source: "/over-ons", destination: "/about" },
+      { source: "/veelgestelde-vragen", destination: "/faq" },
       { source: "/producten/:handle", destination: "/products/:handle" },
       { source: "/winkelwagen", destination: "/cart" },
       { source: "/afrekenen", destination: "/checkout" },

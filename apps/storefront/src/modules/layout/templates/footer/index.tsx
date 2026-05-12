@@ -23,7 +23,7 @@ const FOOTER_COLS = [
   {
     title: "Support",
     links: [
-      { label: "FAQ", href: "/contact" },
+      { label: "FAQ", href: "/veelgestelde-vragen" },
       { label: "Shipping & delivery", href: "/contact" },
       { label: "Returns", href: "/contact" },
       { label: "Care guide", href: "/contact" },
