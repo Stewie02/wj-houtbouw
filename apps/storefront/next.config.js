@@ -18,6 +18,7 @@ const nextConfig = {
       { source: "/winkel", destination: "/store" },
       { source: "/over-ons", destination: "/about" },
       { source: "/veelgestelde-vragen", destination: "/faq" },
+      { source: "/cookiebeleid", destination: "/cookie-policy" },
       { source: "/producten/:handle", destination: "/products/:handle" },
       { source: "/winkelwagen", destination: "/cart" },
       { source: "/afrekenen", destination: "/checkout" },

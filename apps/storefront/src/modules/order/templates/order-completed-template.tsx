@@ -1,8 +1,6 @@
-import { cookies as nextCookies } from "next/headers"
 import { HttpTypes } from "@medusajs/types"
 
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
-import OnboardingCta from "@modules/order/components/onboarding-cta"
 import Items from "@modules/order/components/items"
 import OrderSummary from "@modules/order/components/order-summary"
 import ShippingDetails from "@modules/order/components/shipping-details"
@@ -16,9 +14,6 @@ type OrderCompletedTemplateProps = {
 export default async function OrderCompletedTemplate({
   order,
 }: OrderCompletedTemplateProps) {
-  const cookies = await nextCookies()
-  const isOnboarding = cookies.get("_medusa_onboarding")?.value === "true"
-
   return (
     <div className="bg-wj-bg min-h-screen">
       <div className="bg-wj-dark">
@@ -44,7 +39,6 @@ export default async function OrderCompletedTemplate({
         className="max-w-[1280px] mx-auto px-4 sm:px-8 lg:px-12 py-10 sm:py-14"
         data-testid="order-complete-container"
       >
-        {isOnboarding && <OnboardingCta orderId={order.id} />}
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-10 lg:gap-14 items-start">
           <div className="flex flex-col gap-6">
             <Items order={order} />
