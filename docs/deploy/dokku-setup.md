@@ -50,7 +50,27 @@ dokku config:set medusa-backend \
   ADMIN_CORS=https://<backend-domain> \
   AUTH_CORS=https://<backend-domain>,https://<storefront-domain> \
   MEDUSA_BACKEND_URL=https://<backend-domain> \
-  STOREFRONT_URL=https://<storefront-domain>
+  STOREFRONT_URL=https://<storefront-domain> \
+  STRIPE_API_KEY=sk_live_<secret-key> \
+  STRIPE_WEBHOOK_SECRET=whsec_<signing-secret>
+```
+
+> **Stripe keys:** find them in the [Stripe Dashboard](https://dashboard.stripe.com) → Developers → API keys.
+> The webhook secret is generated in step 5a below.
+
+## 5a. Register the Stripe webhook
+
+In the [Stripe Dashboard](https://dashboard.stripe.com) → Developers → Webhooks → **Add endpoint**:
+
+| Field | Value |
+|---|---|
+| Endpoint URL | `https://<backend-domain>/hooks/payment/stripe_stripe` |
+| Events | `payment_intent.amount_capturable_updated`, `payment_intent.succeeded`, `payment_intent.payment_failed` |
+
+Copy the **Signing secret** (`whsec_...`) and set it:
+
+```bash
+dokku config:set medusa-backend STRIPE_WEBHOOK_SECRET=whsec_<signing-secret>
 ```
 
 ## 6. Configure domains and SSL
@@ -99,7 +119,8 @@ dokku docker-options:add medusa-storefront build \
   "--build-arg NEXT_PUBLIC_MEDUSA_BACKEND_URL=https://<backend-domain>" \
   "--build-arg NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY=<publishable-api-key>" \
   "--build-arg NEXT_PUBLIC_DEFAULT_REGION=nl" \
-  "--build-arg NEXT_PUBLIC_BASE_URL=https://<storefront-domain>"
+  "--build-arg NEXT_PUBLIC_BASE_URL=https://<storefront-domain>" \
+  "--build-arg NEXT_PUBLIC_STRIPE_KEY=pk_live_<publishable-key>"
 ```
 
 Then deploy the storefront from your local machine:

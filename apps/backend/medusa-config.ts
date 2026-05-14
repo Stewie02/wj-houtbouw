@@ -21,6 +21,23 @@ module.exports = defineConfig({
     disable: process.env.DISABLE_MEDUSA_ADMIN === "true" || process.env.MEDUSA_WORKER_MODE === "worker",
   },
   modules: [
+    {
+      resolve: "@medusajs/medusa/payment",
+      options: {
+        providers: [
+          {
+            resolve: "@medusajs/medusa/payment-stripe",
+            id: "stripe",
+            options: {
+              apiKey: process.env.STRIPE_API_KEY,
+              webhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
+              capture: true,
+              automatic_payment_methods: true,
+            },
+          },
+        ],
+      },
+    },
     ...(isProduction ? [
       {
         resolve: "@medusajs/medusa/event-bus-redis",
@@ -67,19 +84,5 @@ module.exports = defineConfig({
         },
       },
     ] : []),
-    // {
-    //   resolve: "@medusajs/medusa/payment",
-    //   options: {
-    //     providers: [
-    //       {
-    //         resolve: "@medusajs/medusa/payment-stripe",
-    //         id: "stripe",
-    //         options: {
-    //           apiKey: process.env.STRIPE_API_KEY,
-    //         },
-    //       },
-    //     ],
-    //   },
-    // },
   ],
 })

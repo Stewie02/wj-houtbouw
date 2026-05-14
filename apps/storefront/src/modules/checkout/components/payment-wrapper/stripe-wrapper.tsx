@@ -3,7 +3,7 @@
 import { Stripe, StripeElementsOptions } from "@stripe/stripe-js"
 import { Elements } from "@stripe/react-stripe-js"
 import { HttpTypes } from "@medusajs/types"
-import { createContext } from "react"
+import { createContext, useMemo } from "react"
 
 type StripeWrapperProps = {
   paymentSession: HttpTypes.StorePaymentSession
@@ -20,9 +20,20 @@ const StripeWrapper: React.FC<StripeWrapperProps> = ({
   stripePromise,
   children,
 }) => {
-  const options: StripeElementsOptions = {
+  const options: StripeElementsOptions = useMemo(() => ({
     clientSecret: paymentSession!.data?.client_secret as string | undefined,
-  }
+    appearance: {
+      theme: "flat",
+      variables: {
+        colorPrimary: "#2B4D1A",
+        colorBackground: "#F7F3EE",
+        colorText: "#1A1410",
+        colorDanger: "#c0392b",
+        fontFamily: "DM Sans, sans-serif",
+        borderRadius: "0px",
+      },
+    },
+  }), [paymentSession!.data?.client_secret]) // eslint-disable-line
 
   if (!stripeKey) {
     throw new Error(
