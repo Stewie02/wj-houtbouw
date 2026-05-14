@@ -22,8 +22,7 @@ export const listCartShippingMethods = async (cartId: string) => {
           cart_id: cartId,
         },
         headers,
-        next,
-        cache: "force-cache",
+        next: { ...next, revalidate: 600 },
       }
     )
     .then(({ shipping_options }) => shipping_options)

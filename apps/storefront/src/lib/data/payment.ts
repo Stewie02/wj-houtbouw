@@ -20,8 +20,7 @@ export const listCartPaymentMethods = async (regionId: string) => {
         method: "GET",
         query: { region_id: regionId },
         headers,
-        next,
-        cache: "force-cache",
+        next: { ...next, revalidate: 600 },
       }
     )
     .then(({ payment_providers }) =>
