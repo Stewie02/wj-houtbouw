@@ -13,7 +13,7 @@ const LoginTemplate = () => {
   const [currentView, setCurrentView] = useState("sign-in")
 
   return (
-    <div className="w-full max-w-md" data-testid="login-page">
+    <div className="w-full" data-testid="login-page">
       {currentView === "sign-in" ? (
         <Login setCurrentView={setCurrentView} />
       ) : (

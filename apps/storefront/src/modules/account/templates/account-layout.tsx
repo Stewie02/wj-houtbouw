@@ -23,14 +23,18 @@ const AccountLayout: React.FC<AccountLayoutProps> = ({ customer, children }) => 
       </div>
 
       <div className="max-w-[1280px] mx-auto px-4 sm:px-8 lg:px-12 py-10 sm:py-14">
-        <div className="grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-10 lg:gap-14 items-start">
-          {customer && (
+        {customer ? (
+          <div className="grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-10 lg:gap-14 items-start">
             <div className="lg:sticky lg:top-24">
               <AccountNav customer={customer} />
             </div>
-          )}
-          <div>{children}</div>
-        </div>
+            <div>{children}</div>
+          </div>
+        ) : (
+          <div className="flex justify-center">
+            <div className="w-full max-w-md">{children}</div>
+          </div>
+        )}
       </div>
     </div>
   )
