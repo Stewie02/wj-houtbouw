@@ -26,6 +26,21 @@ const NECESSARY_COOKIES = [
   },
 ]
 
+const STRIPE_COOKIES = [
+  {
+    name: "__stripe_mid",
+    purpose:
+      "Ingesteld door Stripe voor fraudepreventie. Helpt het risico van een transactiepoging te beoordelen.",
+    retention: "1 jaar",
+  },
+  {
+    name: "__stripe_sid",
+    purpose:
+      "Ingesteld door Stripe voor fraudepreventie. Helpt het risico van een transactiepoging te beoordelen.",
+    retention: "30 minuten",
+  },
+]
+
 
 function CookieTable({
   rows,
@@ -107,6 +122,28 @@ export default function CookiePolicyPage() {
               inloggen niet.
             </p>
             <CookieTable rows={NECESSARY_COOKIES} />
+          </section>
+
+          <section className="mb-10">
+            <h2 className="font-display font-semibold text-[22px] text-wj-text tracking-[-0.01em] mb-1">
+              Stripe (betalingsverwerker)
+            </h2>
+            <p className="font-body text-[14px] text-wj-muted leading-[1.6] mb-5">
+              Voor het verwerken van betalingen maken wij gebruik van Stripe.
+              Stripe plaatst onderstaande cookies op onze website ter
+              voorkoming van fraude. Daarnaast plaatst Stripe cookies op het
+              eigen domein (stripe.com) voor operationele doeleinden. Zie het{" "}
+              <a
+                href="https://stripe.com/en-nl/legal/cookies-policy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-wj-green underline hover:text-wj-text transition-colors"
+              >
+                cookiebeleid van Stripe
+              </a>{" "}
+              voor meer informatie.
+            </p>
+            <CookieTable rows={STRIPE_COOKIES} />
           </section>
 
           <section>
