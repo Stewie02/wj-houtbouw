@@ -8,11 +8,11 @@ const BillingAddress = ({ cart }: { cart: HttpTypes.StoreCart | null }) => {
     "billing_address.first_name": cart?.billing_address?.first_name || "",
     "billing_address.last_name": cart?.billing_address?.last_name || "",
     "billing_address.address_1": cart?.billing_address?.address_1 || "",
+    "billing_address.address_2": cart?.billing_address?.address_2 || "",
     "billing_address.company": cart?.billing_address?.company || "",
     "billing_address.postal_code": cart?.billing_address?.postal_code || "",
     "billing_address.city": cart?.billing_address?.city || "",
     "billing_address.country_code": cart?.billing_address?.country_code || "",
-    "billing_address.province": cart?.billing_address?.province || "",
     "billing_address.phone": cart?.billing_address?.phone || "",
   })
 
@@ -91,12 +91,12 @@ const BillingAddress = ({ cart }: { cart: HttpTypes.StoreCart | null }) => {
           data-testid="billing-country-select"
         />
         <Input
-          label="State / Province"
-          name="billing_address.province"
-          autoComplete="address-level1"
-          value={formData["billing_address.province"]}
+          label="Toevoeging"
+          name="billing_address.address_2"
+          autoComplete="address-line2"
+          value={formData["billing_address.address_2"]}
           onChange={handleChange}
-          data-testid="billing-province-input"
+          data-testid="billing-address-2-input"
         />
         <Input
           label="Phone"

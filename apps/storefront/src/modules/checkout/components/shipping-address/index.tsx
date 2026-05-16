@@ -1,5 +1,5 @@
+import { addCustomerAddress } from "@lib/data/customer"
 import { HttpTypes } from "@medusajs/types"
-import { Container } from "@modules/common/components/ui"
 import Checkbox from "@modules/common/components/checkbox"
 import Input from "@modules/common/components/input"
 import { mapKeys } from "lodash"
@@ -22,11 +22,11 @@ const ShippingAddress = ({
     "shipping_address.first_name": cart?.shipping_address?.first_name || "",
     "shipping_address.last_name": cart?.shipping_address?.last_name || "",
     "shipping_address.address_1": cart?.shipping_address?.address_1 || "",
+    "shipping_address.address_2": cart?.shipping_address?.address_2 || "",
     "shipping_address.company": cart?.shipping_address?.company || "",
     "shipping_address.postal_code": cart?.shipping_address?.postal_code || "",
     "shipping_address.city": cart?.shipping_address?.city || "",
     "shipping_address.country_code": cart?.shipping_address?.country_code || "",
-    "shipping_address.province": cart?.shipping_address?.province || "",
     "shipping_address.phone": cart?.shipping_address?.phone || "",
     email: cart?.email || "",
   })
@@ -55,11 +55,11 @@ const ShippingAddress = ({
         "shipping_address.first_name": address?.first_name || "",
         "shipping_address.last_name": address?.last_name || "",
         "shipping_address.address_1": address?.address_1 || "",
+        "shipping_address.address_2": address?.address_2 || "",
         "shipping_address.company": address?.company || "",
         "shipping_address.postal_code": address?.postal_code || "",
         "shipping_address.city": address?.city || "",
         "shipping_address.country_code": address?.country_code || "",
-        "shipping_address.province": address?.province || "",
         "shipping_address.phone": address?.phone || "",
       }))
     }
@@ -83,23 +83,49 @@ const ShippingAddress = ({
     }
   }, [cart]) // Add cart as a dependency
 
+  const [saveState, setSaveState] = useState<"idle" | "saving" | "saved" | "error">("idle")
+  const [usingSavedAddress, setUsingSavedAddress] = useState(false)
+
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLInputElement | HTMLSelectElement
     >
   ) => {
+    setUsingSavedAddress(false)
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     })
   }
 
+  const handleSaveAddress = async () => {
+    setSaveState("saving")
+    const fd = new FormData()
+    fd.append("first_name", formData["shipping_address.first_name"])
+    fd.append("last_name", formData["shipping_address.last_name"])
+    fd.append("company", formData["shipping_address.company"])
+    fd.append("address_1", formData["shipping_address.address_1"])
+    fd.append("address_2", formData["shipping_address.address_2"])
+    fd.append("postal_code", formData["shipping_address.postal_code"])
+    fd.append("city", formData["shipping_address.city"])
+    fd.append("country_code", formData["shipping_address.country_code"])
+    fd.append("phone", formData["shipping_address.phone"])
+    const result = await addCustomerAddress({}, fd)
+    if (result.success) {
+      setSaveState("saved")
+      setTimeout(() => setSaveState("idle"), 3000)
+    } else {
+      setSaveState("error")
+      setTimeout(() => setSaveState("idle"), 3000)
+    }
+  }
+
   return (
     <>
       {customer && (addressesInRegion?.length || 0) > 0 && (
-        <Container className="mb-6 flex flex-col gap-y-4 p-5">
-          <p className="text-small-regular">
-            {`Hi ${customer.first_name}, do you want to use one of your saved addresses?`}
+        <div className="mb-6 flex flex-col gap-y-4 p-5 border border-ui-border-base bg-ui-bg-subtle rounded-md">
+          <p className="font-body text-[13px] text-wj-text">
+            {`Hoi ${customer.first_name}, wil je een opgeslagen adres gebruiken?`}
           </p>
           <AddressSelect
             addresses={customer.addresses}
@@ -108,9 +134,12 @@ const ShippingAddress = ({
                 key.replace("shipping_address.", "")
               ) as unknown as HttpTypes.StoreCartAddress
             }
-            onSelect={setFormAddress}
+            onSelect={(address, email) => {
+              setUsingSavedAddress(true)
+              setFormAddress(address, email)
+            }}
           />
-        </Container>
+        </div>
       )}
       <div className="grid grid-cols-2 gap-4">
         <Input
@@ -176,14 +205,26 @@ const ShippingAddress = ({
           data-testid="shipping-country-select"
         />
         <Input
-          label="State / Province"
-          name="shipping_address.province"
-          autoComplete="address-level1"
-          value={formData["shipping_address.province"]}
+          label="Toevoeging"
+          name="shipping_address.address_2"
+          autoComplete="address-line2"
+          value={formData["shipping_address.address_2"]}
           onChange={handleChange}
-          data-testid="shipping-province-input"
+          data-testid="shipping-address-2-input"
         />
       </div>
+      {customer && !usingSavedAddress && (
+        <div className="mt-4 flex items-center gap-3">
+          <button
+            type="button"
+            onClick={handleSaveAddress}
+            disabled={saveState === "saving"}
+            className="font-body text-[13px] font-medium text-wj-green hover:underline disabled:opacity-50"
+          >
+            {saveState === "saving" ? "Opslaan..." : saveState === "saved" ? "Opgeslagen!" : saveState === "error" ? "Opslaan mislukt" : "Adres opslaan"}
+          </button>
+        </div>
+      )}
       <div className="my-8">
         <Checkbox
           label="Billing address same as shipping address"

@@ -94,7 +94,7 @@ const AddAddress = ({
                 data-testid="address-1-input"
               />
               <Input
-                label="Apartment, suite, etc."
+                label="Toevoeging"
                 name="address_2"
                 autoComplete="address-line2"
                 data-testid="address-2-input"
@@ -115,12 +115,6 @@ const AddAddress = ({
                   data-testid="city-input"
                 />
               </div>
-              <Input
-                label="Province / State"
-                name="province"
-                autoComplete="address-level1"
-                data-testid="state-input"
-              />
               <CountrySelect
                 region={region}
                 name="country_code"
