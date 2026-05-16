@@ -19,6 +19,7 @@ const nextConfig = {
       { source: "/over-ons", destination: "/about" },
       { source: "/veelgestelde-vragen", destination: "/faq" },
       { source: "/cookiebeleid", destination: "/cookie-policy" },
+      { source: "/algemene-voorwaarden", destination: "/terms-and-conditions" },
       { source: "/producten/:handle", destination: "/products/:handle" },
       { source: "/winkelwagen", destination: "/cart" },
       { source: "/afrekenen", destination: "/checkout" },
