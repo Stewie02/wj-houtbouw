@@ -1,11 +1,11 @@
-import { ArrowUpRightMini } from "@medusajs/icons"
-import { Text } from "@modules/common/components/ui"
-import LocalizedClientLink from "../localized-client-link"
+import { ArrowUpRightMini } from "@medusajs/icons";
+import { Text } from "@modules/common/components/ui";
+import LocalizedClientLink from "../localized-client-link";
 type InteractiveLinkProps = {
-  href: string
-  children?: React.ReactNode
-  onClick?: () => void
-}
+  href: string;
+  children?: React.ReactNode;
+  onClick?: () => void;
+};
 
 const InteractiveLink = ({
   href,
@@ -26,7 +26,7 @@ const InteractiveLink = ({
         color="var(--fg-interactive)"
       />
     </LocalizedClientLink>
-  )
-}
+  );
+};
 
-export default InteractiveLink
+export default InteractiveLink;

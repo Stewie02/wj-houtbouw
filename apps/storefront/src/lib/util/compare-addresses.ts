@@ -1,4 +1,4 @@
-import { isEqual, pick } from "lodash"
+import { isEqual, pick } from "lodash";
 
 export default function compareAddresses(address1: object, address2: object) {
   return isEqual(
@@ -24,5 +24,5 @@ export default function compareAddresses(address1: object, address2: object) {
       "province",
       "phone",
     ])
-  )
+  );
 }

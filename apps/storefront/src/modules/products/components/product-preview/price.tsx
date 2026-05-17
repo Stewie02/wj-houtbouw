@@ -1,9 +1,9 @@
-import { Text, clx } from "@modules/common/components/ui"
-import { VariantPrice } from "types/global"
+import { Text, clx } from "@modules/common/components/ui";
+import { VariantPrice } from "types/global";
 
 export default async function PreviewPrice({ price }: { price: VariantPrice }) {
   if (!price) {
-    return null
+    return null;
   }
 
   return (
@@ -25,5 +25,5 @@ export default async function PreviewPrice({ price }: { price: VariantPrice }) {
         {price.calculated_price}
       </Text>
     </>
-  )
+  );
 }

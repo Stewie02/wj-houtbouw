@@ -1,16 +1,16 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { usePathname } from "next/navigation"
-import LocalizedClientLink from "@modules/common/components/localized-client-link"
-import BrandButton from "@modules/common/components/brand-button"
+import { useState } from "react";
+import { usePathname } from "next/navigation";
+import LocalizedClientLink from "@modules/common/components/localized-client-link";
+import BrandButton from "@modules/common/components/brand-button";
 
 const NAV_LINKS = [
   { href: "/winkel", label: "Shop" },
   { href: "/over-ons", label: "Over ons" },
   { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contact" },
-]
+];
 
 const Logo = () => (
   <LocalizedClientLink href="/" className="flex items-center gap-2.5 shrink-0">
@@ -31,17 +31,17 @@ const Logo = () => (
       </div>
     </div>
   </LocalizedClientLink>
-)
+);
 
 type NavClientProps = {
-  cartCount: number
-}
+  cartCount: number;
+};
 
 const NavClient = ({ cartCount }: NavClientProps) => {
-  const [mobileOpen, setMobileOpen] = useState(false)
-  const pathname = usePathname()
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const pathname = usePathname();
 
-  const isActive = (href: string) => pathname.includes(href.replace("/", ""))
+  const isActive = (href: string) => pathname.includes(href.replace("/", ""));
 
   return (
     <>
@@ -145,8 +145,8 @@ const NavClient = ({ cartCount }: NavClientProps) => {
         </div>
       )}
     </>
-  )
-}
+  );
+};
 
 const CartIcon = ({ count }: { count: number }) => (
   <LocalizedClientLink
@@ -172,6 +172,6 @@ const CartIcon = ({ count }: { count: number }) => (
       </div>
     )}
   </LocalizedClientLink>
-)
+);
 
-export default NavClient
+export default NavClient;

@@ -1,28 +1,28 @@
-import { listProductsWithSort } from "@lib/data/products"
-import { getProductPrice } from "@lib/util/get-product-price"
-import LocalizedClientLink from "@modules/common/components/localized-client-link"
-import BrandButton from "@modules/common/components/brand-button"
-import ProductCard from "@modules/common/components/product-card"
+import { listProductsWithSort } from "@lib/data/products";
+import { getProductPrice } from "@lib/util/get-product-price";
+import LocalizedClientLink from "@modules/common/components/localized-client-link";
+import BrandButton from "@modules/common/components/brand-button";
+import ProductCard from "@modules/common/components/product-card";
 
 export default async function FeaturedProducts() {
   const { response } = await listProductsWithSort({
     page: 1,
     queryParams: { limit: 3, fields: "*variants.calculated_price" },
     sortBy: "created_at",
-  }).catch(() => ({ response: { products: [], count: 0 } }))
+  }).catch(() => ({ response: { products: [], count: 0 } }));
 
   const cards = response.products.map((product) => {
-    const { cheapestPrice } = getProductPrice({ product })
+    const { cheapestPrice } = getProductPrice({ product });
     return {
       name: product.title,
       price: cheapestPrice?.calculated_price ?? "—",
       material: (product.metadata?.material as string) ?? undefined,
       tag: (product.metadata?.tag as string) ?? undefined,
       href: `/producten/${product.handle}`,
-    }
-  })
+    };
+  });
 
-  if (cards.length === 0) return null
+  if (cards.length === 0) return null;
 
   return (
     <div className="py-20 sm:py-24">
@@ -50,5 +50,5 @@ export default async function FeaturedProducts() {
         </div>
       </div>
     </div>
-  )
+  );
 }

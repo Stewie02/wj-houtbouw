@@ -1,23 +1,23 @@
-import { getPercentageDiff } from "@lib/util/get-percentage-diff"
-import { convertToLocale } from "@lib/util/money"
-import { HttpTypes } from "@medusajs/types"
-import { clx } from "@modules/common/components/ui"
+import { getPercentageDiff } from "@lib/util/get-percentage-diff";
+import { convertToLocale } from "@lib/util/money";
+import { HttpTypes } from "@medusajs/types";
+import { clx } from "@modules/common/components/ui";
 
 type LineItemPriceProps = {
-  item: HttpTypes.StoreCartLineItem | HttpTypes.StoreOrderLineItem
-  style?: "default" | "tight"
-  currencyCode: string
-}
+  item: HttpTypes.StoreCartLineItem | HttpTypes.StoreOrderLineItem;
+  style?: "default" | "tight";
+  currencyCode: string;
+};
 
 const LineItemPrice = ({
   item,
   style = "default",
   currencyCode,
 }: LineItemPriceProps) => {
-  const { total, original_total } = item
-  const originalPrice = original_total ?? 0
-  const currentPrice = total ?? 0
-  const hasReducedPrice = currentPrice < originalPrice
+  const { total, original_total } = item;
+  const originalPrice = original_total ?? 0;
+  const currentPrice = total ?? 0;
+  const hasReducedPrice = currentPrice < originalPrice;
 
   return (
     <div className="flex flex-col gap-x-2 text-ui-fg-subtle items-end">
@@ -58,7 +58,7 @@ const LineItemPrice = ({
         </span>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default LineItemPrice
+export default LineItemPrice;

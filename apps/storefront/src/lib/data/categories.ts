@@ -1,13 +1,13 @@
-import { sdk } from "@lib/config"
-import { HttpTypes } from "@medusajs/types"
-import { getCacheOptions } from "./cookies"
+import { sdk } from "@lib/config";
+import { HttpTypes } from "@medusajs/types";
+import { getCacheOptions } from "./cookies";
 
 export const listCategories = async (query?: Record<string, unknown>) => {
   const next = {
     ...(await getCacheOptions("categories")),
-  }
+  };
 
-  const limit = query?.limit || 100
+  const limit = query?.limit || 100;
 
   return sdk.client
     .fetch<{ product_categories: HttpTypes.StoreProductCategory[] }>(
@@ -23,15 +23,15 @@ export const listCategories = async (query?: Record<string, unknown>) => {
         cache: "force-cache",
       }
     )
-    .then(({ product_categories }) => product_categories)
-}
+    .then(({ product_categories }) => product_categories);
+};
 
 export const getCategoryByHandle = async (categoryHandle: string[]) => {
-  const handle = `${categoryHandle.join("/")}`
+  const handle = `${categoryHandle.join("/")}`;
 
   const next = {
     ...(await getCacheOptions("categories")),
-  }
+  };
 
   return sdk.client
     .fetch<HttpTypes.StoreProductCategoryListResponse>(
@@ -45,5 +45,5 @@ export const getCategoryByHandle = async (categoryHandle: string[]) => {
         cache: "force-cache",
       }
     )
-    .then(({ product_categories }) => product_categories[0])
-}
+    .then(({ product_categories }) => product_categories[0]);
+};

@@ -1,44 +1,56 @@
-import { listProductsWithSort } from "@lib/data/products"
-import { getRegion } from "@lib/data/regions"
-import { getProductPrice } from "@lib/util/get-product-price"
-import { HttpTypes } from "@medusajs/types"
-import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
-import PlaceholderImage from "@modules/common/components/placeholder-image"
-import BrandButton from "@modules/common/components/brand-button"
-import BrandTag from "@modules/common/components/brand-tag"
-import LocalizedClientLink from "@modules/common/components/localized-client-link"
+import { listProductsWithSort } from "@lib/data/products";
+import { getRegion } from "@lib/data/regions";
+import { getProductPrice } from "@lib/util/get-product-price";
+import { HttpTypes } from "@medusajs/types";
+import { SortOptions } from "@modules/store/components/refinement-list/sort-products";
+import PlaceholderImage from "@modules/common/components/placeholder-image";
+import BrandButton from "@modules/common/components/brand-button";
+import BrandTag from "@modules/common/components/brand-tag";
+import LocalizedClientLink from "@modules/common/components/localized-client-link";
 
-const PRODUCT_LIMIT = 12
+const PRODUCT_LIMIT = 12;
 
 type PaginatedProductsParams = {
-  limit: number
-  collection_id?: string[]
-  category_id?: string[]
-  id?: string[]
-  order?: string
-}
+  limit: number;
+  collection_id?: string[];
+  category_id?: string[];
+  id?: string[];
+  order?: string;
+};
 
 // ── Editorial product row ──────────────────────────────────────────────────────
 type ProductRowProps = {
-  index: number
-  handle: string
-  title: string
-  description: string
-  material: string
-  tag?: string | null
-  features: string[]
-  sizes: string[]
-  priceFrom: string
-}
+  index: number;
+  handle: string;
+  title: string;
+  description: string;
+  material: string;
+  tag?: string | null;
+  features: string[];
+  sizes: string[];
+  priceFrom: string;
+};
 
-function ProductRow({ index, handle, title, description, material, tag, features, sizes, priceFrom }: ProductRowProps) {
-  const imageFirst = index % 2 === 0
+function ProductRow({
+  index,
+  handle,
+  title,
+  description,
+  material,
+  tag,
+  features,
+  sizes,
+  priceFrom,
+}: ProductRowProps) {
+  const imageFirst = index % 2 === 0;
 
   return (
     <div className="border border-wj-border bg-wj-white overflow-hidden mb-1">
       <div className="flex flex-col lg:grid lg:grid-cols-2">
         {/* Image */}
-        <div className={`relative min-h-[280px] lg:min-h-[500px] ${imageFirst ? "lg:order-first" : "lg:order-last"}`}>
+        <div
+          className={`relative min-h-[280px] lg:min-h-[500px] ${imageFirst ? "lg:order-first" : "lg:order-last"}`}
+        >
           <PlaceholderImage label={`${title} — product photo`} />
           {tag && (
             <div className="absolute top-5 left-5">
@@ -48,7 +60,9 @@ function ProductRow({ index, handle, title, description, material, tag, features
         </div>
 
         {/* Info */}
-        <div className={`flex flex-col justify-center p-8 sm:p-12 lg:p-[52px] ${imageFirst ? "lg:order-last" : "lg:order-first"}`}>
+        <div
+          className={`flex flex-col justify-center p-8 sm:p-12 lg:p-[52px] ${imageFirst ? "lg:order-last" : "lg:order-first"}`}
+        >
           <div className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-wood mb-2.5">
             {material}
           </div>
@@ -76,7 +90,10 @@ function ProductRow({ index, handle, title, description, material, tag, features
             </div>
             <div className="flex flex-wrap gap-1.5">
               {sizes.map((s) => (
-                <span key={s} className="font-body font-medium text-[12px] px-3 py-[5px] border border-wj-border text-wj-text">
+                <span
+                  key={s}
+                  className="font-body font-medium text-[12px] px-3 py-[5px] border border-wj-border text-wj-text"
+                >
                   {s}
                 </span>
               ))}
@@ -102,7 +119,7 @@ function ProductRow({ index, handle, title, description, material, tag, features
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 // ── Paginated products ─────────────────────────────────────────────────────────
@@ -113,33 +130,35 @@ export default async function PaginatedProducts({
   categoryId,
   productsIds,
 }: {
-  sortBy?: SortOptions
-  page: number
-  collectionId?: string
-  categoryId?: string
-  productsIds?: string[]
+  sortBy?: SortOptions;
+  page: number;
+  collectionId?: string;
+  categoryId?: string;
+  productsIds?: string[];
 }) {
-  const region = await getRegion()
-  if (!region) return null
+  const region = await getRegion();
+  if (!region) return null;
 
-  const queryParams: PaginatedProductsParams = { limit: PRODUCT_LIMIT }
-  if (collectionId) queryParams.collection_id = [collectionId]
-  if (categoryId) queryParams.category_id = [categoryId]
-  if (productsIds) queryParams.id = productsIds
-  if (sortBy === "created_at") queryParams.order = "created_at"
+  const queryParams: PaginatedProductsParams = { limit: PRODUCT_LIMIT };
+  if (collectionId) queryParams.collection_id = [collectionId];
+  if (categoryId) queryParams.category_id = [categoryId];
+  if (productsIds) queryParams.id = productsIds;
+  if (sortBy === "created_at") queryParams.order = "created_at";
 
-  const { response: { products } } = await listProductsWithSort({
+  const {
+    response: { products },
+  } = await listProductsWithSort({
     page,
     queryParams: { ...queryParams, fields: "*variants.calculated_price" },
     sortBy,
-  })
+  });
 
   const rows = products.map((product: HttpTypes.StoreProduct, i: number) => {
-    const { cheapestPrice } = getProductPrice({ product })
+    const { cheapestPrice } = getProductPrice({ product });
     const variantOptions = product.variants
       ?.flatMap((v) => v.options?.map((o) => o.value) ?? [])
-      .filter(Boolean) as string[]
-    const uniqueSizes = Array.from(new Set(variantOptions)).slice(0, 6)
+      .filter(Boolean) as string[];
+    const uniqueSizes = Array.from(new Set(variantOptions)).slice(0, 6);
 
     return {
       index: i,
@@ -148,11 +167,14 @@ export default async function PaginatedProducts({
       description: product.description ?? "",
       material: (product.metadata?.material as string) ?? "Timber",
       tag: (product.metadata?.tag as string) ?? null,
-      features: (product.metadata?.features as string[]) ?? ["FSC-certified timber", "10-year guarantee"],
+      features: (product.metadata?.features as string[]) ?? [
+        "FSC-certified timber",
+        "10-year guarantee",
+      ],
       sizes: uniqueSizes.length > 0 ? uniqueSizes : ["Standard"],
       priceFrom: cheapestPrice?.calculated_price ?? "—",
-    }
-  })
+    };
+  });
 
   return (
     <div data-testid="products-list">
@@ -160,5 +182,5 @@ export default async function PaginatedProducts({
         <ProductRow key={row.handle} {...row} />
       ))}
     </div>
-  )
+  );
 }

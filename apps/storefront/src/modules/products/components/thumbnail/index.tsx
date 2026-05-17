@@ -1,17 +1,17 @@
-import { Container, clx } from "@modules/common/components/ui"
-import Image from "next/image"
-import React from "react"
+import { Container, clx } from "@modules/common/components/ui";
+import Image from "next/image";
+import React from "react";
 
-import PlaceholderImage from "@modules/common/icons/placeholder-image"
+import PlaceholderImage from "@modules/common/icons/placeholder-image";
 
 type ThumbnailProps = {
-  thumbnail?: string | null
-  images?: { url?: string }[] | null
-  size?: "small" | "medium" | "large" | "full" | "square"
-  isFeatured?: boolean
-  className?: string
-  "data-testid"?: string
-}
+  thumbnail?: string | null;
+  images?: { url?: string }[] | null;
+  size?: "small" | "medium" | "large" | "full" | "square";
+  isFeatured?: boolean;
+  className?: string;
+  "data-testid"?: string;
+};
 
 const Thumbnail: React.FC<ThumbnailProps> = ({
   thumbnail,
@@ -21,7 +21,7 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
   className,
   "data-testid": dataTestid,
 }) => {
-  const initialImage = thumbnail || images?.[0]?.url
+  const initialImage = thumbnail || images?.[0]?.url;
 
   return (
     <Container
@@ -42,8 +42,8 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
     >
       <ImageOrPlaceholder image={initialImage} size={size} />
     </Container>
-  )
-}
+  );
+};
 
 const ImageOrPlaceholder = ({
   image,
@@ -63,7 +63,7 @@ const ImageOrPlaceholder = ({
     <div className="w-full h-full absolute inset-0 flex items-center justify-center">
       <PlaceholderImage size={size === "small" ? 16 : 24} />
     </div>
-  )
-}
+  );
+};
 
-export default Thumbnail
+export default Thumbnail;

@@ -1,24 +1,28 @@
-"use client"
+"use client";
 
-import { ArrowRightOnRectangle } from "@medusajs/icons"
-import { usePathname } from "next/navigation"
-import { signout } from "@lib/data/customer"
-import { HttpTypes } from "@medusajs/types"
-import LocalizedClientLink from "@modules/common/components/localized-client-link"
+import { ArrowRightOnRectangle } from "@medusajs/icons";
+import { usePathname } from "next/navigation";
+import { signout } from "@lib/data/customer";
+import { HttpTypes } from "@medusajs/types";
+import LocalizedClientLink from "@modules/common/components/localized-client-link";
 
 const NAV_ITEMS = [
   { href: "/account", label: "Overview", testId: "overview-link" },
   { href: "/account/profile", label: "Profile", testId: "profile-link" },
   { href: "/account/addresses", label: "Addresses", testId: "addresses-link" },
   { href: "/account/orders", label: "Orders", testId: "orders-link" },
-]
+];
 
-const AccountNav = ({ customer }: { customer: HttpTypes.StoreCustomer | null }) => {
-  const route = usePathname()
+const AccountNav = ({
+  customer: _customer,
+}: {
+  customer: HttpTypes.StoreCustomer | null;
+}) => {
+  const route = usePathname();
 
   const handleLogout = async () => {
-    await signout()
-  }
+    await signout();
+  };
 
   return (
     <>
@@ -41,7 +45,12 @@ const AccountNav = ({ customer }: { customer: HttpTypes.StoreCustomer | null }) 
           My account
         </p>
         {NAV_ITEMS.map(({ href, label, testId }) => (
-          <AccountNavLink key={href} href={href} route={route} data-testid={testId}>
+          <AccountNavLink
+            key={href}
+            href={href}
+            route={route}
+            data-testid={testId}
+          >
             {label}
           </AccountNavLink>
         ))}
@@ -84,29 +93,36 @@ const AccountNav = ({ customer }: { customer: HttpTypes.StoreCustomer | null }) 
         )}
       </div>
     </>
-  )
-}
+  );
+};
 
 type AccountNavLinkProps = {
-  href: string
-  route: string
-  children: React.ReactNode
-  "data-testid"?: string
-}
+  href: string;
+  route: string;
+  children: React.ReactNode;
+  "data-testid"?: string;
+};
 
-const AccountNavLink = ({ href, route, children, "data-testid": testId }: AccountNavLinkProps) => {
-  const active = route === href
+const AccountNavLink = ({
+  href,
+  route,
+  children,
+  "data-testid": testId,
+}: AccountNavLinkProps) => {
+  const active = route === href;
   return (
     <LocalizedClientLink
       href={href}
       className={`font-body text-[14px] py-1.5 transition-colors ${
-        active ? "text-wj-green font-semibold" : "text-wj-text hover:text-wj-green"
+        active
+          ? "text-wj-green font-semibold"
+          : "text-wj-text hover:text-wj-green"
       }`}
       data-testid={testId}
     >
       {children}
     </LocalizedClientLink>
-  )
-}
+  );
+};
 
-export default AccountNav
+export default AccountNav;

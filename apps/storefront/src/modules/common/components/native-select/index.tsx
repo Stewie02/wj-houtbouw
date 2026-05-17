@@ -1,5 +1,5 @@
-import { ChevronUpDown } from "@medusajs/icons"
-import { clx } from "@modules/common/components/ui"
+import { ChevronUpDown } from "@medusajs/icons";
+import { clx } from "@modules/common/components/ui";
 import {
   SelectHTMLAttributes,
   forwardRef,
@@ -7,34 +7,34 @@ import {
   useImperativeHandle,
   useRef,
   useState,
-} from "react"
+} from "react";
 
 export type NativeSelectProps = {
-  placeholder?: string
-  errors?: Record<string, unknown>
-  touched?: Record<string, unknown>
-} & SelectHTMLAttributes<HTMLSelectElement>
+  placeholder?: string;
+  errors?: Record<string, unknown>;
+  touched?: Record<string, unknown>;
+} & SelectHTMLAttributes<HTMLSelectElement>;
 
 const NativeSelect = forwardRef<HTMLSelectElement, NativeSelectProps>(
   (
     { placeholder = "Select...", defaultValue, className, children, ...props },
     ref
   ) => {
-    const innerRef = useRef<HTMLSelectElement>(null)
-    const [isPlaceholder, setIsPlaceholder] = useState(false)
+    const innerRef = useRef<HTMLSelectElement>(null);
+    const [isPlaceholder, setIsPlaceholder] = useState(false);
 
     useImperativeHandle<HTMLSelectElement | null, HTMLSelectElement | null>(
       ref,
       () => innerRef.current
-    )
+    );
 
     useEffect(() => {
       if (innerRef.current && innerRef.current.value === "") {
-        setIsPlaceholder(true)
+        setIsPlaceholder(true);
       } else {
-        setIsPlaceholder(false)
+        setIsPlaceholder(false);
       }
-    }, [innerRef.current?.value])
+    }, [innerRef.current?.value]);
 
     return (
       <div>
@@ -65,10 +65,10 @@ const NativeSelect = forwardRef<HTMLSelectElement, NativeSelectProps>(
           </span>
         </div>
       </div>
-    )
+    );
   }
-)
+);
 
-NativeSelect.displayName = "NativeSelect"
+NativeSelect.displayName = "NativeSelect";
 
-export default NativeSelect
+export default NativeSelect;

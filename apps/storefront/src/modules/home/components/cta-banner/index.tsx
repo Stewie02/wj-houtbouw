@@ -1,5 +1,5 @@
-import LocalizedClientLink from "@modules/common/components/localized-client-link"
-import BrandButton from "@modules/common/components/brand-button"
+import LocalizedClientLink from "@modules/common/components/localized-client-link";
+import BrandButton from "@modules/common/components/brand-button";
 
 const CtaBanner = () => {
   return (
@@ -26,7 +26,7 @@ const CtaBanner = () => {
         </LocalizedClientLink>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CtaBanner
+export default CtaBanner;

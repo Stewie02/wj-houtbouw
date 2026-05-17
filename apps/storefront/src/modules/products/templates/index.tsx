@@ -1,25 +1,25 @@
-import React, { Suspense } from "react"
-import { notFound } from "next/navigation"
-import { HttpTypes } from "@medusajs/types"
-import ImageGallery from "@modules/products/components/image-gallery"
-import ProductActions from "@modules/products/components/product-actions"
-import ProductInfo from "@modules/products/templates/product-info"
-import ProductTabs from "@modules/products/components/product-tabs"
-import ProductActionsWrapper from "./product-actions-wrapper"
-import Breadcrumb from "@modules/common/components/breadcrumb"
+import React, { Suspense } from "react";
+import { notFound } from "next/navigation";
+import { HttpTypes } from "@medusajs/types";
+import ImageGallery from "@modules/products/components/image-gallery";
+import ProductActions from "@modules/products/components/product-actions";
+import ProductInfo from "@modules/products/templates/product-info";
+import ProductTabs from "@modules/products/components/product-tabs";
+import ProductActionsWrapper from "./product-actions-wrapper";
+import Breadcrumb from "@modules/common/components/breadcrumb";
 
 type ProductTemplateProps = {
-  product: HttpTypes.StoreProduct
-  region: HttpTypes.StoreRegion
-  images: HttpTypes.StoreProductImage[]
-}
+  product: HttpTypes.StoreProduct;
+  region: HttpTypes.StoreRegion;
+  images: HttpTypes.StoreProductImage[];
+};
 
 const ProductTemplate: React.FC<ProductTemplateProps> = ({
   product,
   region,
   images,
 }) => {
-  if (!product?.id) return notFound()
+  if (!product?.id) return notFound();
 
   return (
     <div className="bg-wj-bg">
@@ -57,9 +57,8 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
 
       {/* Tabs */}
       <ProductTabs product={product} />
-
     </div>
-  )
-}
+  );
+};
 
-export default ProductTemplate
+export default ProductTemplate;

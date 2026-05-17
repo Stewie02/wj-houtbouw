@@ -1,19 +1,19 @@
-"use client"
+"use client";
 
-import { convertToLocale } from "@lib/util/money"
-import React from "react"
+import { convertToLocale } from "@lib/util/money";
+import React from "react";
 
 type CartTotalsProps = {
   totals: {
-    total?: number | null
-    subtotal?: number | null
-    tax_total?: number | null
-    currency_code: string
-    item_subtotal?: number | null
-    shipping_subtotal?: number | null
-    discount_subtotal?: number | null
-  }
-}
+    total?: number | null;
+    subtotal?: number | null;
+    tax_total?: number | null;
+    currency_code: string;
+    item_subtotal?: number | null;
+    shipping_subtotal?: number | null;
+    discount_subtotal?: number | null;
+  };
+};
 
 const CartTotals: React.FC<CartTotalsProps> = ({ totals }) => {
   const {
@@ -23,7 +23,7 @@ const CartTotals: React.FC<CartTotalsProps> = ({ totals }) => {
     item_subtotal,
     shipping_subtotal,
     discount_subtotal,
-  } = totals
+  } = totals;
 
   return (
     <div>
@@ -76,7 +76,7 @@ const CartTotals: React.FC<CartTotalsProps> = ({ totals }) => {
       </div>
       <div className="h-px w-full border-b border-gray-200 mt-4" />
     </div>
-  )
-}
+  );
+};
 
-export default CartTotals
+export default CartTotals;

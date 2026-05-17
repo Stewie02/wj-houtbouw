@@ -1,17 +1,17 @@
-"use client"
+"use client";
 
-import { isManual, isStripeLike } from "@lib/constants"
-import { placeOrder } from "@lib/data/cart"
-import { HttpTypes } from "@medusajs/types"
-import { Button } from "@modules/common/components/ui"
-import { useElements, useStripe } from "@stripe/react-stripe-js"
-import React, { useState } from "react"
-import ErrorMessage from "../error-message"
+import { isManual, isStripeLike } from "@lib/constants";
+import { placeOrder } from "@lib/data/cart";
+import { HttpTypes } from "@medusajs/types";
+import { Button } from "@modules/common/components/ui";
+import { useElements, useStripe } from "@stripe/react-stripe-js";
+import React, { useState } from "react";
+import ErrorMessage from "../error-message";
 
 type PaymentButtonProps = {
-  cart: HttpTypes.StoreCart
-  "data-testid": string
-}
+  cart: HttpTypes.StoreCart;
+  "data-testid": string;
+};
 
 const PaymentButton: React.FC<PaymentButtonProps> = ({
   cart,
@@ -22,9 +22,9 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
     !cart.shipping_address ||
     !cart.billing_address ||
     !cart.email ||
-    (cart.shipping_methods?.length ?? 0) < 1
+    (cart.shipping_methods?.length ?? 0) < 1;
 
-  const paymentSession = cart.payment_collection?.payment_sessions?.[0]
+  const paymentSession = cart.payment_collection?.payment_sessions?.[0];
 
   switch (true) {
     case isStripeLike(paymentSession?.provider_id):
@@ -34,47 +34,49 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
           cart={cart}
           data-testid={dataTestId}
         />
-      )
+      );
     case isManual(paymentSession?.provider_id):
       return (
         <ManualTestPaymentButton notReady={notReady} data-testid={dataTestId} />
-      )
+      );
     default:
-      return <Button disabled>Select a payment method</Button>
+      return <Button disabled>Select a payment method</Button>;
   }
-}
+};
 
 const StripePaymentButton = ({
   cart,
   notReady,
   "data-testid": dataTestId,
 }: {
-  cart: HttpTypes.StoreCart
-  notReady: boolean
-  "data-testid"?: string
+  cart: HttpTypes.StoreCart;
+  notReady: boolean;
+  "data-testid"?: string;
 }) => {
-  const [submitting, setSubmitting] = useState(false)
-  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const [submitting, setSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const stripe = useStripe()
-  const elements = useElements()
+  const stripe = useStripe();
+  const elements = useElements();
 
-  const disabled = !stripe || !elements
+  const disabled = !stripe || !elements;
 
   const onPaymentCompleted = async () => {
-    await placeOrder().catch((err) => {
-      setErrorMessage(err.message)
-    }).finally(() => {
-      setSubmitting(false)
-    })
-  }
+    await placeOrder()
+      .catch((err) => {
+        setErrorMessage(err.message);
+      })
+      .finally(() => {
+        setSubmitting(false);
+      });
+  };
 
   const handlePayment = async () => {
-    setSubmitting(true)
+    setSubmitting(true);
 
     if (!stripe || !elements || !cart) {
-      setSubmitting(false)
-      return
+      setSubmitting(false);
+      return;
     }
 
     const { error, paymentIntent } = await stripe.confirmPayment({
@@ -101,21 +103,21 @@ const StripePaymentButton = ({
         },
       },
       redirect: "if_required",
-    })
+    });
 
     if (error) {
-      setErrorMessage(error.message || null)
-      setSubmitting(false)
-      return
+      setErrorMessage(error.message || null);
+      setSubmitting(false);
+      return;
     }
 
     if (
       paymentIntent?.status === "requires_capture" ||
       paymentIntent?.status === "succeeded"
     ) {
-      await onPaymentCompleted()
+      await onPaymentCompleted();
     }
-  }
+  };
 
   return (
     <>
@@ -133,33 +135,33 @@ const StripePaymentButton = ({
         data-testid="stripe-payment-error-message"
       />
     </>
-  )
-}
+  );
+};
 
 const ManualTestPaymentButton = ({
   notReady,
-  "data-testid": dataTestId,
+  "data-testid": _dataTestId,
 }: {
-  notReady: boolean
-  "data-testid"?: string
+  notReady: boolean;
+  "data-testid"?: string;
 }) => {
-  const [submitting, setSubmitting] = useState(false)
-  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const [submitting, setSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const onPaymentCompleted = async () => {
     await placeOrder()
       .catch((err) => {
-        setErrorMessage(err.message)
+        setErrorMessage(err.message);
       })
       .finally(() => {
-        setSubmitting(false)
-      })
-  }
+        setSubmitting(false);
+      });
+  };
 
   const handlePayment = () => {
-    setSubmitting(true)
-    onPaymentCompleted()
-  }
+    setSubmitting(true);
+    onPaymentCompleted();
+  };
 
   return (
     <>
@@ -177,7 +179,7 @@ const ManualTestPaymentButton = ({
         data-testid="manual-payment-error-message"
       />
     </>
-  )
-}
+  );
+};
 
-export default PaymentButton
+export default PaymentButton;

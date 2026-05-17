@@ -1,6 +1,6 @@
-import LocalizedClientLink from "@modules/common/components/localized-client-link"
-import BrandButton from "@modules/common/components/brand-button"
-import PlaceholderImage from "@modules/common/components/placeholder-image"
+import LocalizedClientLink from "@modules/common/components/localized-client-link";
+import BrandButton from "@modules/common/components/brand-button";
+import PlaceholderImage from "@modules/common/components/placeholder-image";
 
 const AboutStrip = () => {
   return (
@@ -14,7 +14,9 @@ const AboutStrip = () => {
             </div>
             <h2 className="font-display font-bold text-[36px] sm:text-[44px] text-wj-text leading-[1.1] tracking-[-0.02em] mb-6">
               Twee handen, één standaard.{" "}
-              <span className="font-display font-normal italic">Gemaakt met overtuiging.</span>
+              <span className="font-display font-normal italic">
+                Gemaakt met overtuiging.
+              </span>
             </h2>
             <p className="font-body text-[15px] sm:text-[16px] text-wj-muted leading-[1.75] max-w-[420px]">
               Vanuit onze werkplaats in Drachten bouwen wij robuust
@@ -37,7 +39,7 @@ const AboutStrip = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default AboutStrip
+export default AboutStrip;

@@ -1,4 +1,4 @@
-import clsx from "clsx"
+import clsx from "clsx";
 import {
   ButtonHTMLAttributes,
   forwardRef,
@@ -8,17 +8,17 @@ import {
   TableHTMLAttributes,
   TdHTMLAttributes,
   ThHTMLAttributes,
-} from "react"
+} from "react";
 
 // TODO: Add Toaster component back when needed for notifications
 
 // Re-export clsx as clx for compatibility
-export { clsx as clx }
+export { clsx as clx };
 
 // Text Component
 type TextProps = HTMLAttributes<HTMLParagraphElement> & {
-  as?: "p" | "span" | "div"
-}
+  as?: "p" | "span" | "div";
+};
 
 export const Text = forwardRef<HTMLParagraphElement, TextProps>(
   ({ className, as: Component = "p", children, ...props }, ref) => {
@@ -26,15 +26,15 @@ export const Text = forwardRef<HTMLParagraphElement, TextProps>(
       <Component ref={ref} className={clsx("text-base", className)} {...props}>
         {children}
       </Component>
-    )
+    );
   }
-)
-Text.displayName = "Text"
+);
+Text.displayName = "Text";
 
 // Heading Component
 type HeadingProps = HTMLAttributes<HTMLHeadingElement> & {
-  level?: "h1" | "h2" | "h3"
-}
+  level?: "h1" | "h2" | "h3";
+};
 
 export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(
   ({ className, level: Component = "h2", children, ...props }, ref) => {
@@ -52,17 +52,17 @@ export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(
       >
         {children}
       </Component>
-    )
+    );
   }
-)
-Heading.displayName = "Heading"
+);
+Heading.displayName = "Heading";
 
 // Button Component
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: "primary" | "secondary" | "transparent"
-  size?: "small" | "medium" | "large"
-  isLoading?: boolean
-}
+  variant?: "primary" | "secondary" | "transparent";
+  size?: "small" | "medium" | "large";
+  isLoading?: boolean;
+};
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
@@ -96,13 +96,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       >
         {isLoading ? "Loading..." : children}
       </button>
-    )
+    );
   }
-)
-Button.displayName = "Button"
+);
+Button.displayName = "Button";
 
 // Container Component
-type ContainerProps = HTMLAttributes<HTMLDivElement>
+type ContainerProps = HTMLAttributes<HTMLDivElement>;
 
 export const Container = forwardRef<HTMLDivElement, ContainerProps>(
   ({ className, children, ...props }, ref) => {
@@ -114,15 +114,15 @@ export const Container = forwardRef<HTMLDivElement, ContainerProps>(
       >
         {children}
       </div>
-    )
+    );
   }
-)
-Container.displayName = "Container"
+);
+Container.displayName = "Container";
 
 // Badge Component
 type BadgeProps = HTMLAttributes<HTMLSpanElement> & {
-  color?: "green" | "red" | "blue" | "orange" | "grey" | "purple"
-}
+  color?: "green" | "red" | "blue" | "orange" | "grey" | "purple";
+};
 
 export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
   ({ className, color = "grey", children, ...props }, ref) => {
@@ -143,13 +143,13 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
       >
         {children}
       </span>
-    )
+    );
   }
-)
-Badge.displayName = "Badge"
+);
+Badge.displayName = "Badge";
 
 // IconBadge Component
-type IconBadgeProps = HTMLAttributes<HTMLSpanElement>
+type IconBadgeProps = HTMLAttributes<HTMLSpanElement>;
 
 export const IconBadge = forwardRef<HTMLSpanElement, IconBadgeProps>(
   ({ className, children, ...props }, ref) => {
@@ -164,13 +164,13 @@ export const IconBadge = forwardRef<HTMLSpanElement, IconBadgeProps>(
       >
         {children}
       </span>
-    )
+    );
   }
-)
-IconBadge.displayName = "IconBadge"
+);
+IconBadge.displayName = "IconBadge";
 
 // IconButton Component
-type IconButtonProps = ButtonHTMLAttributes<HTMLButtonElement>
+type IconButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
 
 export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
   ({ className, children, ...props }, ref) => {
@@ -185,13 +185,13 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
       >
         {children}
       </button>
-    )
+    );
   }
-)
-IconButton.displayName = "IconButton"
+);
+IconButton.displayName = "IconButton";
 
 // Label Component
-type LabelProps = LabelHTMLAttributes<HTMLLabelElement>
+type LabelProps = LabelHTMLAttributes<HTMLLabelElement>;
 
 export const Label = forwardRef<HTMLLabelElement, LabelProps>(
   ({ className, children, ...props }, ref) => {
@@ -203,15 +203,15 @@ export const Label = forwardRef<HTMLLabelElement, LabelProps>(
       >
         {children}
       </label>
-    )
+    );
   }
-)
-Label.displayName = "Label"
+);
+Label.displayName = "Label";
 
 // Input Component
 type InputProps = InputHTMLAttributes<HTMLInputElement> & {
-  label?: string
-}
+  label?: string;
+};
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ className, label, ...props }, ref) => {
@@ -227,13 +227,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           {...props}
         />
       </div>
-    )
+    );
   }
-)
-Input.displayName = "Input"
+);
+Input.displayName = "Input";
 
 // Table Components
-type TableProps = TableHTMLAttributes<HTMLTableElement>
+type TableProps = TableHTMLAttributes<HTMLTableElement>;
 
 const TableRoot = forwardRef<HTMLTableElement, TableProps>(
   ({ className, children, ...props }, ref) => {
@@ -245,12 +245,12 @@ const TableRoot = forwardRef<HTMLTableElement, TableProps>(
       >
         {children}
       </table>
-    )
+    );
   }
-)
-TableRoot.displayName = "Table"
+);
+TableRoot.displayName = "Table";
 
-type TableHeaderProps = HTMLAttributes<HTMLTableSectionElement>
+type TableHeaderProps = HTMLAttributes<HTMLTableSectionElement>;
 
 const TableHeader = forwardRef<HTMLTableSectionElement, TableHeaderProps>(
   ({ className, children, ...props }, ref) => {
@@ -262,12 +262,12 @@ const TableHeader = forwardRef<HTMLTableSectionElement, TableHeaderProps>(
       >
         {children}
       </thead>
-    )
+    );
   }
-)
-TableHeader.displayName = "TableHeader"
+);
+TableHeader.displayName = "TableHeader";
 
-type TableBodyProps = HTMLAttributes<HTMLTableSectionElement>
+type TableBodyProps = HTMLAttributes<HTMLTableSectionElement>;
 
 const TableBody = forwardRef<HTMLTableSectionElement, TableBodyProps>(
   ({ className, children, ...props }, ref) => {
@@ -279,12 +279,12 @@ const TableBody = forwardRef<HTMLTableSectionElement, TableBodyProps>(
       >
         {children}
       </tbody>
-    )
+    );
   }
-)
-TableBody.displayName = "TableBody"
+);
+TableBody.displayName = "TableBody";
 
-type TableRowProps = HTMLAttributes<HTMLTableRowElement>
+type TableRowProps = HTMLAttributes<HTMLTableRowElement>;
 
 const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(
   ({ className, children, ...props }, ref) => {
@@ -299,12 +299,12 @@ const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(
       >
         {children}
       </tr>
-    )
+    );
   }
-)
-TableRow.displayName = "TableRow"
+);
+TableRow.displayName = "TableRow";
 
-type TableHeadProps = ThHTMLAttributes<HTMLTableCellElement>
+type TableHeadProps = ThHTMLAttributes<HTMLTableCellElement>;
 
 const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
   ({ className, children, ...props }, ref) => {
@@ -319,12 +319,12 @@ const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
       >
         {children}
       </th>
-    )
+    );
   }
-)
-TableHead.displayName = "TableHead"
+);
+TableHead.displayName = "TableHead";
 
-type TableCellProps = TdHTMLAttributes<HTMLTableCellElement>
+type TableCellProps = TdHTMLAttributes<HTMLTableCellElement>;
 
 const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(
   ({ className, children, ...props }, ref) => {
@@ -339,10 +339,10 @@ const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(
       >
         {children}
       </td>
-    )
+    );
   }
-)
-TableCell.displayName = "TableCell"
+);
+TableCell.displayName = "TableCell";
 
 export const Table = Object.assign(TableRoot, {
   Header: TableHeader,
@@ -351,10 +351,10 @@ export const Table = Object.assign(TableRoot, {
   Head: TableHead,
   HeaderCell: TableHead,
   Cell: TableCell,
-})
+});
 
 // RadioGroup Components
-type RadioGroupProps = HTMLAttributes<HTMLDivElement>
+type RadioGroupProps = HTMLAttributes<HTMLDivElement>;
 
 const RadioGroupRoot = forwardRef<HTMLDivElement, RadioGroupProps>(
   ({ className, children, ...props }, ref) => {
@@ -366,14 +366,14 @@ const RadioGroupRoot = forwardRef<HTMLDivElement, RadioGroupProps>(
       >
         {children}
       </div>
-    )
+    );
   }
-)
-RadioGroupRoot.displayName = "RadioGroup"
+);
+RadioGroupRoot.displayName = "RadioGroup";
 
 type RadioGroupItemProps = InputHTMLAttributes<HTMLInputElement> & {
-  label?: string
-}
+  label?: string;
+};
 
 const RadioGroupItem = forwardRef<HTMLInputElement, RadioGroupItemProps>(
   ({ className, label, id, ...props }, ref) => {
@@ -391,19 +391,19 @@ const RadioGroupItem = forwardRef<HTMLInputElement, RadioGroupItemProps>(
         />
         {label && <Label htmlFor={id}>{label}</Label>}
       </div>
-    )
+    );
   }
-)
-RadioGroupItem.displayName = "RadioGroupItem"
+);
+RadioGroupItem.displayName = "RadioGroupItem";
 
 export const RadioGroup = Object.assign(RadioGroupRoot, {
   Item: RadioGroupItem,
-})
+});
 
 // Checkbox Component
 type CheckboxProps = Omit<InputHTMLAttributes<HTMLInputElement>, "type"> & {
-  label?: string
-}
+  label?: string;
+};
 
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
   ({ className, label, id, ...props }, ref) => {
@@ -421,7 +421,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
         />
         {label && <Label htmlFor={id}>{label}</Label>}
       </div>
-    )
+    );
   }
-)
-Checkbox.displayName = "Checkbox"
+);
+Checkbox.displayName = "Checkbox";

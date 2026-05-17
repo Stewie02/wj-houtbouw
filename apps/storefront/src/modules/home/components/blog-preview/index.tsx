@@ -1,10 +1,10 @@
-import Image from "next/image"
-import LocalizedClientLink from "@modules/common/components/localized-client-link"
-import BrandButton from "@modules/common/components/brand-button"
-import { BLOG_POSTS } from "@lib/data/blog"
+import Image from "next/image";
+import LocalizedClientLink from "@modules/common/components/localized-client-link";
+import BrandButton from "@modules/common/components/brand-button";
+import { BLOG_POSTS } from "@lib/data/blog";
 
 const BlogPreview = () => {
-  const posts = BLOG_POSTS.slice(0, 3)
+  const posts = BLOG_POSTS.slice(0, 3);
 
   return (
     <div className="py-20 sm:py-[88px]">
@@ -52,13 +52,15 @@ const BlogPreview = () => {
               <p className="font-body text-[14px] text-wj-muted leading-[1.6] mb-2.5 line-clamp-2">
                 {post.excerpt}
               </p>
-              <div className="font-body text-[13px] text-wj-muted">{post.date}</div>
+              <div className="font-body text-[13px] text-wj-muted">
+                {post.date}
+              </div>
             </LocalizedClientLink>
           ))}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default BlogPreview
+export default BlogPreview;

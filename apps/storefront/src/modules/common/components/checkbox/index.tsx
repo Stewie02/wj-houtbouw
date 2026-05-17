@@ -1,20 +1,20 @@
-import { Checkbox, Label } from "@modules/common/components/ui"
-import React from "react"
+import { Checkbox, Label } from "@modules/common/components/ui";
+import React from "react";
 
 type CheckboxProps = {
-  checked?: boolean
-  onChange?: () => void
-  label: string
-  name?: string
-  'data-testid'?: string
-}
+  checked?: boolean;
+  onChange?: () => void;
+  label: string;
+  name?: string;
+  "data-testid"?: string;
+};
 
 const CheckboxWithLabel: React.FC<CheckboxProps> = ({
   checked = true,
   onChange,
   label,
   name,
-  'data-testid': dataTestId
+  "data-testid": dataTestId,
 }) => {
   return (
     <div className="flex items-center space-x-2 ">
@@ -29,14 +29,11 @@ const CheckboxWithLabel: React.FC<CheckboxProps> = ({
         name={name}
         data-testid={dataTestId}
       />
-      <Label
-        htmlFor="checkbox"
-        className="!transform-none !txt-medium"
-      >
+      <Label htmlFor="checkbox" className="!transform-none !txt-medium">
         {label}
       </Label>
     </div>
-  )
-}
+  );
+};
 
-export default CheckboxWithLabel
+export default CheckboxWithLabel;

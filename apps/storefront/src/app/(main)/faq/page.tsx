@@ -1,11 +1,11 @@
-import { Metadata } from "next"
-import FaqAccordion from "@modules/faq/components/faq-accordion"
+import { Metadata } from "next";
+import FaqAccordion from "@modules/faq/components/faq-accordion";
 
 export const metadata: Metadata = {
   title: "Veelgestelde vragen — WJ Houtbouw",
   description:
     "Antwoorden op veelgestelde vragen over ons hout, maatwerk, onderhoud en bezorging.",
-}
+};
 
 const FAQ_CATEGORIES = [
   {
@@ -83,7 +83,7 @@ const FAQ_CATEGORIES = [
       },
     ],
   },
-]
+];
 
 export default function FaqPage() {
   return (
@@ -97,5 +97,5 @@ export default function FaqPage() {
       </div>
       <FaqAccordion categories={FAQ_CATEGORIES} />
     </div>
-  )
+  );
 }

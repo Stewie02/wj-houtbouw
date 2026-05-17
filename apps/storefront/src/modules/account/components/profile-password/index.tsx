@@ -1,27 +1,29 @@
-"use client"
+"use client";
 
-import React from "react"
-import Input from "@modules/common/components/input"
-import AccountInfo from "../account-info"
-import { HttpTypes } from "@medusajs/types"
+import React from "react";
+import Input from "@modules/common/components/input";
+import AccountInfo from "../account-info";
+import { HttpTypes } from "@medusajs/types";
 // TODO: Re-add toast notifications when Toaster component is implemented
 
 type MyInformationProps = {
-  customer: HttpTypes.StoreCustomer
-}
+  customer: HttpTypes.StoreCustomer;
+};
 
-const ProfilePassword: React.FC<MyInformationProps> = ({ customer: _customer }) => {
-  const [successState, setSuccessState] = React.useState(false)
+const ProfilePassword: React.FC<MyInformationProps> = ({
+  customer: _customer,
+}) => {
+  const [successState, setSuccessState] = React.useState(false);
 
   // TODO: Add support for password updates
   const updatePassword = async () => {
     // TODO: Re-add toast notification when Toaster component is implemented
-    console.info("Password update is not implemented")
-  }
+    console.info("Password update is not implemented");
+  };
 
   const clearState = () => {
-    setSuccessState(false)
-  }
+    setSuccessState(false);
+  };
 
   return (
     <form
@@ -65,7 +67,7 @@ const ProfilePassword: React.FC<MyInformationProps> = ({ customer: _customer }) 
         </div>
       </AccountInfo>
     </form>
-  )
-}
+  );
+};
 
-export default ProfilePassword
+export default ProfilePassword;

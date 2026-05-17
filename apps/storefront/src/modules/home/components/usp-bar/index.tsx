@@ -1,4 +1,4 @@
-import { USPS } from "@lib/constants"
+import { USPS } from "@lib/constants";
 
 const UspBar = () => {
   return (
@@ -21,7 +21,7 @@ const UspBar = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default UspBar
+export default UspBar;

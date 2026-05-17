@@ -1,14 +1,18 @@
 type PlaceholderImageProps = {
-  label?: string
-  dark?: boolean
-  className?: string
-}
+  label?: string;
+  dark?: boolean;
+  className?: string;
+};
 
-const PlaceholderImage = ({ label, dark = false, className = "" }: PlaceholderImageProps) => {
+const PlaceholderImage = ({
+  label,
+  dark = false,
+  className = "",
+}: PlaceholderImageProps) => {
   const bg = dark
     ? "repeating-linear-gradient(45deg, #2a2520, #2a2520 2px, #1e1b18 2px, #1e1b18 14px)"
-    : "repeating-linear-gradient(45deg, #DDD8D0, #DDD8D0 2px, #E8E3DC 2px, #E8E3DC 14px)"
-  const color = dark ? "#6B6058" : "#9A8F85"
+    : "repeating-linear-gradient(45deg, #DDD8D0, #DDD8D0 2px, #E8E3DC 2px, #E8E3DC 14px)";
+  const color = dark ? "#6B6058" : "#9A8F85";
 
   return (
     <div
@@ -24,7 +28,7 @@ const PlaceholderImage = ({ label, dark = false, className = "" }: PlaceholderIm
         </span>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default PlaceholderImage
+export default PlaceholderImage;

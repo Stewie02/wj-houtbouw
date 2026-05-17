@@ -1,31 +1,39 @@
-import { listProducts } from "@lib/data/products"
-import { getRegion } from "@lib/data/regions"
-import { getProductPrice } from "@lib/util/get-product-price"
-import { HttpTypes } from "@medusajs/types"
-import LocalizedClientLink from "@modules/common/components/localized-client-link"
-import BrandButton from "@modules/common/components/brand-button"
-import PlaceholderImage from "@modules/common/components/placeholder-image"
+import { listProducts } from "@lib/data/products";
+import { getRegion } from "@lib/data/regions";
+import { getProductPrice } from "@lib/util/get-product-price";
+import { HttpTypes } from "@medusajs/types";
+import LocalizedClientLink from "@modules/common/components/localized-client-link";
+import BrandButton from "@modules/common/components/brand-button";
+import PlaceholderImage from "@modules/common/components/placeholder-image";
 
 type RelatedProductsProps = {
-  product: HttpTypes.StoreProduct
-}
+  product: HttpTypes.StoreProduct;
+};
 
-export default async function RelatedProducts({ product }: RelatedProductsProps) {
-  const region = await getRegion()
-  if (!region) return null
+export default async function RelatedProducts({
+  product,
+}: RelatedProductsProps) {
+  const region = await getRegion();
+  if (!region) return null;
 
   const queryParams: HttpTypes.StoreProductListParams = {
     region_id: region.id,
     is_giftcard: false,
-  }
-  if (product.collection_id) queryParams.collection_id = [product.collection_id]
-  if (product.tags) queryParams.tag_id = product.tags.map((t) => t.id).filter(Boolean) as string[]
+  };
+  if (product.collection_id)
+    queryParams.collection_id = [product.collection_id];
+  if (product.tags)
+    queryParams.tag_id = product.tags
+      .map((t) => t.id)
+      .filter(Boolean) as string[];
 
   const related = await listProducts({ queryParams })
-    .then(({ response }) => response.products.filter((p) => p.id !== product.id).slice(0, 2))
-    .catch(() => [])
+    .then(({ response }) =>
+      response.products.filter((p) => p.id !== product.id).slice(0, 2)
+    )
+    .catch(() => []);
 
-  if (!related.length) return null
+  if (!related.length) return null;
 
   return (
     <div className="py-16 sm:py-20 bg-wj-surface">
@@ -35,14 +43,17 @@ export default async function RelatedProducts({ product }: RelatedProductsProps)
             Complete your setup
           </h2>
           <LocalizedClientLink href="/winkel">
-            <BrandButton variant="outline" className="shrink-0">View all products</BrandButton>
+            <BrandButton variant="outline" className="shrink-0">
+              View all products
+            </BrandButton>
           </LocalizedClientLink>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
           {related.map((p) => {
-            const { cheapestPrice } = getProductPrice({ product: p })
-            const material = (p.metadata?.material as string) ?? p.material ?? null
+            const { cheapestPrice } = getProductPrice({ product: p });
+            const material =
+              (p.metadata?.material as string) ?? p.material ?? null;
             return (
               <LocalizedClientLink key={p.id} href={`/producten/${p.handle}`}>
                 <div className="bg-wj-white border border-wj-border grid grid-cols-[200px_1fr] overflow-hidden hover:shadow-md transition-shadow">
@@ -71,10 +82,10 @@ export default async function RelatedProducts({ product }: RelatedProductsProps)
                   </div>
                 </div>
               </LocalizedClientLink>
-            )
+            );
           })}
         </div>
       </div>
     </div>
-  )
+  );
 }

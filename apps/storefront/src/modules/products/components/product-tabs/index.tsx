@@ -1,16 +1,16 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { HttpTypes } from "@medusajs/types"
+import { useState } from "react";
+import { HttpTypes } from "@medusajs/types";
 
 type ProductTabsProps = {
-  product: HttpTypes.StoreProduct
-}
+  product: HttpTypes.StoreProduct;
+};
 
-const TABS = ["Description", "Technical specs"]
+const TABS = ["Description", "Technical specs"];
 
 const ProductTabs = ({ product }: ProductTabsProps) => {
-  const [active, setActive] = useState("Description")
+  const [active, setActive] = useState("Description");
 
   const specs = [
     { label: "Material", value: product.material },
@@ -28,7 +28,7 @@ const ProductTabs = ({ product }: ProductTabsProps) => {
       label: opt.title ?? "Option",
       value: (opt.values ?? []).map((v) => v.value).join(", "),
     })),
-  ].filter((row) => row.value)
+  ].filter((row) => row.value);
 
   return (
     <div className="border-t border-wj-border bg-wj-white">
@@ -58,8 +58,8 @@ const ProductTabs = ({ product }: ProductTabsProps) => {
             </div>
           )}
 
-          {active === "Technical specs" && (
-            specs.length > 0 ? (
+          {active === "Technical specs" &&
+            (specs.length > 0 ? (
               <table className="w-full border-collapse">
                 <tbody>
                   {specs.map(({ label, value }) => (
@@ -67,19 +67,22 @@ const ProductTabs = ({ product }: ProductTabsProps) => {
                       <td className="py-3 font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-muted w-48">
                         {label}
                       </td>
-                      <td className="py-3 font-body text-[14px] text-wj-text">{value}</td>
+                      <td className="py-3 font-body text-[14px] text-wj-text">
+                        {value}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             ) : (
-              <p className="font-body text-[15px] text-wj-muted">No specifications available.</p>
-            )
-          )}
+              <p className="font-body text-[15px] text-wj-muted">
+                No specifications available.
+              </p>
+            ))}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProductTabs
+export default ProductTabs;

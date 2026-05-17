@@ -1,12 +1,12 @@
-const checkEnvVariables = require("./check-env-variables")
+const checkEnvVariables = require("./check-env-variables");
 
-checkEnvVariables()
+checkEnvVariables();
 
 /**
  * Medusa Cloud-related environment variables
  */
-const S3_HOSTNAME = process.env.MEDUSA_CLOUD_S3_HOSTNAME
-const S3_PATHNAME = process.env.MEDUSA_CLOUD_S3_PATHNAME
+const S3_HOSTNAME = process.env.MEDUSA_CLOUD_S3_HOSTNAME;
+const S3_PATHNAME = process.env.MEDUSA_CLOUD_S3_PATHNAME;
 
 /**
  * @type {import('next').NextConfig}
@@ -25,15 +25,30 @@ const nextConfig = {
       { source: "/afrekenen", destination: "/checkout" },
       { source: "/collecties/:handle", destination: "/collections/:handle" },
       { source: "/categorieen/:path*", destination: "/categories/:path*" },
-      { source: "/bestelling/:id/bevestigd", destination: "/order/:id/confirmed" },
-      { source: "/bestelling/:id/overdracht/:token/accepteren", destination: "/order/:id/transfer/:token/accept" },
-      { source: "/bestelling/:id/overdracht/:token/weigeren", destination: "/order/:id/transfer/:token/decline" },
-      { source: "/bestelling/:id/overdracht/:token", destination: "/order/:id/transfer/:token" },
+      {
+        source: "/bestelling/:id/bevestigd",
+        destination: "/order/:id/confirmed",
+      },
+      {
+        source: "/bestelling/:id/overdracht/:token/accepteren",
+        destination: "/order/:id/transfer/:token/accept",
+      },
+      {
+        source: "/bestelling/:id/overdracht/:token/weigeren",
+        destination: "/order/:id/transfer/:token/decline",
+      },
+      {
+        source: "/bestelling/:id/overdracht/:token",
+        destination: "/order/:id/transfer/:token",
+      },
       { source: "/account/profiel", destination: "/account/profile" },
       { source: "/account/adressen", destination: "/account/addresses" },
-      { source: "/account/bestellingen/details/:id", destination: "/account/orders/details/:id" },
+      {
+        source: "/account/bestellingen/details/:id",
+        destination: "/account/orders/details/:id",
+      },
       { source: "/account/bestellingen", destination: "/account/orders" },
-    ]
+    ];
   },
   reactStrictMode: true,
   logging: {
@@ -73,6 +88,6 @@ const nextConfig = {
         : []),
     ],
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

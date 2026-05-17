@@ -1,15 +1,15 @@
-import { HttpTypes } from "@medusajs/types"
+import { HttpTypes } from "@medusajs/types";
 
 type OrderDetailsProps = {
-  order: HttpTypes.StoreOrder
-  showStatus?: boolean
-}
+  order: HttpTypes.StoreOrder;
+  showStatus?: boolean;
+};
 
 const OrderDetails = ({ order, showStatus }: OrderDetailsProps) => {
   const formatStatus = (str: string) => {
-    const formatted = str.split("_").join(" ")
-    return formatted.slice(0, 1).toUpperCase() + formatted.slice(1)
-  }
+    const formatted = str.split("_").join(" ");
+    return formatted.slice(0, 1).toUpperCase() + formatted.slice(1);
+  };
 
   return (
     <div className="bg-wj-white border border-wj-border p-6 sm:p-8 flex flex-col gap-2">
@@ -29,20 +29,26 @@ const OrderDetails = ({ order, showStatus }: OrderDetailsProps) => {
         <div className="flex flex-wrap gap-x-6 gap-y-1 mt-1">
           <p className="font-body text-[14px] text-wj-muted">
             Order status:{" "}
-            <span className="font-medium text-wj-text" data-testid="order-status">
+            <span
+              className="font-medium text-wj-text"
+              data-testid="order-status"
+            >
               {formatStatus(order.fulfillment_status)}
             </span>
           </p>
           <p className="font-body text-[14px] text-wj-muted">
             Payment status:{" "}
-            <span className="font-medium text-wj-text" data-testid="order-payment-status">
+            <span
+              className="font-medium text-wj-text"
+              data-testid="order-payment-status"
+            >
               {formatStatus(order.payment_status)}
             </span>
           </p>
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default OrderDetails
+export default OrderDetails;

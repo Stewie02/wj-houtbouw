@@ -1,4 +1,4 @@
-import { Container } from "@modules/common/components/ui"
+import { Container } from "@modules/common/components/ui";
 
 const SkeletonProductPreview = () => {
   return (
@@ -9,7 +9,7 @@ const SkeletonProductPreview = () => {
         <div className="w-1/5 h-6 bg-gray-100"></div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SkeletonProductPreview
+export default SkeletonProductPreview;

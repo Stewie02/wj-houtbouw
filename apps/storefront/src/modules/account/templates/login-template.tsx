@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Register from "@modules/account/components/register"
-import Login from "@modules/account/components/login"
+import { useState } from "react";
+import Register from "@modules/account/components/register";
+import Login from "@modules/account/components/login";
 
 export enum LOGIN_VIEW {
   SIGN_IN = "sign-in",
@@ -10,7 +10,7 @@ export enum LOGIN_VIEW {
 }
 
 const LoginTemplate = () => {
-  const [currentView, setCurrentView] = useState("sign-in")
+  const [currentView, setCurrentView] = useState("sign-in");
 
   return (
     <div className="w-full" data-testid="login-page">
@@ -20,7 +20,7 @@ const LoginTemplate = () => {
         <Register setCurrentView={setCurrentView} />
       )}
     </div>
-  )
-}
+  );
+};
 
-export default LoginTemplate
+export default LoginTemplate;

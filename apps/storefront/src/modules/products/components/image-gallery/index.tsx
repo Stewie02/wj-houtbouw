@@ -1,18 +1,18 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Image from "next/image"
-import { HttpTypes } from "@medusajs/types"
-import PlaceholderImage from "@modules/common/components/placeholder-image"
+import { useState } from "react";
+import Image from "next/image";
+import { HttpTypes } from "@medusajs/types";
+import PlaceholderImage from "@modules/common/components/placeholder-image";
 
 type ImageGalleryProps = {
-  images: HttpTypes.StoreProductImage[]
-}
+  images: HttpTypes.StoreProductImage[];
+};
 
 const ImageGallery = ({ images }: ImageGalleryProps) => {
-  const [activeIndex, setActiveIndex] = useState(0)
-  const thumbs = images.length > 0 ? images.slice(0, 4) : Array(4).fill(null)
-  const activeImage = images[activeIndex] ?? null
+  const [activeIndex, setActiveIndex] = useState(0);
+  const thumbs = images.length > 0 ? images.slice(0, 4) : Array(4).fill(null);
+  const activeImage = images[activeIndex] ?? null;
 
   return (
     <div>
@@ -39,7 +39,9 @@ const ImageGallery = ({ images }: ImageGalleryProps) => {
             key={i}
             onClick={() => img && setActiveIndex(i)}
             className={`relative aspect-square overflow-hidden border-2 transition-colors ${
-              activeIndex === i ? "border-wj-green" : "border-wj-border hover:border-wj-muted"
+              activeIndex === i
+                ? "border-wj-green"
+                : "border-wj-border hover:border-wj-muted"
             }`}
           >
             {img?.url ? (
@@ -57,7 +59,7 @@ const ImageGallery = ({ images }: ImageGalleryProps) => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ImageGallery
+export default ImageGallery;

@@ -1,11 +1,11 @@
-import { Metadata } from "next"
-import SectionContainer from "@modules/common/components/section-container"
+import { Metadata } from "next";
+import SectionContainer from "@modules/common/components/section-container";
 
 export const metadata: Metadata = {
   title: "Cookiebeleid — WJ Houtbouw",
   description:
     "Lees welke cookies WJ Houtbouw gebruikt, waarvoor ze dienen en hoe lang ze worden bewaard.",
-}
+};
 
 const NECESSARY_COOKIES = [
   {
@@ -24,7 +24,7 @@ const NECESSARY_COOKIES = [
       "Unieke identifier voor de caching van paginadata per gebruiker, zodat wijzigingen direct zichtbaar zijn.",
     retention: "24 uur",
   },
-]
+];
 
 const STRIPE_COOKIES = [
   {
@@ -39,13 +39,12 @@ const STRIPE_COOKIES = [
       "Ingesteld door Stripe voor fraudepreventie. Helpt het risico van een transactiepoging te beoordelen.",
     retention: "30 minuten",
   },
-]
-
+];
 
 function CookieTable({
   rows,
 }: {
-  rows: { name: string; purpose: string; retention: string }[]
+  rows: { name: string; purpose: string; retention: string }[];
 }) {
   return (
     <div className="overflow-x-auto">
@@ -65,7 +64,10 @@ function CookieTable({
         </thead>
         <tbody>
           {rows.map((row) => (
-            <tr key={row.name} className="border-b border-wj-border last:border-0">
+            <tr
+              key={row.name}
+              className="border-b border-wj-border last:border-0"
+            >
               <td className="py-3 pr-6 align-top">
                 <code className="font-mono text-[13px] bg-wj-surface px-1.5 py-0.5 text-wj-text">
                   {row.name}
@@ -80,7 +82,7 @@ function CookieTable({
         </tbody>
       </table>
     </div>
-  )
+  );
 }
 
 export default function CookiePolicyPage() {
@@ -101,8 +103,8 @@ export default function CookiePolicyPage() {
             functioneren en jouw ervaring te verbeteren. Cookies zijn kleine
             tekstbestanden die door je browser worden opgeslagen. Op deze pagina
             leggen wij uit welke cookies wij gebruiken, waarom, en hoe lang ze
-            worden bewaard. Wij gebruiken uitsluitend
-            noodzakelijke cookies. Heb je vragen? Neem contact met ons op via{" "}
+            worden bewaard. Wij gebruiken uitsluitend noodzakelijke cookies. Heb
+            je vragen? Neem contact met ons op via{" "}
             <a
               href="mailto:info@wjhoutbouw.nl"
               className="text-wj-green underline hover:text-wj-text transition-colors"
@@ -130,9 +132,9 @@ export default function CookiePolicyPage() {
             </h2>
             <p className="font-body text-[14px] text-wj-muted leading-[1.6] mb-5">
               Voor het verwerken van betalingen maken wij gebruik van Stripe.
-              Stripe plaatst onderstaande cookies op onze website ter
-              voorkoming van fraude. Daarnaast plaatst Stripe cookies op het
-              eigen domein (stripe.com) voor operationele doeleinden. Zie het{" "}
+              Stripe plaatst onderstaande cookies op onze website ter voorkoming
+              van fraude. Daarnaast plaatst Stripe cookies op het eigen domein
+              (stripe.com) voor operationele doeleinden. Zie het{" "}
               <a
                 href="https://stripe.com/en-nl/legal/cookies-policy"
                 target="_blank"
@@ -160,5 +162,5 @@ export default function CookiePolicyPage() {
         </div>
       </SectionContainer>
     </div>
-  )
+  );
 }

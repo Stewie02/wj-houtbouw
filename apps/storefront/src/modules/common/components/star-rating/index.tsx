@@ -1,14 +1,19 @@
-import { clx } from "@modules/common/components/ui"
+import { clx } from "@modules/common/components/ui";
 
 type StarRatingProps = {
-  rating?: number
-  max?: number
-  size?: "sm" | "md"
-  className?: string
-}
+  rating?: number;
+  max?: number;
+  size?: "sm" | "md";
+  className?: string;
+};
 
-const StarRating = ({ rating = 5, max = 5, size = "md", className }: StarRatingProps) => {
-  const starSize = size === "sm" ? "w-3 h-3" : "w-[14px] h-[14px]"
+const StarRating = ({
+  rating = 5,
+  max = 5,
+  size = "md",
+  className,
+}: StarRatingProps) => {
+  const starSize = size === "sm" ? "w-3 h-3" : "w-[14px] h-[14px]";
 
   return (
     <div className={clx("flex gap-[3px]", className)}>
@@ -23,7 +28,7 @@ const StarRating = ({ rating = 5, max = 5, size = "md", className }: StarRatingP
         />
       ))}
     </div>
-  )
-}
+  );
+};
 
-export default StarRating
+export default StarRating;

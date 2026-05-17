@@ -1,4 +1,4 @@
-import { Table } from "@modules/common/components/ui"
+import { Table } from "@modules/common/components/ui";
 
 const SkeletonLineItem = () => {
   return (
@@ -29,7 +29,7 @@ const SkeletonLineItem = () => {
         </div>
       </Table.Cell>
     </Table.Row>
-  )
-}
+  );
+};
 
-export default SkeletonLineItem
+export default SkeletonLineItem;

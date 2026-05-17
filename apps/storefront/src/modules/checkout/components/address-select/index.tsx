@@ -1,20 +1,20 @@
-import { Listbox, Transition } from "@headlessui/react"
-import { ChevronUpDown } from "@medusajs/icons"
-import { clx } from "@modules/common/components/ui"
-import { Fragment, useMemo } from "react"
+import { Listbox, Transition } from "@headlessui/react";
+import { ChevronUpDown } from "@medusajs/icons";
+import { clx } from "@modules/common/components/ui";
+import { Fragment, useMemo } from "react";
 
-import compareAddresses from "@lib/util/compare-addresses"
-import { HttpTypes } from "@medusajs/types"
-import Radio from "@modules/common/components/radio"
+import compareAddresses from "@lib/util/compare-addresses";
+import { HttpTypes } from "@medusajs/types";
+import Radio from "@modules/common/components/radio";
 
 type AddressSelectProps = {
-  addresses: HttpTypes.StoreCustomerAddress[]
-  addressInput: HttpTypes.StoreCartAddress | null
+  addresses: HttpTypes.StoreCustomerAddress[];
+  addressInput: HttpTypes.StoreCartAddress | null;
   onSelect: (
     address: HttpTypes.StoreCartAddress | undefined,
     email?: string
-  ) => void
-}
+  ) => void;
+};
 
 const AddressSelect = ({
   addresses,
@@ -22,15 +22,17 @@ const AddressSelect = ({
   onSelect,
 }: AddressSelectProps) => {
   const handleSelect = (id: string) => {
-    const savedAddress = addresses.find((a) => a.id === id)
+    const savedAddress = addresses.find((a) => a.id === id);
     if (savedAddress) {
-      onSelect(savedAddress as HttpTypes.StoreCartAddress)
+      onSelect(savedAddress as HttpTypes.StoreCartAddress);
     }
-  }
+  };
 
   const selectedAddress = useMemo(() => {
-    return addresses.find((a) => addressInput && compareAddresses(a, addressInput))
-  }, [addresses, addressInput])
+    return addresses.find(
+      (a) => addressInput && compareAddresses(a, addressInput)
+    );
+  }, [addresses, addressInput]);
 
   return (
     <Listbox onChange={handleSelect} value={selectedAddress?.id}>
@@ -96,20 +98,18 @@ const AddressSelect = ({
                         <span>
                           {address.postal_code}, {address.city}
                         </span>
-                        <span>
-                          {address.country_code?.toUpperCase()}
-                        </span>
+                        <span>{address.country_code?.toUpperCase()}</span>
                       </div>
                     </div>
                   </div>
                 </Listbox.Option>
-              )
+              );
             })}
           </Listbox.Options>
         </Transition>
       </div>
     </Listbox>
-  )
-}
+  );
+};
 
-export default AddressSelect
+export default AddressSelect;

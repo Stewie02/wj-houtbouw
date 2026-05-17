@@ -21,7 +21,7 @@ const SkeletonOrderConfirmed = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SkeletonOrderConfirmed
+export default SkeletonOrderConfirmed;

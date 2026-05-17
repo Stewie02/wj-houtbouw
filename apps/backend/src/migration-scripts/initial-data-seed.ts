@@ -7,14 +7,12 @@ import {
 } from "@medusajs/framework/utils";
 import {
   createApiKeysWorkflow,
-  createCollectionsWorkflow,
   createInventoryLevelsWorkflow,
   createProductCategoriesWorkflow,
   createProductsWorkflow,
   createRegionsWorkflow,
   createSalesChannelsWorkflow,
   createShippingOptionsWorkflow,
-  createShippingProfilesWorkflow,
   createStockLocationsWorkflow,
   createStoresWorkflow,
   createTaxRegionsWorkflow,
@@ -72,7 +70,7 @@ export default async function initial_data_seed({
   });
 
   const {
-    result: [store],
+    result: [_store],
   } = await createStoresWorkflow(container).run({
     input: {
       stores: [

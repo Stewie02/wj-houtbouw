@@ -1,7 +1,7 @@
-import ItemsPreviewTemplate from "@modules/cart/templates/preview"
-import DiscountCode from "@modules/checkout/components/discount-code"
-import CartTotals from "@modules/common/components/cart-totals"
-import { HttpTypes } from "@medusajs/types"
+import ItemsPreviewTemplate from "@modules/cart/templates/preview";
+import DiscountCode from "@modules/checkout/components/discount-code";
+import CartTotals from "@modules/common/components/cart-totals";
+import { HttpTypes } from "@medusajs/types";
 
 const CheckoutSummary = ({ cart }: { cart: HttpTypes.StoreCart }) => {
   return (
@@ -25,7 +25,7 @@ const CheckoutSummary = ({ cart }: { cart: HttpTypes.StoreCart }) => {
         <CartTotals totals={cart} />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CheckoutSummary
+export default CheckoutSummary;

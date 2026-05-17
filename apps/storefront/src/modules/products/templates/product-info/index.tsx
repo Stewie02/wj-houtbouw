@@ -1,15 +1,15 @@
-import { HttpTypes } from "@medusajs/types"
-import BrandTag from "@modules/common/components/brand-tag"
-import StarRating from "@modules/common/components/star-rating"
+import { HttpTypes } from "@medusajs/types";
+import BrandTag from "@modules/common/components/brand-tag";
+import StarRating from "@modules/common/components/star-rating";
 
 type ProductInfoProps = {
-  product: HttpTypes.StoreProduct
-}
+  product: HttpTypes.StoreProduct;
+};
 
 const ProductInfo = ({ product }: ProductInfoProps) => {
   const material =
-    (product.metadata?.material as string) ?? product.material ?? null
-  const tag = (product.metadata?.tag as string) ?? null
+    (product.metadata?.material as string) ?? product.material ?? null;
+  const tag = (product.metadata?.tag as string) ?? null;
 
   return (
     <div id="product-info" className="pt-2">
@@ -37,7 +37,9 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
       {/* Rating */}
       <div className="flex items-center gap-2.5 mb-6">
         <StarRating />
-        <span className="font-body text-[13px] text-wj-muted">4.9 · 124 reviews</span>
+        <span className="font-body text-[13px] text-wj-muted">
+          4.9 · 124 reviews
+        </span>
       </div>
 
       {/* Description */}
@@ -50,7 +52,7 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
         </p>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default ProductInfo
+export default ProductInfo;

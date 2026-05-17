@@ -1,4 +1,4 @@
-import LocalizedClientLink from "@modules/common/components/localized-client-link"
+import LocalizedClientLink from "@modules/common/components/localized-client-link";
 
 const Help = () => {
   return (
@@ -21,7 +21,7 @@ const Help = () => {
         </LocalizedClientLink>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Help
+export default Help;

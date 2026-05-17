@@ -1,17 +1,17 @@
-import { convertToLocale } from "@lib/util/money"
-import { HttpTypes } from "@medusajs/types"
+import { convertToLocale } from "@lib/util/money";
+import { HttpTypes } from "@medusajs/types";
 
-import LocalizedClientLink from "@modules/common/components/localized-client-link"
+import LocalizedClientLink from "@modules/common/components/localized-client-link";
 
 type OrderSummaryProps = {
-  order: HttpTypes.StoreOrder
-}
+  order: HttpTypes.StoreOrder;
+};
 
 const OrderSummary = ({ order }: OrderSummaryProps) => {
   const getAmount = (amount?: number | null) => {
-    if (amount == null) return null
-    return convertToLocale({ amount, currency_code: order.currency_code })
-  }
+    if (amount == null) return null;
+    return convertToLocale({ amount, currency_code: order.currency_code });
+  };
 
   return (
     <div className="bg-wj-white border border-wj-border p-6 sm:p-8 flex flex-col gap-4">
@@ -62,7 +62,7 @@ const OrderSummary = ({ order }: OrderSummaryProps) => {
         Continue shopping
       </LocalizedClientLink>
     </div>
-  )
-}
+  );
+};
 
-export default OrderSummary
+export default OrderSummary;

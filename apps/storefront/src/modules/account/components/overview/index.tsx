@@ -1,17 +1,17 @@
-import LocalizedClientLink from "@modules/common/components/localized-client-link"
-import { convertToLocale } from "@lib/util/money"
-import { HttpTypes } from "@medusajs/types"
+import LocalizedClientLink from "@modules/common/components/localized-client-link";
+import { convertToLocale } from "@lib/util/money";
+import { HttpTypes } from "@medusajs/types";
 
 type OverviewProps = {
-  customer: HttpTypes.StoreCustomer | null
-  orders: HttpTypes.StoreOrder[] | null
-}
+  customer: HttpTypes.StoreCustomer | null;
+  orders: HttpTypes.StoreOrder[] | null;
+};
 
 const Overview = ({ customer, orders }: OverviewProps) => {
   return (
     <div data-testid="overview-page-wrapper" className="flex flex-col gap-8">
       {/* Stats */}
-      <div className="grid grid-cols-2 sm:grid-cols-2 gap-4">        
+      <div className="grid grid-cols-2 sm:grid-cols-2 gap-4">
         <div className="bg-wj-white border border-wj-border p-6">
           <p className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-muted mb-2">
             Addresses
@@ -62,25 +62,50 @@ const Overview = ({ customer, orders }: OverviewProps) => {
               >
                 <div className="bg-wj-white border border-wj-border p-4 sm:p-5 hover:border-wj-text transition-colors grid grid-cols-3 sm:grid-cols-4 gap-4 items-center">
                   <div>
-                    <p className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-muted mb-1">Date</p>
-                    <p className="font-body text-[13px] text-wj-text" data-testid="order-created-date">
-                      {new Date(order.created_at).toLocaleDateString("nl-NL", { day: "numeric", month: "short", year: "numeric" })}
+                    <p className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-muted mb-1">
+                      Date
+                    </p>
+                    <p
+                      className="font-body text-[13px] text-wj-text"
+                      data-testid="order-created-date"
+                    >
+                      {new Date(order.created_at).toLocaleDateString("nl-NL", {
+                        day: "numeric",
+                        month: "short",
+                        year: "numeric",
+                      })}
                     </p>
                   </div>
                   <div>
-                    <p className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-muted mb-1">Order</p>
-                    <p className="font-body text-[13px] text-wj-text" data-testid="order-id" data-value={order.display_id}>
+                    <p className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-muted mb-1">
+                      Order
+                    </p>
+                    <p
+                      className="font-body text-[13px] text-wj-text"
+                      data-testid="order-id"
+                      data-value={order.display_id}
+                    >
                       #{order.display_id}
                     </p>
                   </div>
                   <div>
-                    <p className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-muted mb-1">Total</p>
-                    <p className="font-body font-semibold text-[13px] text-wj-text" data-testid="order-amount">
-                      {convertToLocale({ amount: order.total, currency_code: order.currency_code })}
+                    <p className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-muted mb-1">
+                      Total
+                    </p>
+                    <p
+                      className="font-body font-semibold text-[13px] text-wj-text"
+                      data-testid="order-amount"
+                    >
+                      {convertToLocale({
+                        amount: order.total,
+                        currency_code: order.currency_code,
+                      })}
                     </p>
                   </div>
                   <div className="hidden sm:flex justify-end">
-                    <span className="font-body text-[13px] text-wj-green font-medium">View →</span>
+                    <span className="font-body text-[13px] text-wj-green font-medium">
+                      View →
+                    </span>
                   </div>
                 </div>
               </LocalizedClientLink>
@@ -88,7 +113,10 @@ const Overview = ({ customer, orders }: OverviewProps) => {
           </div>
         ) : (
           <div className="bg-wj-white border border-wj-border p-8 text-center">
-            <p className="font-body text-[15px] text-wj-muted" data-testid="no-orders-message">
+            <p
+              className="font-body text-[15px] text-wj-muted"
+              data-testid="no-orders-message"
+            >
               You haven&apos;t placed any orders yet.
             </p>
             <LocalizedClientLink
@@ -101,7 +129,7 @@ const Overview = ({ customer, orders }: OverviewProps) => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Overview
+export default Overview;

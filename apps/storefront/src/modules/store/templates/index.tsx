@@ -1,35 +1,41 @@
-import { Suspense } from "react"
-import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
-import PaginatedProducts from "./paginated-products"
-import BrandButton from "@modules/common/components/brand-button"
-import Breadcrumb from "@modules/common/components/breadcrumb"
-import LocalizedClientLink from "@modules/common/components/localized-client-link"
-import SkeletonProductGrid from "@modules/skeletons/templates/skeleton-product-grid"
-import { USPS } from "@lib/constants"
+import { Suspense } from "react";
+import { SortOptions } from "@modules/store/components/refinement-list/sort-products";
+import PaginatedProducts from "./paginated-products";
+import BrandButton from "@modules/common/components/brand-button";
+import Breadcrumb from "@modules/common/components/breadcrumb";
+import LocalizedClientLink from "@modules/common/components/localized-client-link";
+import SkeletonProductGrid from "@modules/skeletons/templates/skeleton-product-grid";
+import { USPS } from "@lib/constants";
 
 const StoreTemplate = ({
   sortBy,
   page,
 }: {
-  sortBy?: SortOptions
-  page?: string
+  sortBy?: SortOptions;
+  page?: string;
 }) => {
-  const pageNumber = page ? parseInt(page) : 1
+  const pageNumber = page ? parseInt(page) : 1;
 
   return (
     <div className="bg-wj-bg min-h-screen">
       {/* Dark page header */}
       <div className="bg-wj-dark pt-14 pb-12">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-8 lg:px-12">
-          <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Shop" }]} dark />
+          <Breadcrumb
+            items={[{ label: "Home", href: "/" }, { label: "Shop" }]}
+            dark
+          />
           <div className="mt-3 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-end">
             <h1 className="font-display font-bold text-[40px] sm:text-[52px] text-wj-white tracking-[-0.02em] leading-[1.08] mt-3">
               Drie producten.{" "}
-              <span className="font-display font-normal italic text-wj-wood">Goed gemaakt.</span>
+              <span className="font-display font-normal italic text-wj-wood">
+                Goed gemaakt.
+              </span>
             </h1>
             <p className="font-body text-[14px] sm:text-[15px] text-[rgba(254,252,249,0.6)] leading-[1.75]">
-              Geen breed assortiment, maar drie producten die we door en door kennen. Elk formaat,
-              elke afwerking en elke configuratie komt uit onze eigen werkplaats in Drachten.
+              Geen breed assortiment, maar drie producten die we door en door
+              kennen. Elk formaat, elke afwerking en elke configuratie komt uit
+              onze eigen werkplaats in Drachten.
             </p>
           </div>
         </div>
@@ -38,10 +44,7 @@ const StoreTemplate = ({
       {/* Product list */}
       <div className="max-w-[1280px] mx-auto px-4 sm:px-8 lg:px-12 pt-16 pb-4">
         <Suspense fallback={<SkeletonProductGrid />}>
-          <PaginatedProducts
-            sortBy={sortBy}
-            page={pageNumber}
-          />
+          <PaginatedProducts sortBy={sortBy} page={pageNumber} />
         </Suspense>
 
         {/* Custom / bespoke CTA */}
@@ -54,16 +57,21 @@ const StoreTemplate = ({
               Maatwerk en configuraties
             </h3>
             <p className="font-body text-[14px] sm:text-[15px] text-wj-muted leading-[1.7] max-w-[560px]">
-              Zie je jouw ideale configuratie er niet bij? Laat het ons weten. We werken regelmatig aan
-              maatwerk en denken graag met je mee over afmetingen, afwerking of andere specifieke wensen.
+              Zie je jouw ideale configuratie er niet bij? Laat het ons weten.
+              We werken regelmatig aan maatwerk en denken graag met je mee over
+              afmetingen, afwerking of andere specifieke wensen.
             </p>
           </div>
           <div className="flex flex-col gap-3 shrink-0">
             <LocalizedClientLink href="/contact">
-              <BrandButton size="lg" className="w-full">Vraag een offerte aan</BrandButton>
+              <BrandButton size="lg" className="w-full">
+                Vraag een offerte aan
+              </BrandButton>
             </LocalizedClientLink>
             <LocalizedClientLink href="/over-ons">
-              <BrandButton size="lg" variant="outline" className="w-full">Bezoek onze werkplaats</BrandButton>
+              <BrandButton size="lg" variant="outline" className="w-full">
+                Bezoek onze werkplaats
+              </BrandButton>
             </LocalizedClientLink>
           </div>
         </div>
@@ -71,11 +79,18 @@ const StoreTemplate = ({
         {/* USP strip */}
         <div className="mt-1 grid grid-cols-2 lg:grid-cols-4">
           {USPS.map((usp, i) => (
-            <div key={usp.title} className={`p-7 sm:p-8 ${i % 2 === 0 ? "bg-wj-green" : "bg-wj-green-light"}`}>
-              <div className={`font-display font-semibold text-[15px] sm:text-[16px] mb-2 ${i % 2 === 0 ? "text-wj-white" : "text-wj-green"}`}>
+            <div
+              key={usp.title}
+              className={`p-7 sm:p-8 ${i % 2 === 0 ? "bg-wj-green" : "bg-wj-green-light"}`}
+            >
+              <div
+                className={`font-display font-semibold text-[15px] sm:text-[16px] mb-2 ${i % 2 === 0 ? "text-wj-white" : "text-wj-green"}`}
+              >
                 {usp.title}
               </div>
-              <p className={`font-body text-[13px] leading-[1.6] ${i % 2 === 0 ? "text-[rgba(255,255,255,0.65)]" : "text-wj-muted"}`}>
+              <p
+                className={`font-body text-[13px] leading-[1.6] ${i % 2 === 0 ? "text-[rgba(255,255,255,0.65)]" : "text-wj-muted"}`}
+              >
                 {usp.description}
               </p>
             </div>
@@ -85,7 +100,7 @@ const StoreTemplate = ({
 
       <div className="pb-24" />
     </div>
-  )
-}
+  );
+};
 
-export default StoreTemplate
+export default StoreTemplate;

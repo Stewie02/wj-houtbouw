@@ -1,16 +1,16 @@
-import { listProducts } from "@lib/data/products"
-import { HttpTypes } from "@medusajs/types"
-import { Text } from "@modules/common/components/ui"
+import { listProducts } from "@lib/data/products";
+import { HttpTypes } from "@medusajs/types";
+import { Text } from "@modules/common/components/ui";
 
-import InteractiveLink from "@modules/common/components/interactive-link"
-import ProductPreview from "@modules/products/components/product-preview"
+import InteractiveLink from "@modules/common/components/interactive-link";
+import ProductPreview from "@modules/products/components/product-preview";
 
 export default async function ProductRail({
   collection,
   region,
 }: {
-  collection: HttpTypes.StoreCollection
-  region: HttpTypes.StoreRegion
+  collection: HttpTypes.StoreCollection;
+  region: HttpTypes.StoreRegion;
 }) {
   const {
     response: { products: pricedProducts },
@@ -19,10 +19,10 @@ export default async function ProductRail({
       collection_id: collection.id,
       fields: "*variants.calculated_price",
     },
-  })
+  });
 
   if (!pricedProducts) {
-    return null
+    return null;
   }
 
   return (
@@ -42,5 +42,5 @@ export default async function ProductRail({
           ))}
       </ul>
     </div>
-  )
+  );
 }

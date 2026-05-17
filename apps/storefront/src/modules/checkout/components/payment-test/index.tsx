@@ -1,4 +1,4 @@
-import { Badge } from "@modules/common/components/ui"
+import { Badge } from "@modules/common/components/ui";
 
 const PaymentTest = ({ className }: { className?: string }) => {
   return (
@@ -6,7 +6,7 @@ const PaymentTest = ({ className }: { className?: string }) => {
       <span className="font-semibold">Attention:</span> For testing purposes
       only.
     </Badge>
-  )
-}
+  );
+};
 
-export default PaymentTest
+export default PaymentTest;

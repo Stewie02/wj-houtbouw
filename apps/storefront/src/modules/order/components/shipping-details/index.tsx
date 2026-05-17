@@ -1,9 +1,9 @@
-import { convertToLocale } from "@lib/util/money"
-import { HttpTypes } from "@medusajs/types"
+import { convertToLocale } from "@lib/util/money";
+import { HttpTypes } from "@medusajs/types";
 
 type ShippingDetailsProps = {
-  order: HttpTypes.StoreOrder
-}
+  order: HttpTypes.StoreOrder;
+};
 
 const ShippingDetails = ({ order }: ShippingDetailsProps) => {
   return (
@@ -17,14 +17,16 @@ const ShippingDetails = ({ order }: ShippingDetailsProps) => {
             Shipping address
           </p>
           <p className="font-body text-[14px] text-wj-text">
-            {order.shipping_address?.first_name} {order.shipping_address?.last_name}
+            {order.shipping_address?.first_name}{" "}
+            {order.shipping_address?.last_name}
           </p>
           <p className="font-body text-[14px] text-wj-text">
             {order.shipping_address?.address_1}{" "}
             {order.shipping_address?.address_2}
           </p>
           <p className="font-body text-[14px] text-wj-text">
-            {order.shipping_address?.postal_code}, {order.shipping_address?.city}
+            {order.shipping_address?.postal_code},{" "}
+            {order.shipping_address?.city}
           </p>
           <p className="font-body text-[14px] text-wj-text">
             {order.shipping_address?.country_code?.toUpperCase()}
@@ -57,7 +59,7 @@ const ShippingDetails = ({ order }: ShippingDetailsProps) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ShippingDetails
+export default ShippingDetails;

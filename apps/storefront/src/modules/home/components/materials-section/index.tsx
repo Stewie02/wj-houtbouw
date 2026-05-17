@@ -1,4 +1,4 @@
-import PlaceholderImage from "@modules/common/components/placeholder-image"
+import PlaceholderImage from "@modules/common/components/placeholder-image";
 
 const MATERIALS = [
   {
@@ -22,7 +22,7 @@ const MATERIALS = [
     note: "Altijd persoonlijk",
     dark: false,
   },
-]
+];
 
 const MaterialsSection = () => {
   return (
@@ -86,7 +86,7 @@ const MaterialsSection = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default MaterialsSection
+export default MaterialsSection;

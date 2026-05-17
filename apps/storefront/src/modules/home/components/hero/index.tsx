@@ -1,20 +1,23 @@
-import LocalizedClientLink from "@modules/common/components/localized-client-link"
-import BrandButton from "@modules/common/components/brand-button"
-import BrandTag from "@modules/common/components/brand-tag"
-import PlaceholderImage from "@modules/common/components/placeholder-image"
+import LocalizedClientLink from "@modules/common/components/localized-client-link";
+import BrandButton from "@modules/common/components/brand-button";
+import BrandTag from "@modules/common/components/brand-tag";
+import PlaceholderImage from "@modules/common/components/placeholder-image";
 
 const STATS = [
   { value: "6+", label: "jaar vakmanschap" },
   { value: "FSC 100%", label: "gecertificeerd hout" },
   { value: "Dutch", label: "made" },
-]
+];
 
 const Hero = () => {
   return (
     <div className="relative min-h-[600px] h-[92vh] overflow-hidden flex">
       {/* Background */}
       <div className="absolute inset-0">
-        <PlaceholderImage label="hero — outdoor lifestyle, picnic table in garden setting" dark />
+        <PlaceholderImage
+          label="hero — outdoor lifestyle, picnic table in garden setting"
+          dark
+        />
       </div>
 
       {/* Gradient overlay */}
@@ -29,7 +32,10 @@ const Hero = () => {
       {/* Content */}
       <div className="relative max-w-[1280px] mx-auto px-4 sm:px-8 lg:px-12 flex items-center w-full">
         <div className="max-w-[620px]">
-          <BrandTag variant="wood" className="bg-[rgba(196,132,58,0.2)] text-wj-wood">
+          <BrandTag
+            variant="wood"
+            className="bg-[rgba(196,132,58,0.2)] text-wj-wood"
+          >
             Vakmanschap uit Nederland
           </BrandTag>
 
@@ -80,7 +86,7 @@ const Hero = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Hero
+export default Hero;

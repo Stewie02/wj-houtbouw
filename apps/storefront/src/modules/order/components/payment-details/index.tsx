@@ -1,15 +1,15 @@
-import { isStripeLike, paymentInfoMap } from "@lib/constants"
-import { convertToLocale } from "@lib/util/money"
-import { HttpTypes } from "@medusajs/types"
+import { isStripeLike, paymentInfoMap } from "@lib/constants";
+import { convertToLocale } from "@lib/util/money";
+import { HttpTypes } from "@medusajs/types";
 
 type PaymentDetailsProps = {
-  order: HttpTypes.StoreOrder
-}
+  order: HttpTypes.StoreOrder;
+};
 
 const PaymentDetails = ({ order }: PaymentDetailsProps) => {
-  const payment = order.payment_collections?.[0].payments?.[0]
+  const payment = order.payment_collections?.[0].payments?.[0];
 
-  if (!payment) return null
+  if (!payment) return null;
 
   return (
     <div className="bg-wj-white border border-wj-border p-6 sm:p-8">
@@ -48,7 +48,7 @@ const PaymentDetails = ({ order }: PaymentDetailsProps) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default PaymentDetails
+export default PaymentDetails;

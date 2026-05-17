@@ -1,12 +1,12 @@
 export type BlogPost = {
-  slug: string
-  title: string
-  category: string
-  date: string
-  excerpt: string
-  image?: string
-  sections: { heading?: string; body: string }[]
-}
+  slug: string;
+  title: string;
+  category: string;
+  date: string;
+  excerpt: string;
+  image?: string;
+  sections: { heading?: string; body: string }[];
+};
 
 export const BLOG_POSTS: BlogPost[] = [
   {
@@ -96,8 +96,8 @@ export const BLOG_POSTS: BlogPost[] = [
       },
     ],
   },
-]
+];
 
 export function getBlogPost(slug: string): BlogPost | undefined {
-  return BLOG_POSTS.find((p) => p.slug === slug)
+  return BLOG_POSTS.find((p) => p.slug === slug);
 }

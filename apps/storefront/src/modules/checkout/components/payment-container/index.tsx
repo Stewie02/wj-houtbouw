@@ -1,19 +1,19 @@
-import { Radio as RadioGroupOption } from "@headlessui/react"
-import { Text, clx } from "@modules/common/components/ui"
-import React, { type JSX } from "react"
+import { Radio as RadioGroupOption } from "@headlessui/react";
+import { Text, clx } from "@modules/common/components/ui";
+import React, { type JSX } from "react";
 
-import Radio from "@modules/common/components/radio"
+import Radio from "@modules/common/components/radio";
 
-import { isManual } from "@lib/constants"
-import PaymentTest from "../payment-test"
+import { isManual } from "@lib/constants";
+import PaymentTest from "../payment-test";
 
 type PaymentContainerProps = {
-  paymentProviderId: string
-  selectedPaymentOptionId: string | null
-  disabled?: boolean
-  paymentInfoMap: Record<string, { title: string; icon: JSX.Element }>
-  children?: React.ReactNode
-}
+  paymentProviderId: string;
+  selectedPaymentOptionId: string | null;
+  disabled?: boolean;
+  paymentInfoMap: Record<string, { title: string; icon: JSX.Element }>;
+  children?: React.ReactNode;
+};
 
 const PaymentContainer: React.FC<PaymentContainerProps> = ({
   paymentProviderId,
@@ -22,7 +22,7 @@ const PaymentContainer: React.FC<PaymentContainerProps> = ({
   disabled = false,
   children,
 }) => {
-  const isDevelopment = process.env.NODE_ENV === "development"
+  const isDevelopment = process.env.NODE_ENV === "development";
 
   return (
     <RadioGroupOption
@@ -56,7 +56,7 @@ const PaymentContainer: React.FC<PaymentContainerProps> = ({
       )}
       {children}
     </RadioGroupOption>
-  )
-}
+  );
+};
 
-export default PaymentContainer
+export default PaymentContainer;

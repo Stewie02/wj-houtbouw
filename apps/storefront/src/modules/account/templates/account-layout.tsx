@@ -1,13 +1,16 @@
-import React from "react"
-import AccountNav from "../components/account-nav"
-import { HttpTypes } from "@medusajs/types"
+import React from "react";
+import AccountNav from "../components/account-nav";
+import { HttpTypes } from "@medusajs/types";
 
 interface AccountLayoutProps {
-  customer: HttpTypes.StoreCustomer | null
-  children: React.ReactNode
+  customer: HttpTypes.StoreCustomer | null;
+  children: React.ReactNode;
 }
 
-const AccountLayout: React.FC<AccountLayoutProps> = ({ customer, children }) => {
+const AccountLayout: React.FC<AccountLayoutProps> = ({
+  customer,
+  children,
+}) => {
   return (
     <div className="bg-wj-bg min-h-screen" data-testid="account-page">
       {/* Page header */}
@@ -17,7 +20,9 @@ const AccountLayout: React.FC<AccountLayoutProps> = ({ customer, children }) => 
             {customer ? `Hello, ${customer.first_name}` : "My account"}
           </h1>
           {customer && (
-            <p className="font-body text-[14px] text-wj-muted mt-2">{customer.email}</p>
+            <p className="font-body text-[14px] text-wj-muted mt-2">
+              {customer.email}
+            </p>
           )}
         </div>
       </div>
@@ -37,7 +42,7 @@ const AccountLayout: React.FC<AccountLayoutProps> = ({ customer, children }) => 
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default AccountLayout
+export default AccountLayout;

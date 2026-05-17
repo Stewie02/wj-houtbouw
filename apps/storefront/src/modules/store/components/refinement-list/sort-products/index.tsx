@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
-import FilterRadioGroup from "@modules/common/components/filter-radio-group"
+import FilterRadioGroup from "@modules/common/components/filter-radio-group";
 
-export type SortOptions = "price_asc" | "price_desc" | "created_at"
+export type SortOptions = "price_asc" | "price_desc" | "created_at";
 
 type SortProductsProps = {
-  sortBy: SortOptions
-  setQueryParams: (name: string, value: SortOptions) => void
-  "data-testid"?: string
-}
+  sortBy: SortOptions;
+  setQueryParams: (name: string, value: SortOptions) => void;
+  "data-testid"?: string;
+};
 
 const sortOptions = [
   {
@@ -23,7 +23,7 @@ const sortOptions = [
     value: "price_desc",
     label: "Price: High -> Low",
   },
-]
+];
 
 const SortProducts = ({
   "data-testid": dataTestId,
@@ -31,8 +31,8 @@ const SortProducts = ({
   setQueryParams,
 }: SortProductsProps) => {
   const handleChange = (value: string) => {
-    setQueryParams("sortBy", value as SortOptions)
-  }
+    setQueryParams("sortBy", value as SortOptions);
+  };
 
   return (
     <FilterRadioGroup
@@ -42,7 +42,7 @@ const SortProducts = ({
       handleChange={handleChange}
       data-testid={dataTestId}
     />
-  )
-}
+  );
+};
 
-export default SortProducts
+export default SortProducts;

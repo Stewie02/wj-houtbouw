@@ -1,64 +1,63 @@
-"use client"
+"use client";
 
 import {
   deleteCustomerAddress,
   updateCustomerAddress,
-} from "@lib/data/customer"
-import useToggleState from "@lib/hooks/use-toggle-state"
-import { PencilSquare as Edit, Trash } from "@medusajs/icons"
-import { HttpTypes } from "@medusajs/types"
-import CountrySelect from "@modules/checkout/components/country-select"
-import { SubmitButton } from "@modules/checkout/components/submit-button"
-import Input from "@modules/common/components/input"
-import Modal from "@modules/common/components/modal"
-import { Heading, Text, clx } from "@modules/common/components/ui"
-import BrandButton from "@modules/common/components/brand-button"
-import Spinner from "@modules/common/icons/spinner"
-import React, { useActionState, useEffect, useState } from "react"
+} from "@lib/data/customer";
+import useToggleState from "@lib/hooks/use-toggle-state";
+import { PencilSquare as Edit, Trash } from "@medusajs/icons";
+import { HttpTypes } from "@medusajs/types";
+import CountrySelect from "@modules/checkout/components/country-select";
+import { SubmitButton } from "@modules/checkout/components/submit-button";
+import Input from "@modules/common/components/input";
+import Modal from "@modules/common/components/modal";
+import { Heading, clx } from "@modules/common/components/ui";
+import BrandButton from "@modules/common/components/brand-button";
+import Spinner from "@modules/common/icons/spinner";
+import React, { useActionState, useEffect, useState } from "react";
 
 type EditAddressProps = {
-  region: HttpTypes.StoreRegion
-  address: HttpTypes.StoreCustomerAddress
-  isActive?: boolean
-}
+  region: HttpTypes.StoreRegion;
+  address: HttpTypes.StoreCustomerAddress;
+  isActive?: boolean;
+};
 
 const EditAddress: React.FC<EditAddressProps> = ({
   region,
   address,
   isActive = false,
 }) => {
-  const [removing, setRemoving] = useState(false)
-  const [successState, setSuccessState] = useState(false)
-  const { state, open, close: closeModal } = useToggleState(false)
+  const [removing, setRemoving] = useState(false);
+  const [successState, setSuccessState] = useState(false);
+  const { state, open, close: closeModal } = useToggleState(false);
 
   const [formState, formAction] = useActionState(updateCustomerAddress, {
     success: false,
     error: null,
-  } as { success: boolean; error: string | null })
+  } as { success: boolean; error: string | null });
 
   const close = () => {
-    setSuccessState(false)
-    closeModal()
-  }
+    setSuccessState(false);
+    closeModal();
+  };
 
   useEffect(() => {
     if (successState) {
-      close()
+      close();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [successState])
+  }, [successState]);
 
   useEffect(() => {
     if (formState.success) {
-      setSuccessState(true)
+      setSuccessState(true);
     }
-  }, [formState])
+  }, [formState]);
 
   const removeAddress = async () => {
-    setRemoving(true)
-    await deleteCustomerAddress(address.id)
-    setRemoving(false)
-  }
+    setRemoving(true);
+    await deleteCustomerAddress(address.id);
+    setRemoving(false);
+  };
 
   return (
     <>
@@ -70,17 +69,24 @@ const EditAddress: React.FC<EditAddressProps> = ({
         data-testid="address-container"
       >
         <div className="flex flex-col gap-1">
-          <p className="font-body font-semibold text-[14px] text-wj-text" data-testid="address-name">
+          <p
+            className="font-body font-semibold text-[14px] text-wj-text"
+            data-testid="address-name"
+          >
             {address.first_name} {address.last_name}
           </p>
           {address.company && (
-            <p className="font-body text-[13px] text-wj-muted" data-testid="address-company">
+            <p
+              className="font-body text-[13px] text-wj-muted"
+              data-testid="address-company"
+            >
               {address.company}
             </p>
           )}
           <div className="font-body text-[13px] text-wj-muted mt-1 flex flex-col">
             <span data-testid="address-address">
-              {address.address_1}{address.address_2 && `, ${address.address_2}`}
+              {address.address_1}
+              {address.address_2 && `, ${address.address_2}`}
             </span>
             <span data-testid="address-postal-city">
               {address.postal_code}, {address.city}
@@ -209,13 +215,15 @@ const EditAddress: React.FC<EditAddressProps> = ({
               >
                 Cancel
               </BrandButton>
-              <SubmitButton data-testid="save-button">Save address</SubmitButton>
+              <SubmitButton data-testid="save-button">
+                Save address
+              </SubmitButton>
             </div>
           </Modal.Footer>
         </form>
       </Modal>
     </>
-  )
-}
+  );
+};
 
-export default EditAddress
+export default EditAddress;

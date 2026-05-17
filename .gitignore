@@ -42,6 +42,9 @@ yarn-error.log*
 # Turbo
 .turbo
 
+# Lint caches
+.eslintcache
+
 # vercel
 .vercel
 

@@ -1,18 +1,18 @@
-import { Text } from "@modules/common/components/ui"
-import { getProductPrice } from "@lib/util/get-product-price"
-import { HttpTypes } from "@medusajs/types"
-import LocalizedClientLink from "@modules/common/components/localized-client-link"
-import Thumbnail from "../thumbnail"
-import PreviewPrice from "./price"
+import { Text } from "@modules/common/components/ui";
+import { getProductPrice } from "@lib/util/get-product-price";
+import { HttpTypes } from "@medusajs/types";
+import LocalizedClientLink from "@modules/common/components/localized-client-link";
+import Thumbnail from "../thumbnail";
+import PreviewPrice from "./price";
 
 export default async function ProductPreview({
   product,
   isFeatured,
   region: _region,
 }: {
-  product: HttpTypes.StoreProduct
-  isFeatured?: boolean
-  region: HttpTypes.StoreRegion
+  product: HttpTypes.StoreProduct;
+  isFeatured?: boolean;
+  region: HttpTypes.StoreRegion;
 }) {
   // const pricedProduct = await listProducts({
   //   regionId: region.id,
@@ -25,10 +25,13 @@ export default async function ProductPreview({
 
   const { cheapestPrice } = getProductPrice({
     product,
-  })
+  });
 
   return (
-    <LocalizedClientLink href={`/producten/${product.handle}`} className="group">
+    <LocalizedClientLink
+      href={`/producten/${product.handle}`}
+      className="group"
+    >
       <div data-testid="product-wrapper">
         <Thumbnail
           thumbnail={product.thumbnail}
@@ -46,5 +49,5 @@ export default async function ProductPreview({
         </div>
       </div>
     </LocalizedClientLink>
-  )
+  );
 }

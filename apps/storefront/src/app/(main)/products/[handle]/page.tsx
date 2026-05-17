@@ -1,47 +1,47 @@
-import { Metadata } from "next"
-import { notFound } from "next/navigation"
-import { listProducts } from "@lib/data/products"
-import { getRegion } from "@lib/data/regions"
-import ProductTemplate from "@modules/products/templates"
-import { HttpTypes } from "@medusajs/types"
+import { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { listProducts } from "@lib/data/products";
+import { getRegion } from "@lib/data/regions";
+import ProductTemplate from "@modules/products/templates";
+import { HttpTypes } from "@medusajs/types";
 
 type Props = {
-  params: Promise<{ handle: string }>
-  searchParams: Promise<{ v_id?: string }>
-}
+  params: Promise<{ handle: string }>;
+  searchParams: Promise<{ v_id?: string }>;
+};
 
 function getImagesForVariant(
   product: HttpTypes.StoreProduct,
   selectedVariantId?: string
 ) {
   if (!selectedVariantId || !product.variants) {
-    return product.images
+    return product.images;
   }
 
-  const variant = product.variants!.find((v) => v.id === selectedVariantId)
+  const variant = product.variants!.find((v) => v.id === selectedVariantId);
   if (!variant || !variant.images?.length) {
-    return product.images
+    return product.images;
   }
 
-  const imageIdsMap = new Map(variant.images!.map((i) => [i.id, true]))
-  return product.images?.filter((i) => imageIdsMap.has(i.id)) ?? null
+  const imageIdsMap = new Map(variant.images!.map((i) => [i.id, true]));
+  return product.images?.filter((i) => imageIdsMap.has(i.id)) ?? null;
 }
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
-  const params = await props.params
-  const { handle } = params
-  const region = await getRegion()
+  const params = await props.params;
+  const { handle } = params;
+  const region = await getRegion();
 
   if (!region) {
-    notFound()
+    notFound();
   }
 
   const product = await listProducts({
     queryParams: { handle },
-  }).then(({ response }) => response.products[0])
+  }).then(({ response }) => response.products[0]);
 
   if (!product) {
-    notFound()
+    notFound();
   }
 
   return {
@@ -52,28 +52,28 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
       description: `${product.title}`,
       images: product.thumbnail ? [product.thumbnail] : [],
     },
-  }
+  };
 }
 
 export default async function ProductPage(props: Props) {
-  const params = await props.params
-  const region = await getRegion()
-  const searchParams = await props.searchParams
+  const params = await props.params;
+  const region = await getRegion();
+  const searchParams = await props.searchParams;
 
-  const selectedVariantId = searchParams.v_id
+  const selectedVariantId = searchParams.v_id;
 
   if (!region) {
-    notFound()
+    notFound();
   }
 
   const pricedProduct = await listProducts({
     queryParams: { handle: params.handle },
-  }).then(({ response }) => response.products[0])
+  }).then(({ response }) => response.products[0]);
 
-  const images = getImagesForVariant(pricedProduct, selectedVariantId)
+  const images = getImagesForVariant(pricedProduct, selectedVariantId);
 
   if (!pricedProduct) {
-    notFound()
+    notFound();
   }
 
   return (
@@ -82,5 +82,5 @@ export default async function ProductPage(props: Props) {
       region={region}
       images={images ?? []}
     />
-  )
+  );
 }

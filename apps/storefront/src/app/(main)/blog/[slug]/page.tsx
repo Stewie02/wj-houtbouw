@@ -1,29 +1,29 @@
-import { Metadata } from "next"
-import { notFound } from "next/navigation"
-import Image from "next/image"
-import LocalizedClientLink from "@modules/common/components/localized-client-link"
-import BrandTag from "@modules/common/components/brand-tag"
-import { getBlogPost } from "@lib/data/blog"
+import { Metadata } from "next";
+import { notFound } from "next/navigation";
+import Image from "next/image";
+import LocalizedClientLink from "@modules/common/components/localized-client-link";
+import BrandTag from "@modules/common/components/brand-tag";
+import { getBlogPost } from "@lib/data/blog";
 
 type Props = {
-  params: Promise<{ slug: string }>
-}
+  params: Promise<{ slug: string }>;
+};
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params
-  const post = getBlogPost(slug)
-  if (!post) return {}
+  const { slug } = await params;
+  const post = getBlogPost(slug);
+  if (!post) return {};
   return {
     title: `${post.title} — WJ Houtbouw`,
     description: post.excerpt,
-  }
+  };
 }
 
 export default async function BlogArticlePage({ params }: Props) {
-  const { slug } = await params
-  const post = getBlogPost(slug)
+  const { slug } = await params;
+  const post = getBlogPost(slug);
 
-  if (!post) notFound()
+  if (!post) notFound();
 
   return (
     <div className="bg-wj-bg">
@@ -76,5 +76,5 @@ export default async function BlogArticlePage({ params }: Props) {
         </div>
       </div>
     </div>
-  )
+  );
 }

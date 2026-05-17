@@ -1,9 +1,9 @@
-import LocalizedClientLink from "@modules/common/components/localized-client-link"
+import LocalizedClientLink from "@modules/common/components/localized-client-link";
 
 export default function CheckoutLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <div className="w-full bg-wj-bg min-h-screen flex flex-col">
@@ -24,7 +24,9 @@ export default function CheckoutLayout({
             data-testid="store-link"
           >
             <div className="w-7 h-7 bg-wj-green flex items-center justify-center">
-              <span className="font-display font-bold text-[11px] text-wj-white leading-none">WJ</span>
+              <span className="font-display font-bold text-[11px] text-wj-white leading-none">
+                WJ
+              </span>
             </div>
             <span className="font-display font-bold text-[15px] text-wj-text tracking-[-0.01em] hidden sm:block">
               WJ Houtbouw
@@ -39,5 +41,5 @@ export default function CheckoutLayout({
         {children}
       </div>
     </div>
-  )
+  );
 }

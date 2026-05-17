@@ -1,5 +1,5 @@
 // Not used on the homepage for now
-import StarRating from "@modules/common/components/star-rating"
+import StarRating from "@modules/common/components/star-rating";
 
 const TESTIMONIALS = [
   {
@@ -20,7 +20,7 @@ const TESTIMONIALS = [
     name: "Sandra K.",
     location: "Antwerp",
   },
-]
+];
 
 const Testimonials = () => {
   return (
@@ -41,7 +41,7 @@ const Testimonials = () => {
             >
               <StarRating className="mb-5" />
               <p className="font-display font-normal italic text-[16px] sm:text-[17px] text-[#D5CFC7] leading-[1.65] mb-6">
-                "{t.quote}"
+                &ldquo;{t.quote}&rdquo;
               </p>
               <div className="font-body font-medium text-[13px] text-wj-white">
                 {t.name}
@@ -54,7 +54,7 @@ const Testimonials = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Testimonials
+export default Testimonials;

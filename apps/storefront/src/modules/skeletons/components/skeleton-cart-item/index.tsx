@@ -1,4 +1,4 @@
-import { Table } from "@modules/common/components/ui"
+import { Table } from "@modules/common/components/ui";
 
 const SkeletonCartItem = () => {
   return (
@@ -29,7 +29,7 @@ const SkeletonCartItem = () => {
         </div>
       </Table.Cell>
     </Table.Row>
-  )
-}
+  );
+};
 
-export default SkeletonCartItem
+export default SkeletonCartItem;

@@ -1,21 +1,24 @@
-"use client"
+"use client";
 
-import { useActionState } from "react"
-import Input from "@modules/common/components/input"
-import { LOGIN_VIEW } from "@modules/account/templates/login-template"
-import ErrorMessage from "@modules/checkout/components/error-message"
-import { SubmitButton } from "@modules/checkout/components/submit-button"
-import { signup } from "@lib/data/customer"
+import { useActionState } from "react";
+import Input from "@modules/common/components/input";
+import { LOGIN_VIEW } from "@modules/account/templates/login-template";
+import ErrorMessage from "@modules/checkout/components/error-message";
+import { SubmitButton } from "@modules/checkout/components/submit-button";
+import { signup } from "@lib/data/customer";
 
 type Props = {
-  setCurrentView: (view: LOGIN_VIEW) => void
-}
+  setCurrentView: (view: LOGIN_VIEW) => void;
+};
 
 const Register = ({ setCurrentView }: Props) => {
   const [message, formAction] = useActionState(
-    signup as (state: string | null, formData: FormData) => Promise<string | null>,
+    signup as (
+      state: string | null,
+      formData: FormData
+    ) => Promise<string | null>,
     null as string | null
-  )
+  );
 
   return (
     <div data-testid="register-page">
@@ -67,7 +70,9 @@ const Register = ({ setCurrentView }: Props) => {
           data-testid="password-input"
         />
         <ErrorMessage error={message} data-testid="register-error" />
-        <SubmitButton data-testid="register-button">Create account</SubmitButton>
+        <SubmitButton data-testid="register-button">
+          Create account
+        </SubmitButton>
       </form>
 
       <p className="font-body text-[13px] text-wj-muted text-center mt-6">
@@ -80,7 +85,7 @@ const Register = ({ setCurrentView }: Props) => {
         </button>
       </p>
     </div>
-  )
-}
+  );
+};
 
-export default Register
+export default Register;

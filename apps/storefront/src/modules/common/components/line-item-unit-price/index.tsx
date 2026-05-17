@@ -1,25 +1,25 @@
-import { convertToLocale } from "@lib/util/money"
-import { HttpTypes } from "@medusajs/types"
-import { clx } from "@modules/common/components/ui"
+import { convertToLocale } from "@lib/util/money";
+import { HttpTypes } from "@medusajs/types";
+import { clx } from "@modules/common/components/ui";
 
 type LineItemUnitPriceProps = {
-  item: HttpTypes.StoreCartLineItem | HttpTypes.StoreOrderLineItem
-  style?: "default" | "tight"
-  currencyCode: string
-}
+  item: HttpTypes.StoreCartLineItem | HttpTypes.StoreOrderLineItem;
+  style?: "default" | "tight";
+  currencyCode: string;
+};
 
 const LineItemUnitPrice = ({
   item,
   style = "default",
   currencyCode,
 }: LineItemUnitPriceProps) => {
-  const total = item.total ?? 0
-  const original_total = item.original_total ?? 0
-  const hasReducedPrice = total < original_total
+  const total = item.total ?? 0;
+  const original_total = item.original_total ?? 0;
+  const hasReducedPrice = total < original_total;
 
   const percentage_diff = Math.round(
     ((original_total - total) / original_total) * 100
-  )
+  );
 
   return (
     <div className="flex flex-col text-ui-fg-muted justify-center h-full">
@@ -56,7 +56,7 @@ const LineItemUnitPrice = ({
         })}
       </span>
     </div>
-  )
-}
+  );
+};
 
-export default LineItemUnitPrice
+export default LineItemUnitPrice;

@@ -1,13 +1,13 @@
-import { Metadata } from "next"
-import Image from "next/image"
-import LocalizedClientLink from "@modules/common/components/localized-client-link"
-import { BLOG_POSTS } from "@lib/data/blog"
+import { Metadata } from "next";
+import Image from "next/image";
+import LocalizedClientLink from "@modules/common/components/localized-client-link";
+import { BLOG_POSTS } from "@lib/data/blog";
 
 export const metadata: Metadata = {
   title: "Blog — WJ Houtbouw",
   description:
     "Tips, inspiratie en verhalen vanuit de werkplaats van WJ Houtbouw.",
-}
+};
 
 export default function BlogPage() {
   return (
@@ -56,5 +56,5 @@ export default function BlogPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

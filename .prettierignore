@@ -1,0 +1,6 @@
+.next/
+.medusa/
+node_modules/
+dist/
+build/
+*.min.js

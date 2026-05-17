@@ -62,10 +62,10 @@ dokku config:set medusa-backend \
 
 In the [Stripe Dashboard](https://dashboard.stripe.com) → Developers → Webhooks → **Add endpoint**:
 
-| Field | Value |
-|---|---|
-| Endpoint URL | `https://<backend-domain>/hooks/payment/stripe_stripe` |
-| Events | `payment_intent.amount_capturable_updated`, `payment_intent.succeeded`, `payment_intent.payment_failed` |
+| Field        | Value                                                                                                   |
+| ------------ | ------------------------------------------------------------------------------------------------------- |
+| Endpoint URL | `https://<backend-domain>/hooks/payment/stripe_stripe`                                                  |
+| Events       | `payment_intent.amount_capturable_updated`, `payment_intent.succeeded`, `payment_intent.payment_failed` |
 
 Copy the **Signing secret** (`whsec_...`) and set it:
 
@@ -131,12 +131,12 @@ git push dokku-storefront main
 
 ## Verification
 
-| Check | Expected |
-|---|---|
-| `https://<backend-domain>/health` | `OK` |
-| `https://<backend-domain>/app` | Admin login page |
-| `https://<storefront-domain>` | Storefront loads |
-| `dokku ps:report medusa-backend` | `web.1` and `worker.1` both running |
+| Check                              | Expected                             |
+| ---------------------------------- | ------------------------------------ |
+| `https://<backend-domain>/health`  | `OK`                                 |
+| `https://<backend-domain>/app`     | Admin login page                     |
+| `https://<storefront-domain>`      | Storefront loads                     |
+| `dokku ps:report medusa-backend`   | `web.1` and `worker.1` both running  |
 | `dokku logs medusa-backend --tail` | No errors; migrations ran on startup |
 
 ## Re-deploying

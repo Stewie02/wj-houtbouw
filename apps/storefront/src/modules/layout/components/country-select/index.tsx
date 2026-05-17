@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   Listbox,
@@ -6,28 +6,28 @@ import {
   ListboxOption,
   ListboxOptions,
   Transition,
-} from "@headlessui/react"
-import { Fragment, useEffect, useMemo, useState } from "react"
-import ReactCountryFlag from "react-country-flag"
+} from "@headlessui/react";
+import { Fragment, useEffect, useMemo, useState } from "react";
+import ReactCountryFlag from "react-country-flag";
 
-import { StateType } from "@lib/hooks/use-toggle-state"
-import { HttpTypes } from "@medusajs/types"
+import { StateType } from "@lib/hooks/use-toggle-state";
+import { HttpTypes } from "@medusajs/types";
 
 type CountryOption = {
-  country: string
-  region: string
-  label: string
-}
+  country: string;
+  region: string;
+  label: string;
+};
 
 type CountrySelectProps = {
-  toggleState: StateType
-  regions: HttpTypes.StoreRegion[]
-}
+  toggleState: StateType;
+  regions: HttpTypes.StoreRegion[];
+};
 
 const CountrySelect = ({ toggleState, regions }: CountrySelectProps) => {
-  const [current, setCurrent] = useState<CountryOption | undefined>(undefined)
+  const [current, setCurrent] = useState<CountryOption | undefined>(undefined);
 
-  const { state, close } = toggleState
+  const { state, close } = toggleState;
 
   const options = useMemo(() => {
     return regions
@@ -36,28 +36,24 @@ const CountrySelect = ({ toggleState, regions }: CountrySelectProps) => {
           country: c.iso_2 ?? "",
           region: r.id,
           label: c.display_name ?? "",
-        }))
+        }));
       })
       .flat()
       .filter((o): o is CountryOption => !!o)
-      .sort((a, b) => a.label.localeCompare(b.label))
-  }, [regions])
+      .sort((a, b) => a.label.localeCompare(b.label));
+  }, [regions]);
 
   useEffect(() => {
-    setCurrent(options?.[0])
-  }, [options])
+    setCurrent(options?.[0]);
+  }, [options]);
 
   const handleChange = (_option: CountryOption) => {
-    close()
-  }
+    close();
+  };
 
   return (
     <div>
-      <Listbox
-        as="span"
-        onChange={handleChange}
-        defaultValue={current}
-      >
+      <Listbox as="span" onChange={handleChange} defaultValue={current}>
         <ListboxButton className="py-1 w-full">
           <div className="txt-compact-small flex items-start gap-x-2">
             <span>Shipping to:</span>
@@ -105,14 +101,14 @@ const CountrySelect = ({ toggleState, regions }: CountrySelectProps) => {
                     />{" "}
                     {o?.label}
                   </ListboxOption>
-                )
+                );
               })}
             </ListboxOptions>
           </Transition>
         </div>
       </Listbox>
     </div>
-  )
-}
+  );
+};
 
-export default CountrySelect
+export default CountrySelect;

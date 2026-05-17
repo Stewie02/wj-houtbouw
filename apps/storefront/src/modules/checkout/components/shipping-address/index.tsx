@@ -1,11 +1,11 @@
-import { addCustomerAddress } from "@lib/data/customer"
-import { HttpTypes } from "@medusajs/types"
-import Checkbox from "@modules/common/components/checkbox"
-import Input from "@modules/common/components/input"
-import { mapKeys } from "lodash"
-import React, { useEffect, useMemo, useState } from "react"
-import AddressSelect from "../address-select"
-import CountrySelect from "../country-select"
+import { addCustomerAddress } from "@lib/data/customer";
+import { HttpTypes } from "@medusajs/types";
+import Checkbox from "@modules/common/components/checkbox";
+import Input from "@modules/common/components/input";
+import { mapKeys } from "lodash";
+import React, { useEffect, useMemo, useState } from "react";
+import AddressSelect from "../address-select";
+import CountrySelect from "../country-select";
 
 const ShippingAddress = ({
   customer,
@@ -13,10 +13,10 @@ const ShippingAddress = ({
   checked,
   onChange,
 }: {
-  customer: HttpTypes.StoreCustomer | null
-  cart: HttpTypes.StoreCart | null
-  checked: boolean
-  onChange: () => void
+  customer: HttpTypes.StoreCustomer | null;
+  cart: HttpTypes.StoreCart | null;
+  checked: boolean;
+  onChange: () => void;
 }) => {
   const [formData, setFormData] = useState<Record<string, string>>({
     "shipping_address.first_name": cart?.shipping_address?.first_name || "",
@@ -29,12 +29,12 @@ const ShippingAddress = ({
     "shipping_address.country_code": cart?.shipping_address?.country_code || "",
     "shipping_address.phone": cart?.shipping_address?.phone || "",
     email: cart?.email || "",
-  })
+  });
 
   const countriesInRegion = useMemo(
     () => cart?.region?.countries?.map((c) => c.iso_2),
     [cart?.region]
-  )
+  );
 
   // check if customer has saved addresses that are in the current region
   const addressesInRegion = useMemo(
@@ -43,7 +43,7 @@ const ShippingAddress = ({
         (a) => a.country_code && countriesInRegion?.includes(a.country_code)
       ),
     [customer?.addresses, countriesInRegion]
-  )
+  );
 
   const setFormAddress = (
     address?: HttpTypes.StoreCartAddress,
@@ -61,64 +61,66 @@ const ShippingAddress = ({
         "shipping_address.city": address?.city || "",
         "shipping_address.country_code": address?.country_code || "",
         "shipping_address.phone": address?.phone || "",
-      }))
+      }));
     }
 
     if (email) {
       setFormData((prevState: Record<string, string>) => ({
         ...prevState,
         email: email,
-      }))
+      }));
     }
-  }
+  };
 
   useEffect(() => {
     // Ensure cart is not null and has a shipping_address before setting form data
     if (cart && cart.shipping_address) {
-      setFormAddress(cart?.shipping_address, cart?.email)
+      setFormAddress(cart?.shipping_address, cart?.email);
     }
 
     if (cart && !cart.email && customer?.email) {
-      setFormAddress(undefined, customer.email)
+      setFormAddress(undefined, customer.email);
     }
-  }, [cart]) // Add cart as a dependency
+  }, [cart]); // Add cart as a dependency
 
-  const [saveState, setSaveState] = useState<"idle" | "saving" | "saved" | "error">("idle")
-  const [usingSavedAddress, setUsingSavedAddress] = useState(false)
+  const [saveState, setSaveState] = useState<
+    "idle" | "saving" | "saved" | "error"
+  >("idle");
+  const [usingSavedAddress, setUsingSavedAddress] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLInputElement | HTMLSelectElement
     >
   ) => {
-    setUsingSavedAddress(false)
+    setUsingSavedAddress(false);
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
-    })
-  }
+    });
+  };
 
   const handleSaveAddress = async () => {
-    setSaveState("saving")
-    const fd = new FormData()
-    fd.append("first_name", formData["shipping_address.first_name"])
-    fd.append("last_name", formData["shipping_address.last_name"])
-    fd.append("company", formData["shipping_address.company"])
-    fd.append("address_1", formData["shipping_address.address_1"])
-    fd.append("address_2", formData["shipping_address.address_2"])
-    fd.append("postal_code", formData["shipping_address.postal_code"])
-    fd.append("city", formData["shipping_address.city"])
-    fd.append("country_code", formData["shipping_address.country_code"])
-    fd.append("phone", formData["shipping_address.phone"])
-    const result = await addCustomerAddress({}, fd)
+    setSaveState("saving");
+    const fd = new FormData();
+    fd.append("first_name", formData["shipping_address.first_name"]);
+    fd.append("last_name", formData["shipping_address.last_name"]);
+    fd.append("company", formData["shipping_address.company"]);
+    fd.append("address_1", formData["shipping_address.address_1"]);
+    fd.append("address_2", formData["shipping_address.address_2"]);
+    fd.append("postal_code", formData["shipping_address.postal_code"]);
+    fd.append("city", formData["shipping_address.city"]);
+    fd.append("country_code", formData["shipping_address.country_code"]);
+    fd.append("phone", formData["shipping_address.phone"]);
+    const result = await addCustomerAddress({}, fd);
     if (result.success) {
-      setSaveState("saved")
-      setTimeout(() => setSaveState("idle"), 3000)
+      setSaveState("saved");
+      setTimeout(() => setSaveState("idle"), 3000);
     } else {
-      setSaveState("error")
-      setTimeout(() => setSaveState("idle"), 3000)
+      setSaveState("error");
+      setTimeout(() => setSaveState("idle"), 3000);
     }
-  }
+  };
 
   return (
     <>
@@ -135,8 +137,8 @@ const ShippingAddress = ({
               ) as unknown as HttpTypes.StoreCartAddress
             }
             onSelect={(address, email) => {
-              setUsingSavedAddress(true)
-              setFormAddress(address, email)
+              setUsingSavedAddress(true);
+              setFormAddress(address, email);
             }}
           />
         </div>
@@ -221,7 +223,13 @@ const ShippingAddress = ({
             disabled={saveState === "saving"}
             className="font-body text-[13px] font-medium text-wj-green hover:underline disabled:opacity-50"
           >
-            {saveState === "saving" ? "Opslaan..." : saveState === "saved" ? "Opgeslagen!" : saveState === "error" ? "Opslaan mislukt" : "Adres opslaan"}
+            {saveState === "saving"
+              ? "Opslaan..."
+              : saveState === "saved"
+                ? "Opgeslagen!"
+                : saveState === "error"
+                  ? "Opslaan mislukt"
+                  : "Adres opslaan"}
           </button>
         </div>
       )}
@@ -256,7 +264,7 @@ const ShippingAddress = ({
         />
       </div>
     </>
-  )
-}
+  );
+};
 
-export default ShippingAddress
+export default ShippingAddress;

@@ -1,17 +1,17 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import LocalizedClientLink from "@modules/common/components/localized-client-link"
-import PlaceholderImage from "@modules/common/components/placeholder-image"
-import BrandTag from "@modules/common/components/brand-tag"
+import { useState } from "react";
+import LocalizedClientLink from "@modules/common/components/localized-client-link";
+import PlaceholderImage from "@modules/common/components/placeholder-image";
+import BrandTag from "@modules/common/components/brand-tag";
 
 type ProductCardProps = {
-  name: string
-  price: string
-  material?: string
-  tag?: string
-  href: string
-}
+  name: string;
+  price: string;
+  material?: string;
+  tag?: string;
+  href: string;
+};
 
 const ProductCard = ({
   name,
@@ -20,7 +20,7 @@ const ProductCard = ({
   tag,
   href,
 }: ProductCardProps) => {
-  const [hovered, setHovered] = useState(false)
+  const [hovered, setHovered] = useState(false);
 
   return (
     <LocalizedClientLink href={href}>
@@ -70,7 +70,7 @@ const ProductCard = ({
         </div>
       </div>
     </LocalizedClientLink>
-  )
-}
+  );
+};
 
-export default ProductCard
+export default ProductCard;

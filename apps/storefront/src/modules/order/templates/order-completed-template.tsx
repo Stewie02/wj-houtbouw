@@ -1,15 +1,15 @@
-import { HttpTypes } from "@medusajs/types"
+import { HttpTypes } from "@medusajs/types";
 
-import LocalizedClientLink from "@modules/common/components/localized-client-link"
-import Items from "@modules/order/components/items"
-import OrderSummary from "@modules/order/components/order-summary"
-import ShippingDetails from "@modules/order/components/shipping-details"
-import PaymentDetails from "@modules/order/components/payment-details"
-import Help from "@modules/order/components/help"
+import LocalizedClientLink from "@modules/common/components/localized-client-link";
+import Items from "@modules/order/components/items";
+import OrderSummary from "@modules/order/components/order-summary";
+import ShippingDetails from "@modules/order/components/shipping-details";
+import PaymentDetails from "@modules/order/components/payment-details";
+import Help from "@modules/order/components/help";
 
 type OrderCompletedTemplateProps = {
-  order: HttpTypes.StoreOrder
-}
+  order: HttpTypes.StoreOrder;
+};
 
 export default async function OrderCompletedTemplate({
   order,
@@ -19,7 +19,10 @@ export default async function OrderCompletedTemplate({
       <div className="bg-wj-dark">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-8 lg:px-12 py-10 sm:py-14">
           <p className="font-body text-[12px] tracking-[0.1em] uppercase text-wj-muted mb-3">
-            <LocalizedClientLink href="/" className="hover:text-wj-white transition-colors">
+            <LocalizedClientLink
+              href="/"
+              className="hover:text-wj-white transition-colors"
+            >
               Home
             </LocalizedClientLink>
             {" / "}
@@ -52,5 +55,5 @@ export default async function OrderCompletedTemplate({
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -1,27 +1,27 @@
-"use client"
+"use client";
 
-import CartTotals from "@modules/common/components/cart-totals"
-import DiscountCode from "@modules/checkout/components/discount-code"
-import LocalizedClientLink from "@modules/common/components/localized-client-link"
-import BrandButton from "@modules/common/components/brand-button"
-import { HttpTypes } from "@medusajs/types"
+import CartTotals from "@modules/common/components/cart-totals";
+import DiscountCode from "@modules/checkout/components/discount-code";
+import LocalizedClientLink from "@modules/common/components/localized-client-link";
+import BrandButton from "@modules/common/components/brand-button";
+import { HttpTypes } from "@medusajs/types";
 
 type SummaryProps = {
-  cart: HttpTypes.StoreCart
-}
+  cart: HttpTypes.StoreCart;
+};
 
 function getCheckoutStep(cart: HttpTypes.StoreCart) {
   if (!cart?.shipping_address?.address_1 || !cart.email) {
-    return "address"
+    return "address";
   } else if (cart?.shipping_methods?.length === 0) {
-    return "delivery"
+    return "delivery";
   } else {
-    return "payment"
+    return "payment";
   }
 }
 
 const Summary = ({ cart }: SummaryProps) => {
-  const step = getCheckoutStep(cart)
+  const step = getCheckoutStep(cart);
 
   return (
     <div className="bg-wj-white border border-wj-border p-6 sm:p-8 flex flex-col gap-6">
@@ -38,7 +38,10 @@ const Summary = ({ cart }: SummaryProps) => {
       </div>
 
       {/* Checkout CTA */}
-      <LocalizedClientLink href={"/checkout?step=" + step} data-testid="checkout-button">
+      <LocalizedClientLink
+        href={"/checkout?step=" + step}
+        data-testid="checkout-button"
+      >
         <BrandButton size="lg" full>
           Proceed to checkout
         </BrandButton>
@@ -60,7 +63,7 @@ const Summary = ({ cart }: SummaryProps) => {
         Secure checkout · 30-day returns
       </p>
     </div>
-  )
-}
+  );
+};
 
-export default Summary
+export default Summary;

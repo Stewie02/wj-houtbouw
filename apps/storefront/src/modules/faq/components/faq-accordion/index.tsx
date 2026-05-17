@@ -1,16 +1,16 @@
-"use client"
+"use client";
 
-import { useState } from "react"
+import { useState } from "react";
 
 type FaqItem = {
-  question: string
-  answer: string
-}
+  question: string;
+  answer: string;
+};
 
 type FaqCategory = {
-  title: string
-  items: FaqItem[]
-}
+  title: string;
+  items: FaqItem[];
+};
 
 const ChevronIcon = ({ open }: { open: boolean }) => (
   <svg
@@ -24,10 +24,10 @@ const ChevronIcon = ({ open }: { open: boolean }) => (
   >
     <polyline points="4,7 9,12 14,7" />
   </svg>
-)
+);
 
 const FaqItem = ({ question, answer }: FaqItem) => {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   return (
     <div className="border-b border-wj-border last:border-0">
@@ -46,8 +46,8 @@ const FaqItem = ({ question, answer }: FaqItem) => {
         </p>
       )}
     </div>
-  )
-}
+  );
+};
 
 const FaqAccordion = ({ categories }: { categories: FaqCategory[] }) => {
   return (
@@ -83,7 +83,7 @@ const FaqAccordion = ({ categories }: { categories: FaqCategory[] }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default FaqAccordion
+export default FaqAccordion;

@@ -1,21 +1,21 @@
-"use client"
+"use client";
 
-import BrandButton from "@modules/common/components/brand-button"
-import React from "react"
-import { useFormStatus } from "react-dom"
+import BrandButton from "@modules/common/components/brand-button";
+import React from "react";
+import { useFormStatus } from "react-dom";
 
 export function SubmitButton({
   children,
   className,
   "data-testid": dataTestId,
 }: {
-  children: React.ReactNode
-  variant?: "primary" | "secondary" | "transparent" | null
-  size?: "small" | "medium" | "large"
-  className?: string
-  "data-testid"?: string
+  children: React.ReactNode;
+  variant?: "primary" | "secondary" | "transparent" | null;
+  size?: "small" | "medium" | "large";
+  className?: string;
+  "data-testid"?: string;
 }) {
-  const { pending } = useFormStatus()
+  const { pending } = useFormStatus();
 
   return (
     <BrandButton
@@ -28,5 +28,5 @@ export function SubmitButton({
     >
       {pending ? "Processing…" : children}
     </BrandButton>
-  )
+  );
 }
