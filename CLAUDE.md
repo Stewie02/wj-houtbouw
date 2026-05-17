@@ -41,13 +41,13 @@ Storefront runs at `http://localhost:8000`.
 
 ## Architecture
 
-### Routing & Localisation (Storefront)
+### Routing (Storefront)
 
-All routes are nested under `[countryCode]` — the middleware (`src/middleware.ts`) detects the visitor's country from the URL, Cloudflare `cf.country`, or Vercel `x-vercel-ip-country` headers, and redirects to the correct country-prefixed URL (e.g. `/nl/products/chair`). `NEXT_PUBLIC_DEFAULT_REGION` is the fallback.
-
-Two route groups inside `[countryCode]`:
-- `(main)` — storefront pages (home, store, product, cart, account)
+Country-code routing was removed. Routes sit directly inside two route groups under `src/app/`:
+- `(main)` — all storefront pages (home, store, product, cart, account, blog, contact, FAQ, legal pages, etc.)
 - `(checkout)` — checkout flow with its own minimal layout
+
+The middleware (`src/middleware.ts`) no longer handles country detection — it only ensures every request has a `_medusa_cache_id` cookie (sets one if absent). Always use `LocalizedClientLink` instead of Next.js `Link` for internal navigation; it is now a thin wrapper over `Link` kept for codebase consistency.
 
 ### Data Layer (Storefront)
 
@@ -61,7 +61,7 @@ Canonical product fetch: **`listProductsWithSort`** in `src/lib/data/products.ts
 
 ### Module Structure (Storefront)
 
-`src/modules/` groups features by domain: `account`, `cart`, `checkout`, `home`, `layout`, `products`, `store`, `common`. Each module follows: `templates/` (page-level shells) → `components/` (reusable pieces).
+`src/modules/` groups features by domain: `account`, `cart`, `checkout`, `home`, `layout`, `products`, `store`, `common`, `faq`, `shipping`, `skeletons`, `order`, `blog`, `categories`, `collections`. Each module follows: `templates/` (page-level shells) → `components/` (reusable pieces).
 
 Server components handle data fetching; client components (`"use client"`) handle interaction/state. The split is intentional — keep data fetching in server components and pass data down as props.
 
@@ -93,7 +93,14 @@ Reusable primitives in `src/modules/common/components/`:
 - `SectionContainer` — `max-w-[1280px] mx-auto px-4 sm:px-8 lg:px-12`
 - `StarRating`, `Breadcrumb`
 
+Lower-level primitives (`Text`, `Heading`, `Button`, `Input`, `Table`, `Badge`, `Label`, etc.) live in `src/modules/common/components/ui/index.tsx`. Extend these rather than creating new `brand-*` component files for the same concept.
+
 Square corners are intentional — do not add `rounded-*` to WJ brand elements.
+
+**Eyebrow/category label pattern** — used above headings across virtually every page and section:
+```
+font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-wood
+```
 
 Dark page headers follow this pattern across pages (cart, checkout, account):
 ```tsx
@@ -103,6 +110,12 @@ Dark page headers follow this pattern across pages (cart, checkout, account):
   </div>
 </div>
 ```
+
+### Static Content Pages (Storefront)
+
+Content-only pages (contact, terms & conditions, cookie policy, FAQ, about) are pure server components with no API calls. They live in `app/(main)/`. Helper components (e.g. `Section`, `SubSection`, `Ol`) can be defined inline at the bottom of the page file rather than as separate module components.
+
+Blog posts are **static data** in `src/lib/data/blog.ts` (`BlogPost[]`) — they are not stored in Medusa. Add or edit posts in that file.
 
 ### Backend
 
