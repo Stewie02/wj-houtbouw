@@ -8,26 +8,10 @@ type OverviewProps = {
 }
 
 const Overview = ({ customer, orders }: OverviewProps) => {
-  const profileCompletion = getProfileCompletion(customer)
-
   return (
     <div data-testid="overview-page-wrapper" className="flex flex-col gap-8">
       {/* Stats */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-        <div className="bg-wj-white border border-wj-border p-6">
-          <p className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-muted mb-2">
-            Profile
-          </p>
-          <p
-            className="font-display font-bold text-[32px] text-wj-green tracking-[-0.02em]"
-            data-testid="customer-profile-completion"
-            data-value={profileCompletion}
-          >
-            {profileCompletion}%
-          </p>
-          <p className="font-body text-[12px] text-wj-muted mt-1">completed</p>
-        </div>
-
+      <div className="grid grid-cols-2 sm:grid-cols-2 gap-4">        
         <div className="bg-wj-white border border-wj-border p-6">
           <p className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-muted mb-2">
             Addresses
@@ -118,16 +102,6 @@ const Overview = ({ customer, orders }: OverviewProps) => {
       </div>
     </div>
   )
-}
-
-const getProfileCompletion = (customer: HttpTypes.StoreCustomer | null) => {
-  if (!customer) return 0
-  let count = 0
-  if (customer.email) count++
-  if (customer.first_name && customer.last_name) count++
-  if (customer.phone) count++
-  if (customer.addresses?.find((addr) => addr.is_default_billing)) count++
-  return (count / 4) * 100
 }
 
 export default Overview
