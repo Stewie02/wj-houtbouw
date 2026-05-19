@@ -15,7 +15,7 @@ export default function CheckoutLayout({
             className="font-body text-[13px] font-medium text-wj-muted hover:text-wj-text transition-colors flex items-center gap-1.5"
             data-testid="back-to-cart-link"
           >
-            ← Back to cart
+            ← Terug naar winkelwagen
           </LocalizedClientLink>
 
           <LocalizedClientLink

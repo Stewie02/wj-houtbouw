@@ -7,8 +7,8 @@ import { getRegion } from "@lib/data/regions";
 import { retrieveCustomer } from "@lib/data/customer";
 
 export const metadata: Metadata = {
-  title: "Addresses",
-  description: "View your addresses",
+  title: "Adressen",
+  description: "Bekijk en beheer je bezorgadressen.",
 };
 
 export default async function Addresses() {
@@ -21,11 +21,15 @@ export default async function Addresses() {
 
   return (
     <div className="w-full" data-testid="addresses-page-wrapper">
-      <div className="mb-8 flex flex-col gap-y-4">
-        <h1 className="text-2xl-semi">Shipping Addresses</h1>
-        <p className="text-base-regular">
-          View and update your shipping addresses, you can add as many as you
-          like. Saving your addresses will make them available during checkout.
+      <div className="mb-8">
+        <p className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-wood mb-2">
+          Mijn account
+        </p>
+        <h1 className="font-display font-bold text-[28px] text-wj-text tracking-[-0.02em] mb-2">
+          Adressen
+        </h1>
+        <p className="font-body text-[14px] text-wj-muted">
+          Beheer je bezorgadressen. Opgeslagen adressen zijn beschikbaar tijdens het afrekenen.
         </p>
       </div>
       <AddressBook customer={customer} region={region} />

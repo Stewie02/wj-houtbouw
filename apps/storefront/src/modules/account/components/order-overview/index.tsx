@@ -22,15 +22,14 @@ const OrderOverview = ({ orders }: { orders: HttpTypes.StoreOrder[] }) => {
       data-testid="no-orders-container"
     >
       <h2 className="font-display font-bold text-[22px] text-wj-text tracking-[-0.01em]">
-        No orders yet
+        Nog geen bestellingen
       </h2>
       <p className="font-body text-[14px] text-wj-muted max-w-xs">
-        You haven&apos;t placed any orders. Browse our collection to find
-        something you&apos;ll love.
+        Je hebt nog geen bestellingen geplaatst. Bekijk ons assortiment en ontdek onze collectie.
       </p>
       <LocalizedClientLink href="/winkel">
         <BrandButton data-testid="continue-shopping-button">
-          Start shopping
+          Ga winkelen
         </BrandButton>
       </LocalizedClientLink>
     </div>

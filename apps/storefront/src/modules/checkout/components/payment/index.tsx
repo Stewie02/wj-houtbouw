@@ -90,7 +90,7 @@ const Payment = ({
         setError(
           err instanceof Error
             ? err.message
-            : "Failed to initialise payment. Please try again."
+            : "Betaling kon niet worden gestart. Probeer het opnieuw."
         );
       }
     );
@@ -136,7 +136,7 @@ const Payment = ({
             }
           )}
         >
-          Payment
+          Betaling
           {!isOpen && paymentReady && (
             <CheckCircleSolid className="text-wj-green w-5 h-5" />
           )}
@@ -147,18 +147,17 @@ const Payment = ({
             className="font-body text-[13px] font-medium text-wj-green hover:underline"
             data-testid="edit-payment-button"
           >
-            Edit
+            Wijzigen
           </button>
         )}
       </div>
 
       <div className={isOpen ? "flex flex-col gap-4" : "hidden"}>
         {paidByGiftcard ? (
-          <p className="font-body text-[14px] text-wj-text">Gift card</p>
+          <p className="font-body text-[14px] text-wj-text">Cadeaubon</p>
         ) : !stripeProvider ? (
           <p className="font-body text-[14px] text-wj-muted">
-            Online payment is not available at this time. Please contact us to
-            complete your order.
+            Online betalen is momenteel niet beschikbaar. Neem contact met ons op om je bestelling af te ronden.
           </p>
         ) : stripeReady ? (
           <StripePaymentElementField onComplete={setPaymentComplete} />
@@ -179,7 +178,7 @@ const Payment = ({
             disabled={!canContinue || isLoading}
             data-testid="submit-payment-button"
           >
-            {isLoading ? "Processing…" : "Continue to review"}
+            {isLoading ? "Verwerken..." : "Verder naar overzicht"}
           </BrandButton>
         )}
       </div>
@@ -205,7 +204,7 @@ const Payment = ({
             className="font-body text-[14px] text-wj-text"
             data-testid="payment-method-summary"
           >
-            Gift card
+            Cadeaubon
           </p>
         ) : null}
       </div>

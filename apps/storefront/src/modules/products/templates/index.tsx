@@ -28,7 +28,7 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
         <Breadcrumb
           items={[
             { label: "Home", href: "/" },
-            { label: "Shop", href: "/winkel" },
+            { label: "Winkel", href: "/winkel" },
             { label: product.title },
           ]}
         />

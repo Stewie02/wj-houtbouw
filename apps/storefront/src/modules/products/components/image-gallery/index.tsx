@@ -21,7 +21,7 @@ const ImageGallery = ({ images }: ImageGalleryProps) => {
         {activeImage?.url ? (
           <Image
             src={activeImage.url}
-            alt="Product image"
+            alt="Productafbeelding"
             fill
             className="object-cover"
             priority
@@ -47,7 +47,7 @@ const ImageGallery = ({ images }: ImageGalleryProps) => {
             {img?.url ? (
               <Image
                 src={img.url}
-                alt={`Product thumbnail ${i + 1}`}
+                alt={`Productafbeelding ${i + 1}`}
                 fill
                 className="object-cover"
                 sizes="120px"

@@ -137,6 +137,15 @@ Content-only pages (contact, terms & conditions, cookie policy, FAQ, about) are 
 
 Blog posts are **static data** in `src/lib/data/blog.ts` (`BlogPost[]`) — they are not stored in Medusa. Add or edit posts in that file.
 
+### Copywriting
+
+All user-facing copy is written in Dutch. This applies to page headings, labels, button text, descriptions, error messages, placeholders, and any other text visible to the visitor.
+
+Two rules apply to all running text:
+
+- **Taal** — all copy is Dutch, without exception. Do not mix in English words or phrases unless they are established brand or product names.
+- **Geen koppeltekens in lopende tekst** — do not use hyphens as punctuation in running text (no em dashes, no en dashes used as separators). Compound words follow normal Dutch spelling rules.
+
 ### Backend
 
 Standard Medusa v2 structure: `src/modules/` for custom modules, `src/api/` for custom route handlers, `src/workflows/` for custom workflows, `src/subscribers/` for event subscribers, `src/links/` for module links. Custom API routes are under `src/api/store/custom/` and `src/api/admin/custom/`.

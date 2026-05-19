@@ -26,7 +26,7 @@ const Summary = ({ cart }: SummaryProps) => {
   return (
     <div className="bg-wj-white border border-wj-border p-6 sm:p-8 flex flex-col gap-6">
       <h2 className="font-display font-bold text-[22px] text-wj-text tracking-[-0.01em]">
-        Order summary
+        Besteloverzicht
       </h2>
 
       {/* Discount code */}
@@ -43,7 +43,7 @@ const Summary = ({ cart }: SummaryProps) => {
         data-testid="checkout-button"
       >
         <BrandButton size="lg" full>
-          Proceed to checkout
+          Afrekenen
         </BrandButton>
       </LocalizedClientLink>
 
@@ -60,7 +60,7 @@ const Summary = ({ cart }: SummaryProps) => {
       </div>
 
       <p className="font-body text-[12px] text-wj-muted text-center -mt-2">
-        Secure checkout · 30-day returns
+        Veilig betalen · 30 dagen retour
       </p>
     </div>
   );

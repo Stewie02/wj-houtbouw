@@ -43,7 +43,7 @@ const Addresses = ({
         <h2
           className={`font-display font-bold text-[20px] text-wj-text tracking-[-0.01em] flex items-center gap-2 ${!isOpen && !cart?.shipping_address ? "opacity-40" : ""}`}
         >
-          Shipping address
+          Bezorgadres
           {!isOpen && cart?.shipping_address && (
             <CheckCircleSolid className="text-wj-green w-5 h-5" />
           )}
@@ -54,7 +54,7 @@ const Addresses = ({
             className="font-body text-[13px] font-medium text-wj-green hover:underline"
             data-testid="edit-address-button"
           >
-            Edit
+            Wijzigen
           </button>
         )}
       </div>
@@ -72,14 +72,14 @@ const Addresses = ({
             {!sameAsBilling && (
               <div className="border-t border-wj-border pt-6">
                 <h3 className="font-display font-bold text-[18px] text-wj-text mb-4">
-                  Billing address
+                  Factuuradres
                 </h3>
                 <BillingAddress cart={cart} />
               </div>
             )}
 
             <SubmitButton data-testid="submit-address-button">
-              Continue to delivery
+              Verder naar bezorging
             </SubmitButton>
             <ErrorMessage error={message} data-testid="address-error-message" />
           </div>
@@ -90,7 +90,7 @@ const Addresses = ({
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
               <div data-testid="shipping-address-summary">
                 <p className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-muted mb-2">
-                  Shipping address
+                  Bezorgadres
                 </p>
                 <p className="font-body text-[14px] text-wj-text">
                   {cart.shipping_address.first_name}{" "}
@@ -123,11 +123,11 @@ const Addresses = ({
 
               <div data-testid="billing-address-summary">
                 <p className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-muted mb-2">
-                  Billing address
+                  Factuuradres
                 </p>
                 {sameAsBilling ? (
                   <p className="font-body text-[14px] text-wj-muted">
-                    Same as shipping
+                    Zelfde als bezorgadres
                   </p>
                 ) : (
                   <>

@@ -26,7 +26,7 @@ export default function ProductPrice({
         data-testid="product-price"
         data-value={selectedPrice.calculated_price_number}
       >
-        {!variant && "From "}
+        {!variant && "Vanaf "}
         {selectedPrice.calculated_price}
       </div>
       {selectedPrice.price_type === "sale" && (

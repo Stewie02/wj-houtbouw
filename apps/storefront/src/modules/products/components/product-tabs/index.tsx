@@ -7,25 +7,25 @@ type ProductTabsProps = {
   product: HttpTypes.StoreProduct;
 };
 
-const TABS = ["Description", "Technical specs"];
+const TABS = ["Omschrijving", "Technische specs"];
 
 const ProductTabs = ({ product }: ProductTabsProps) => {
-  const [active, setActive] = useState("Description");
+  const [active, setActive] = useState("Omschrijving");
 
   const specs = [
-    { label: "Material", value: product.material },
-    { label: "Weight", value: product.weight ? `${product.weight} g` : null },
+    { label: "Materiaal", value: product.material },
+    { label: "Gewicht", value: product.weight ? `${product.weight} g` : null },
     {
-      label: "Dimensions",
+      label: "Afmetingen",
       value:
         product.length && product.width && product.height
           ? `${product.length} × ${product.width} × ${product.height} cm`
           : null,
     },
-    { label: "Country of origin", value: product.origin_country },
+    { label: "Herkomst", value: product.origin_country },
     { label: "Type", value: product.type?.value },
     ...(product.options ?? []).map((opt) => ({
-      label: opt.title ?? "Option",
+      label: opt.title ?? "Optie",
       value: (opt.values ?? []).map((v) => v.value).join(", "),
     })),
   ].filter((row) => row.value);
@@ -52,13 +52,13 @@ const ProductTabs = ({ product }: ProductTabsProps) => {
 
         {/* Tab content */}
         <div className="py-10 sm:py-12 max-w-[720px]">
-          {active === "Description" && (
+          {active === "Omschrijving" && (
             <div className="font-body text-[15px] text-wj-muted leading-[1.8]">
-              {product.description ?? "No description available."}
+              {product.description ?? "Geen omschrijving beschikbaar."}
             </div>
           )}
 
-          {active === "Technical specs" &&
+          {active === "Technische specs" &&
             (specs.length > 0 ? (
               <table className="w-full border-collapse">
                 <tbody>
@@ -76,7 +76,7 @@ const ProductTabs = ({ product }: ProductTabsProps) => {
               </table>
             ) : (
               <p className="font-body text-[15px] text-wj-muted">
-                No specifications available.
+                Geen specificaties beschikbaar.
               </p>
             ))}
         </div>

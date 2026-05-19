@@ -26,13 +26,13 @@ export default async function OrderCompletedTemplate({
               Home
             </LocalizedClientLink>
             {" / "}
-            <span className="text-wj-white">Order confirmed</span>
+            <span className="text-wj-white">Bestelling bevestigd</span>
           </p>
           <h1 className="font-display font-bold text-[32px] sm:text-[40px] text-wj-white tracking-[-0.02em]">
-            Thank you for your order
+            Bedankt voor je bestelling
           </h1>
           <p className="font-body text-wj-muted mt-2 text-[15px]">
-            Order #{order.display_id} &middot; Confirmation sent to{" "}
+            Bestelling #{order.display_id} &middot; Bevestiging verzonden naar{" "}
             <span data-testid="order-email">{order.email}</span>
           </p>
         </div>

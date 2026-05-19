@@ -86,7 +86,7 @@ function ProductRow({
           {/* Sizes */}
           <div className="mb-8">
             <div className="font-body font-semibold text-[10px] tracking-[0.08em] uppercase text-wj-muted mb-2.5">
-              Available sizes
+              Beschikbare maten
             </div>
             <div className="flex flex-wrap gap-1.5">
               {sizes.map((s) => (
@@ -104,7 +104,7 @@ function ProductRow({
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5">
             <div>
               <div className="font-body font-semibold text-[10px] tracking-[0.08em] uppercase text-wj-muted mb-1">
-                Starting from
+                Vanaf
               </div>
               <div className="font-display font-bold text-[32px] sm:text-[34px] text-wj-green tracking-[-0.02em]">
                 {priceFrom}
@@ -112,7 +112,7 @@ function ProductRow({
             </div>
             <LocalizedClientLink href={`/producten/${handle}`}>
               <BrandButton size="lg" className="w-full sm:w-auto">
-                Configure &amp; order
+                Bekijken &amp; bestellen
               </BrandButton>
             </LocalizedClientLink>
           </div>
@@ -165,13 +165,13 @@ export default async function PaginatedProducts({
       handle: product.handle ?? product.id!,
       title: product.title,
       description: product.description ?? "",
-      material: (product.metadata?.material as string) ?? "Timber",
+      material: (product.metadata?.material as string) ?? "Hout",
       tag: (product.metadata?.tag as string) ?? null,
       features: (product.metadata?.features as string[]) ?? [
-        "FSC-certified timber",
-        "10-year guarantee",
+        "FSC-gecertificeerd hout",
+        "10 jaar garantie",
       ],
-      sizes: uniqueSizes.length > 0 ? uniqueSizes : ["Standard"],
+      sizes: uniqueSizes.length > 0 ? uniqueSizes : ["Standaard"],
       priceFrom: cheapestPrice?.calculated_price ?? "—",
     };
   });

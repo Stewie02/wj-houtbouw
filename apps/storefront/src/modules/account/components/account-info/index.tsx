@@ -22,7 +22,7 @@ const AccountInfo = ({
   isSuccess,
   isError,
   clearState,
-  errorMessage = "An error occurred, please try again",
+  errorMessage = "Er is een fout opgetreden. Probeer het opnieuw.",
   children,
   "data-testid": dataTestid,
 }: AccountInfoProps) => {
@@ -59,7 +59,7 @@ const AccountInfo = ({
           data-testid="edit-button"
           data-active={state}
         >
-          {state ? "Cancel" : "Edit"}
+          {state ? "Annuleren" : "Wijzigen"}
         </button>
       </div>
 
@@ -77,7 +77,7 @@ const AccountInfo = ({
           data-testid="success-message"
         >
           <p className="font-body text-[13px] text-wj-green bg-wj-green-light px-3 py-2 mt-3">
-            {label} updated successfully
+            {label} bijgewerkt
           </p>
         </Disclosure.Panel>
       </Disclosure>
@@ -122,7 +122,7 @@ const AccountInfo = ({
                 disabled={pending}
                 data-testid="save-button"
               >
-                {pending ? "Saving…" : "Save changes"}
+                {pending ? "Opslaan..." : "Wijzigingen opslaan"}
               </BrandButton>
             </div>
           </div>

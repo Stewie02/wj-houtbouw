@@ -183,7 +183,7 @@ const Shipping: React.FC<ShippingProps> = ({
             }
           )}
         >
-          Delivery
+          Bezorging
           {!isOpen && (cart.shipping_methods?.length ?? 0) > 0 && (
             <CheckCircleSolid className="text-wj-green w-5 h-5" />
           )}
@@ -197,7 +197,7 @@ const Shipping: React.FC<ShippingProps> = ({
               className="font-body text-[13px] font-medium text-wj-green hover:underline"
               data-testid="edit-delivery-button"
             >
-              Edit
+              Wijzigen
             </button>
           )}
       </div>
@@ -206,7 +206,7 @@ const Shipping: React.FC<ShippingProps> = ({
         <div className="flex flex-col gap-6">
           <div>
             <p className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-muted mb-3">
-              Shipping method
+              Bezorgmethode
             </p>
             <div
               className="flex flex-col gap-2"
@@ -237,7 +237,7 @@ const Shipping: React.FC<ShippingProps> = ({
                         checked={showPickupOptions === PICKUP_OPTION_ON}
                       />
                       <span className="font-body text-[14px] text-wj-text">
-                        Pick up your order
+                        Afhalen bij ons
                       </span>
                     </div>
                     <span className="font-body text-[14px] text-wj-muted">
@@ -306,7 +306,7 @@ const Shipping: React.FC<ShippingProps> = ({
           {showPickupOptions === PICKUP_OPTION_ON && (
             <div>
               <p className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-muted mb-3">
-                Store location
+                Afhaallocatie
               </p>
               <div
                 className="flex flex-col gap-2"
@@ -381,7 +381,7 @@ const Shipping: React.FC<ShippingProps> = ({
             disabled={!cart.shipping_methods?.[0] || isLoading}
             data-testid="submit-delivery-option-button"
           >
-            {isLoading ? "Saving…" : "Continue to payment"}
+            {isLoading ? "Opslaan..." : "Verder naar betaling"}
           </BrandButton>
         </div>
       ) : (
@@ -389,7 +389,7 @@ const Shipping: React.FC<ShippingProps> = ({
           {(cart.shipping_methods?.length ?? 0) > 0 && (
             <div>
               <p className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-muted mb-1">
-                Method
+                Methode
               </p>
               <p className="font-body text-[14px] text-wj-text">
                 {cart.shipping_methods!.at(-1)!.name} ·{" "}

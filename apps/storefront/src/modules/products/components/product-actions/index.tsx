@@ -96,10 +96,10 @@ export default function ProductActions({
   };
 
   const buttonLabel = !selectedVariant
-    ? "Select variant"
+    ? "Kies een variant"
     : !inStock || !isValidVariant
-      ? "Out of stock"
-      : "Add to cart";
+      ? "Niet op voorraad"
+      : "In winkelwagen";
 
   return (
     <>
@@ -140,11 +140,11 @@ export default function ProductActions({
           }
           data-testid="add-product-button"
         >
-          {isAdding ? "Adding…" : buttonLabel}
+          {isAdding ? "Toevoegen..." : buttonLabel}
         </BrandButton>
 
         <BrandButton variant="outline" full>
-          Add to wishlist
+          Op verlanglijst
         </BrandButton>
 
         <MobileActions

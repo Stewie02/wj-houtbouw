@@ -22,7 +22,7 @@ const StoreTemplate = ({
       <div className="bg-wj-dark pt-14 pb-12">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-8 lg:px-12">
           <Breadcrumb
-            items={[{ label: "Home", href: "/" }, { label: "Shop" }]}
+            items={[{ label: "Home", href: "/" }, { label: "Winkel" }]}
             dark
           />
           <div className="mt-3 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-end">

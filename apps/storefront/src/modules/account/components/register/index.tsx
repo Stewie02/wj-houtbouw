@@ -23,23 +23,23 @@ const Register = ({ setCurrentView }: Props) => {
   return (
     <div data-testid="register-page">
       <h2 className="font-display font-bold text-[26px] text-wj-text tracking-[-0.02em] mb-2">
-        Create an account
+        Account aanmaken
       </h2>
       <p className="font-body text-[14px] text-wj-muted mb-8">
-        Get access to order history, saved addresses and a faster checkout.
+        Bekijk je bestelgeschiedenis, sla adressen op en reken sneller af.
       </p>
 
       <form className="flex flex-col gap-4" action={formAction}>
         <div className="grid grid-cols-2 gap-4">
           <Input
-            label="First name"
+            label="Voornaam"
             name="first_name"
             required
             autoComplete="given-name"
             data-testid="first-name-input"
           />
           <Input
-            label="Last name"
+            label="Achternaam"
             name="last_name"
             required
             autoComplete="family-name"
@@ -47,7 +47,7 @@ const Register = ({ setCurrentView }: Props) => {
           />
         </div>
         <Input
-          label="Email"
+          label="E-mailadres"
           name="email"
           required
           type="email"
@@ -55,14 +55,14 @@ const Register = ({ setCurrentView }: Props) => {
           data-testid="email-input"
         />
         <Input
-          label="Phone (optional)"
+          label="Telefoonnummer (optioneel)"
           name="phone"
           type="tel"
           autoComplete="tel"
           data-testid="phone-input"
         />
         <Input
-          label="Password"
+          label="Wachtwoord"
           name="password"
           required
           type="password"
@@ -71,17 +71,17 @@ const Register = ({ setCurrentView }: Props) => {
         />
         <ErrorMessage error={message} data-testid="register-error" />
         <SubmitButton data-testid="register-button">
-          Create account
+          Account aanmaken
         </SubmitButton>
       </form>
 
       <p className="font-body text-[13px] text-wj-muted text-center mt-6">
-        Already have an account?{" "}
+        Al een account?{" "}
         <button
           onClick={() => setCurrentView(LOGIN_VIEW.SIGN_IN)}
           className="text-wj-green font-medium hover:underline"
         >
-          Sign in
+          Inloggen
         </button>
       </p>
     </div>

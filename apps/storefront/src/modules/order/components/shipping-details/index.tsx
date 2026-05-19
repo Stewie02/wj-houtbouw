@@ -9,12 +9,12 @@ const ShippingDetails = ({ order }: ShippingDetailsProps) => {
   return (
     <div className="bg-wj-white border border-wj-border p-6 sm:p-8">
       <h2 className="font-display font-semibold text-[20px] text-wj-text tracking-[-0.01em] mb-6">
-        Delivery
+        Bezorging
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
         <div data-testid="shipping-address-summary">
           <p className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-muted mb-2">
-            Shipping address
+            Bezorgadres
           </p>
           <p className="font-body text-[14px] text-wj-text">
             {order.shipping_address?.first_name}{" "}
@@ -35,7 +35,7 @@ const ShippingDetails = ({ order }: ShippingDetailsProps) => {
 
         <div data-testid="shipping-contact-summary">
           <p className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-muted mb-2">
-            Contact
+            Contactgegevens
           </p>
           <p className="font-body text-[14px] text-wj-text">
             {order.shipping_address?.phone}
@@ -45,7 +45,7 @@ const ShippingDetails = ({ order }: ShippingDetailsProps) => {
 
         <div data-testid="shipping-method-summary">
           <p className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-muted mb-2">
-            Method
+            Verzendmethode
           </p>
           <p className="font-body text-[14px] text-wj-text">
             {(order.shipping_methods?.[0] as { name?: string })?.name}

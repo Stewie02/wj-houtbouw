@@ -7,10 +7,10 @@ import { HttpTypes } from "@medusajs/types";
 import LocalizedClientLink from "@modules/common/components/localized-client-link";
 
 const NAV_ITEMS = [
-  { href: "/account", label: "Overview", testId: "overview-link" },
-  { href: "/account/profile", label: "Profile", testId: "profile-link" },
-  { href: "/account/addresses", label: "Addresses", testId: "addresses-link" },
-  { href: "/account/orders", label: "Orders", testId: "orders-link" },
+  { href: "/account", label: "Overzicht", testId: "overview-link" },
+  { href: "/account/profiel", label: "Profiel", testId: "profile-link" },
+  { href: "/account/adressen", label: "Adressen", testId: "addresses-link" },
+  { href: "/account/bestellingen", label: "Bestellingen", testId: "orders-link" },
 ];
 
 const AccountNav = ({
@@ -42,7 +42,7 @@ const AccountNav = ({
       {/* Desktop sidebar nav */}
       <nav className="hidden lg:flex flex-col gap-1" data-testid="account-nav">
         <p className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-muted mb-3">
-          My account
+          Mijn account
         </p>
         {NAV_ITEMS.map(({ href, label, testId }) => (
           <AccountNavLink
@@ -61,7 +61,7 @@ const AccountNav = ({
           data-testid="logout-button"
         >
           <ArrowRightOnRectangle className="w-4 h-4" />
-          Log out
+          Uitloggen
         </button>
       </nav>
 
@@ -86,7 +86,7 @@ const AccountNav = ({
               className="flex items-center justify-between py-4 font-body text-[15px] text-wj-muted w-full"
               data-testid="logout-button"
             >
-              Log out
+              Uitloggen
               <ArrowRightOnRectangle className="w-4 h-4" />
             </button>
           </div>

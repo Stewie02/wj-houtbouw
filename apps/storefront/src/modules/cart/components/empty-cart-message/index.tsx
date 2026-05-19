@@ -23,14 +23,13 @@ const EmptyCartMessage = () => {
         </svg>
       </div>
       <h2 className="font-display font-bold text-[26px] text-wj-text tracking-[-0.02em] mb-3">
-        Your cart is empty
+        Je winkelwagen is leeg
       </h2>
       <p className="font-body text-[15px] text-wj-muted max-w-[340px] mb-8 leading-[1.7]">
-        Looks like you haven&apos;t added anything yet. Browse our collection of
-        handcrafted wooden outdoor furniture.
+        Je hebt nog niets toegevoegd. Bekijk onze collectie handgemaakt houten buitenmeubilair.
       </p>
       <LocalizedClientLink href="/winkel">
-        <BrandButton size="lg">Explore products</BrandButton>
+        <BrandButton size="lg">Bekijk producten</BrandButton>
       </LocalizedClientLink>
     </div>
   );

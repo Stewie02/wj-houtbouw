@@ -40,12 +40,12 @@ const Item = ({ item, currencyCode }: ItemProps) => {
             data-testid="product-variant"
           />
           <p className="font-body text-[13px] text-wj-muted mt-1">
-            Qty: <span data-testid="product-quantity">{item.quantity}</span>
+            Aantal: <span data-testid="product-quantity">{item.quantity}</span>
           </p>
         </div>
         <div className="text-right flex-shrink-0">
           <p className="font-body text-[13px] text-wj-muted">
-            {unitPrice} each
+            {unitPrice} per stuk
           </p>
           <p className="font-body font-semibold text-[15px] text-wj-text mt-1">
             {total}

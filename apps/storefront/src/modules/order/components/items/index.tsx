@@ -14,7 +14,7 @@ const Items = ({ order }: ItemsProps) => {
   return (
     <div className="bg-wj-white border border-wj-border p-6 sm:p-8">
       <h2 className="font-display font-semibold text-[20px] text-wj-text tracking-[-0.01em] mb-6">
-        Items ordered
+        Bestelde artikelen
       </h2>
       <div
         className="flex flex-col divide-y divide-wj-border"

@@ -19,7 +19,7 @@ export default function PaymentReturnPage() {
     }
 
     placeOrder(cart_id).catch((err) => {
-      setError(err?.message ?? "Something went wrong placing your order.");
+      setError(err?.message ?? "Er is iets misgegaan bij het plaatsen van je bestelling.");
     });
   }, []);
 
@@ -32,7 +32,7 @@ export default function PaymentReturnPage() {
             onClick={() => router.replace("/checkout")}
             className="font-body text-[13px] font-medium text-wj-green hover:underline"
           >
-            Return to checkout
+            Terug naar afrekenen
           </button>
         </div>
       </div>
@@ -42,7 +42,7 @@ export default function PaymentReturnPage() {
   return (
     <div className="min-h-[60vh] flex items-center justify-center">
       <p className="font-body text-[14px] text-wj-muted">
-        Processing your payment…
+        Betaling wordt verwerkt…
       </p>
     </div>
   );

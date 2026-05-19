@@ -19,13 +19,13 @@ const ItemsTemplate = ({ cart }: ItemsTemplateProps) => {
           Product
         </span>
         <span className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-muted text-center">
-          Quantity
+          Aantal
         </span>
         <span className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-muted text-right">
-          Price
+          Prijs
         </span>
         <span className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-muted text-right">
-          Total
+          Totaal
         </span>
       </div>
 
@@ -49,7 +49,7 @@ const ItemsTemplate = ({ cart }: ItemsTemplateProps) => {
           href="/winkel"
           className="font-body text-[13px] font-medium text-wj-green hover:underline inline-flex items-center gap-1.5"
         >
-          ← Continue shopping
+          ← Verder winkelen
         </LocalizedClientLink>
       </div>
     </div>

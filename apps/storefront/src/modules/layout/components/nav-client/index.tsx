@@ -6,7 +6,7 @@ import LocalizedClientLink from "@modules/common/components/localized-client-lin
 import BrandButton from "@modules/common/components/brand-button";
 
 const NAV_LINKS = [
-  { href: "/winkel", label: "Shop" },
+  { href: "/winkel", label: "Winkel" },
   { href: "/over-ons", label: "Over ons" },
   { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contact" },
@@ -27,7 +27,7 @@ const Logo = () => (
         WJ Houtbouw
       </div>
       <div className="font-body font-semibold text-[9px] tracking-[0.08em] uppercase text-wj-muted">
-        Outdoor Furniture
+        Buitenmeubilair
       </div>
     </div>
   </LocalizedClientLink>
@@ -76,7 +76,7 @@ const NavClient = ({ cartCount }: NavClientProps) => {
           </LocalizedClientLink>
           <CartIcon count={cartCount} />
           <LocalizedClientLink href="/winkel">
-            <BrandButton size="sm">Shop now</BrandButton>
+            <BrandButton size="sm">Naar de winkel</BrandButton>
           </LocalizedClientLink>
         </div>
 

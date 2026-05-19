@@ -16,39 +16,39 @@ const OrderSummary = ({ order }: OrderSummaryProps) => {
   return (
     <div className="bg-wj-white border border-wj-border p-6 sm:p-8 flex flex-col gap-4">
       <h2 className="font-display font-semibold text-[20px] text-wj-text tracking-[-0.01em]">
-        Order summary
+        Besteloverzicht
       </h2>
 
       <div className="flex flex-col gap-2">
         <div className="flex justify-between font-body text-[14px] text-wj-muted">
-          <span>Subtotal</span>
+          <span>Subtotaal</span>
           <span>{getAmount(order.subtotal)}</span>
         </div>
         {(order.discount_total ?? 0) > 0 && (
           <div className="flex justify-between font-body text-[14px] text-wj-green">
-            <span>Discount</span>
+            <span>Korting</span>
             <span>- {getAmount(order.discount_total)}</span>
           </div>
         )}
         {(order.gift_card_total ?? 0) > 0 && (
           <div className="flex justify-between font-body text-[14px] text-wj-green">
-            <span>Gift card</span>
+            <span>Cadeaubon</span>
             <span>- {getAmount(order.gift_card_total)}</span>
           </div>
         )}
         <div className="flex justify-between font-body text-[14px] text-wj-muted">
-          <span>Shipping</span>
+          <span>Verzending</span>
           <span>{getAmount(order.shipping_total)}</span>
         </div>
         <div className="flex justify-between font-body text-[14px] text-wj-muted">
-          <span>Taxes</span>
+          <span>Btw</span>
           <span>{getAmount(order.tax_total)}</span>
         </div>
       </div>
 
       <div className="border-t border-wj-border pt-4 flex justify-between items-baseline">
         <span className="font-body font-semibold text-[15px] text-wj-text">
-          Total
+          Totaal
         </span>
         <span className="font-display font-bold text-[22px] text-wj-text">
           {getAmount(order.total)}
@@ -59,7 +59,7 @@ const OrderSummary = ({ order }: OrderSummaryProps) => {
         href="/winkel"
         className="inline-flex items-center justify-center w-full font-body font-medium tracking-[0.04em] text-[14px] px-7 py-[13px] bg-wj-green text-wj-white border border-transparent transition-all duration-[180ms] hover:opacity-90 mt-2"
       >
-        Continue shopping
+        Verder winkelen
       </LocalizedClientLink>
     </div>
   );

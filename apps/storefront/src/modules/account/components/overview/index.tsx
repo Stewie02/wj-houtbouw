@@ -14,7 +14,7 @@ const Overview = ({ customer, orders }: OverviewProps) => {
       <div className="grid grid-cols-2 sm:grid-cols-2 gap-4">
         <div className="bg-wj-white border border-wj-border p-6">
           <p className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-muted mb-2">
-            Addresses
+            Adressen
           </p>
           <p
             className="font-display font-bold text-[32px] text-wj-text tracking-[-0.02em]"
@@ -23,17 +23,17 @@ const Overview = ({ customer, orders }: OverviewProps) => {
           >
             {customer?.addresses?.length ?? 0}
           </p>
-          <p className="font-body text-[12px] text-wj-muted mt-1">saved</p>
+          <p className="font-body text-[12px] text-wj-muted mt-1">opgeslagen</p>
         </div>
 
         <div className="bg-wj-white border border-wj-border p-6">
           <p className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-muted mb-2">
-            Orders
+            Bestellingen
           </p>
           <p className="font-display font-bold text-[32px] text-wj-text tracking-[-0.02em]">
             {orders?.length ?? 0}
           </p>
-          <p className="font-body text-[12px] text-wj-muted mt-1">placed</p>
+          <p className="font-body text-[12px] text-wj-muted mt-1">geplaatst</p>
         </div>
       </div>
 
@@ -41,13 +41,13 @@ const Overview = ({ customer, orders }: OverviewProps) => {
       <div>
         <div className="flex items-center justify-between mb-4">
           <h2 className="font-display font-bold text-[20px] text-wj-text tracking-[-0.01em]">
-            Recent orders
+            Recente bestellingen
           </h2>
           <LocalizedClientLink
             href="/account/bestellingen"
             className="font-body text-[13px] font-medium text-wj-green hover:underline"
           >
-            View all
+            Alles bekijken
           </LocalizedClientLink>
         </div>
 
@@ -56,14 +56,14 @@ const Overview = ({ customer, orders }: OverviewProps) => {
             {orders.slice(0, 5).map((order) => (
               <LocalizedClientLink
                 key={order.id}
-                href={`/account/orders/details/${order.id}`}
+                href={`/account/bestellingen/details/${order.id}`}
                 data-testid="order-wrapper"
                 data-value={order.id}
               >
                 <div className="bg-wj-white border border-wj-border p-4 sm:p-5 hover:border-wj-text transition-colors grid grid-cols-3 sm:grid-cols-4 gap-4 items-center">
                   <div>
                     <p className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-muted mb-1">
-                      Date
+                      Datum
                     </p>
                     <p
                       className="font-body text-[13px] text-wj-text"
@@ -78,7 +78,7 @@ const Overview = ({ customer, orders }: OverviewProps) => {
                   </div>
                   <div>
                     <p className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-muted mb-1">
-                      Order
+                      Bestelling
                     </p>
                     <p
                       className="font-body text-[13px] text-wj-text"
@@ -90,7 +90,7 @@ const Overview = ({ customer, orders }: OverviewProps) => {
                   </div>
                   <div>
                     <p className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-muted mb-1">
-                      Total
+                      Totaal
                     </p>
                     <p
                       className="font-body font-semibold text-[13px] text-wj-text"
@@ -104,7 +104,7 @@ const Overview = ({ customer, orders }: OverviewProps) => {
                   </div>
                   <div className="hidden sm:flex justify-end">
                     <span className="font-body text-[13px] text-wj-green font-medium">
-                      View →
+                      Bekijken →
                     </span>
                   </div>
                 </div>
@@ -117,13 +117,13 @@ const Overview = ({ customer, orders }: OverviewProps) => {
               className="font-body text-[15px] text-wj-muted"
               data-testid="no-orders-message"
             >
-              You haven&apos;t placed any orders yet.
+              Je hebt nog geen bestellingen geplaatst.
             </p>
             <LocalizedClientLink
               href="/winkel"
               className="font-body text-[13px] font-medium text-wj-green hover:underline mt-3 inline-block"
             >
-              Start shopping →
+              Ga winkelen →
             </LocalizedClientLink>
           </div>
         )}

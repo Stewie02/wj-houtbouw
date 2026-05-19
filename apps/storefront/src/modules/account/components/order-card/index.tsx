@@ -24,7 +24,7 @@ const OrderCard = ({ order }: OrderCardProps) => {
       <div className="flex items-start justify-between gap-4">
         <div>
           <p className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-muted mb-1">
-            Order
+            Bestelling
           </p>
           <p className="font-display font-bold text-[20px] text-wj-text tracking-[-0.01em]">
             #<span data-testid="order-display-id">{order.display_id}</span>
@@ -32,7 +32,7 @@ const OrderCard = ({ order }: OrderCardProps) => {
         </div>
         <div className="text-right">
           <p className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-muted mb-1">
-            Total
+            Totaal
           </p>
           <p
             className="font-display font-bold text-[18px] text-wj-green"
@@ -57,7 +57,7 @@ const OrderCard = ({ order }: OrderCardProps) => {
         </span>
         <span className="text-wj-border">·</span>
         <span>
-          {numberOfLines} {numberOfLines === 1 ? "item" : "items"}
+          {numberOfLines} {numberOfLines === 1 ? "artikel" : "artikelen"}
         </span>
       </div>
 
@@ -85,13 +85,13 @@ const OrderCard = ({ order }: OrderCardProps) => {
 
       {/* CTA */}
       <div className="flex justify-end border-t border-wj-border pt-4">
-        <LocalizedClientLink href={`/account/orders/details/${order.id}`}>
+        <LocalizedClientLink href={`/account/bestellingen/details/${order.id}`}>
           <BrandButton
             variant="outline"
             size="sm"
             data-testid="order-details-link"
           >
-            View order
+            Bestelling bekijken
           </BrandButton>
         </LocalizedClientLink>
       </div>

@@ -7,7 +7,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 export const metadata: Metadata = {
-  title: "Checkout",
+  title: "Afrekenen",
 };
 
 export default async function Checkout() {
@@ -25,7 +25,7 @@ export default async function Checkout() {
       <div className="bg-wj-dark">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-8 lg:px-12 py-10 sm:py-14">
           <h1 className="font-display font-bold text-[32px] sm:text-[40px] text-wj-white tracking-[-0.02em]">
-            Checkout
+            Afrekenen
           </h1>
         </div>
       </div>

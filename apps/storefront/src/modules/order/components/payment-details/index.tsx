@@ -14,12 +14,12 @@ const PaymentDetails = ({ order }: PaymentDetailsProps) => {
   return (
     <div className="bg-wj-white border border-wj-border p-6 sm:p-8">
       <h2 className="font-display font-semibold text-[20px] text-wj-text tracking-[-0.01em] mb-6">
-        Payment
+        Betaling
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div>
           <p className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-muted mb-2">
-            Payment method
+            Betaalmethode
           </p>
           <p
             className="font-body text-[14px] text-wj-text"
@@ -30,7 +30,7 @@ const PaymentDetails = ({ order }: PaymentDetailsProps) => {
         </div>
         <div>
           <p className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-muted mb-2">
-            Payment details
+            Betalingsdetails
           </p>
           <p
             className="font-body text-[14px] text-wj-text"
@@ -41,9 +41,9 @@ const PaymentDetails = ({ order }: PaymentDetailsProps) => {
               : `${convertToLocale({
                   amount: payment.amount,
                   currency_code: order.currency_code,
-                })} paid at ${new Date(
+                })} betaald op ${new Date(
                   payment.created_at ?? ""
-                ).toLocaleString()}`}
+                ).toLocaleString("nl-NL")}`}
           </p>
         </div>
       </div>
