@@ -1,9 +1,7 @@
 import { Metadata } from "next";
 
-import ProfilePhone from "@modules/account//components/profile-phone";
+import ProfileForm from "@modules/account/components/profile-form";
 import ProfileBillingAddress from "@modules/account/components/profile-billing-address";
-import ProfileEmail from "@modules/account/components/profile-email";
-import ProfileName from "@modules/account/components/profile-name";
 import { notFound } from "next/navigation";
 import { listRegions } from "@lib/data/regions";
 import { retrieveCustomer } from "@lib/data/customer";
@@ -35,9 +33,7 @@ export default async function Profile() {
         </p>
       </div>
       <div className="w-full">
-        <ProfileName customer={customer} />
-        <ProfileEmail customer={customer} />
-        <ProfilePhone customer={customer} />
+        <ProfileForm customer={customer} />
         <ProfileBillingAddress customer={customer} regions={regions} />
       </div>
     </div>
