@@ -34,14 +34,6 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
         </div>
       )}
 
-      {/* Rating */}
-      <div className="flex items-center gap-2.5 mb-6">
-        <StarRating />
-        <span className="font-body text-[13px] text-wj-muted">
-          4.9 · 124 reviews
-        </span>
-      </div>
-
       {/* Description */}
       {product.description && (
         <p
