@@ -143,10 +143,6 @@ export default function ProductActions({
           {isAdding ? "Toevoegen..." : buttonLabel}
         </BrandButton>
 
-        <BrandButton variant="outline" full>
-          Op verlanglijst
-        </BrandButton>
-
         <MobileActions
           product={product}
           variant={selectedVariant}
