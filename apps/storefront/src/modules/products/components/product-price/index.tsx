@@ -1,19 +1,29 @@
-import { getProductPrice } from "@lib/util/get-product-price";
+import {
+  getCheapestFromVariants,
+  getProductPrice,
+} from "@lib/util/get-product-price";
 import { HttpTypes } from "@medusajs/types";
 
 export default function ProductPrice({
   product,
   variant,
+  variants,
 }: {
   product: HttpTypes.StoreProduct;
   variant?: HttpTypes.StoreProductVariant;
+  variants?: HttpTypes.StoreProductVariant[];
 }) {
   const { cheapestPrice, variantPrice } = getProductPrice({
     product,
     variantId: variant?.id,
   });
 
-  const selectedPrice = variant ? variantPrice : cheapestPrice;
+  const filteredPrice = variants?.length
+    ? getCheapestFromVariants(variants)
+    : null;
+  const selectedPrice = variant
+    ? variantPrice
+    : (filteredPrice ?? cheapestPrice);
 
   if (!selectedPrice) {
     return <div className="h-12 w-36 bg-wj-surface animate-pulse" />;

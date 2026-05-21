@@ -54,6 +54,17 @@ export default function ProductActions({
     [product.variants, options]
   );
 
+  const partialMatchVariants = useMemo(() => {
+    const selectedEntries = Object.entries(options).filter(
+      ([, v]) => v !== undefined
+    );
+    if (selectedEntries.length === 0 || selectedVariant) return undefined;
+    return product.variants?.filter((v) => {
+      const variantOptions = optionsAsKeymap(v.options) ?? {};
+      return selectedEntries.every(([k, val]) => variantOptions[k] === val);
+    });
+  }, [product.variants, options, selectedVariant]);
+
   const isValidVariant = useMemo(
     () =>
       product.variants?.some((v) =>
@@ -124,7 +135,11 @@ export default function ProductActions({
         )}
 
         {/* Price */}
-        <ProductPrice product={product} variant={selectedVariant} />
+        <ProductPrice
+          product={product}
+          variant={selectedVariant}
+          variants={partialMatchVariants}
+        />
 
         {/* Add to cart */}
         <BrandButton
@@ -155,6 +170,7 @@ export default function ProductActions({
           isAdding={isAdding}
           show={!inView}
           optionsDisabled={!!disabled || isAdding}
+          partialMatchVariants={partialMatchVariants}
         />
       </div>
     </>

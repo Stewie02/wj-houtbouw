@@ -6,7 +6,10 @@ import useToggleState from "@lib/hooks/use-toggle-state";
 import ChevronDown from "@modules/common/icons/chevron-down";
 import X from "@modules/common/icons/x";
 
-import { getProductPrice } from "@lib/util/get-product-price";
+import {
+  getCheapestFromVariants,
+  getProductPrice,
+} from "@lib/util/get-product-price";
 import OptionSelect from "./option-select";
 import { HttpTypes } from "@medusajs/types";
 import { isSimpleProduct } from "@lib/util/product";
@@ -21,6 +24,7 @@ type MobileActionsProps = {
   isAdding?: boolean;
   show: boolean;
   optionsDisabled: boolean;
+  partialMatchVariants?: HttpTypes.StoreProductVariant[];
 };
 
 const MobileActions: React.FC<MobileActionsProps> = ({
@@ -33,6 +37,7 @@ const MobileActions: React.FC<MobileActionsProps> = ({
   isAdding,
   show,
   optionsDisabled,
+  partialMatchVariants,
 }) => {
   const { state, open, close } = useToggleState();
 
@@ -42,13 +47,13 @@ const MobileActions: React.FC<MobileActionsProps> = ({
   });
 
   const selectedPrice = useMemo(() => {
-    if (!price) {
-      return null;
-    }
+    if (!price) return null;
     const { variantPrice, cheapestPrice } = price;
-
-    return variantPrice || cheapestPrice || null;
-  }, [price]);
+    if (variantPrice) return variantPrice;
+    if (partialMatchVariants?.length)
+      return getCheapestFromVariants(partialMatchVariants);
+    return cheapestPrice || null;
+  }, [price, partialMatchVariants]);
 
   const isSimple = isSimpleProduct(product);
 

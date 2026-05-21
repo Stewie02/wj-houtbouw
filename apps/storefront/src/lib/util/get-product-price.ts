@@ -38,6 +38,24 @@ export const getPricesForVariant = (variant: VariantWithPrice) => {
   };
 };
 
+const hasCalculatedPrice = (
+  v: HttpTypes.StoreProductVariant
+): v is VariantWithPrice =>
+  !!(v as VariantWithPrice).calculated_price?.calculated_amount;
+
+export const getCheapestFromVariants = (
+  variants: HttpTypes.StoreProductVariant[]
+) => {
+  const cheapestVariant = variants
+    .filter(hasCalculatedPrice)
+    .sort(
+      (a, b) =>
+        (a.calculated_price?.calculated_amount ?? 0) -
+        (b.calculated_price?.calculated_amount ?? 0)
+    )[0];
+  return cheapestVariant ? getPricesForVariant(cheapestVariant) : null;
+};
+
 export function getProductPrice({
   product,
   variantId,
