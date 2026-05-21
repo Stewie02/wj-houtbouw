@@ -61,6 +61,7 @@ export const updateCustomer = async (body: HttpTypes.StoreUpdateCustomer) => {
 
 export async function signup(_currentState: unknown, formData: FormData) {
   const password = formData.get("password") as string;
+  const newsletterOptIn = formData.get("newsletter_opt_in") === "true";
   const customerForm = {
     email: formData.get("email") as string,
     first_name: formData.get("first_name") as string,
@@ -82,7 +83,7 @@ export async function signup(_currentState: unknown, formData: FormData) {
     };
 
     const { customer: createdCustomer } = await sdk.store.customer.create(
-      customerForm,
+      { ...customerForm, metadata: { newsletter_opt_in: newsletterOptIn } },
       {},
       headers
     );

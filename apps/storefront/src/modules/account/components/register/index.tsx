@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import Input from "@modules/common/components/input";
 import CustomerFields from "@modules/account/components/customer-fields";
 import { LOGIN_VIEW } from "@modules/account/templates/login-template";
@@ -20,6 +20,7 @@ const Register = ({ setCurrentView }: Props) => {
     ) => Promise<string | null>,
     null as string | null
   );
+  const [newsletterOptIn, setNewsletterOptIn] = useState(false);
 
   return (
     <div data-testid="register-page">
@@ -40,6 +41,19 @@ const Register = ({ setCurrentView }: Props) => {
           autoComplete="new-password"
           data-testid="password-input"
         />
+        <label className="flex items-start gap-3 cursor-pointer">
+          <input
+            type="checkbox"
+            name="newsletter_opt_in"
+            value="true"
+            checked={newsletterOptIn}
+            onChange={(e) => setNewsletterOptIn(e.target.checked)}
+            className="mt-0.5 h-4 w-4 shrink-0 accent-wj-green"
+          />
+          <span className="font-body text-[13px] text-wj-muted leading-snug">
+            Ja, houd mij op de hoogte van nieuws en aanbiedingen
+          </span>
+        </label>
         <ErrorMessage error={message} data-testid="register-error" />
         <SubmitButton data-testid="register-button">
           Account aanmaken
