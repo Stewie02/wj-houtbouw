@@ -19,14 +19,16 @@ yarn backend:dev      # Start backend only
 yarn storefront:dev   # Start storefront only (port 8000)
 yarn build            # Build both apps
 yarn lint             # Lint both apps
+yarn typecheck        # Type-check both apps
 yarn knip             # Find unused exports, files, and dependencies
 ```
 
-**When a feature is ready**, always run both before considering it done:
+**When a feature is ready**, always run all three before considering it done:
 
 ```bash
-yarn lint   # must pass with no errors
-yarn knip   # must report no unused code
+yarn lint       # must pass with no errors
+yarn typecheck  # must pass with no errors
+yarn knip       # must report no unused code
 ```
 
 ### Backend only (`apps/backend`)
