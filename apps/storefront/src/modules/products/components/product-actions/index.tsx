@@ -82,7 +82,7 @@ export default function ProductActions({
     } else {
       params.delete("v_id");
     }
-    router.replace(pathname + "?" + params.toString());
+    router.replace(pathname + "?" + params.toString(), { scroll: false });
   }, [selectedVariant, isValidVariant]);
 
   const inStock = useMemo(() => {
