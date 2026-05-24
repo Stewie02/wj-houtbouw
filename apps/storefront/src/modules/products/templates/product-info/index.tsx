@@ -1,6 +1,5 @@
 import { HttpTypes } from "@medusajs/types";
 import BrandTag from "@modules/common/components/brand-tag";
-import StarRating from "@modules/common/components/star-rating";
 
 type ProductInfoProps = {
   product: HttpTypes.StoreProduct;

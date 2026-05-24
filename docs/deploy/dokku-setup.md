@@ -55,6 +55,18 @@ dokku config:set medusa-backend \
   STRIPE_WEBHOOK_SECRET=whsec_<signing-secret>
 ```
 
+If using Contabo Object Storage for file uploads, also set (all optional — omit to keep local disk storage):
+
+```bash
+dokku config:set medusa-backend \
+  S3_BUCKET=<bucket-name> \
+  S3_REGION=<region> \
+  S3_ENDPOINT=https://<region>.contabostorage.com \
+  S3_ACCESS_KEY_ID=<access-key> \
+  S3_SECRET_ACCESS_KEY=<secret-key> \
+  S3_FILE_URL=https://<bucket-name>.<region>.contabostorage.com
+```
+
 > **Stripe keys:** find them in the [Stripe Dashboard](https://dashboard.stripe.com) → Developers → API keys.
 > The webhook secret is generated in step 5a below.
 

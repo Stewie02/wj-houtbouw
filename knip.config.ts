@@ -29,6 +29,8 @@ const config: KnipConfig = {
         "react-router-dom",
         "ts-node",
         "zod",
+        "@medusajs/file-s3",
+        "resend",
       ],
     },
     "apps/storefront": {

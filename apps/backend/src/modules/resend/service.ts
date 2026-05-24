@@ -65,11 +65,23 @@ class ResendNotificationProviderService extends AbstractNotificationProviderServ
 
     const template = this.getReactTemplate(data)
 
+    const attachments: Array<{ filename: string; content: Buffer }> = []
+    if (
+      data.type === "order-placed" &&
+      data.invoice_pdf_base64
+    ) {
+      attachments.push({
+        filename: `factuur-${data.display_id ?? "bestelling"}.pdf`,
+        content: Buffer.from(data.invoice_pdf_base64, "base64"),
+      })
+    }
+
     const { data: result, error } = await this.resendClient.emails.send({
       from: this.options.from,
       to: notification.to,
       subject: this.getSubject(data),
       react: template,
+      ...(attachments.length > 0 && { attachments }),
     })
 
     if (error) {

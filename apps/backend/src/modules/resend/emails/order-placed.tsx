@@ -32,6 +32,8 @@ export type OrderEmailProps = Pick<
   | "shipping_address"
 > & {
   customer?: { first_name?: string | null; last_name?: string | null } | null
+  billing_address?: OrderAddressDTO | null
+  created_at?: string | null
 }
 
 const formatPrice = (amount: BigNumberValue, currency: string) =>

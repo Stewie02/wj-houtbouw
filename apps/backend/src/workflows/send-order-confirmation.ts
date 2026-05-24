@@ -7,6 +7,7 @@ import { useQueryGraphStep } from "@medusajs/medusa/core-flows"
 import type { OrderConfirmationEmailData } from "../modules/resend/types"
 import type { OrderEmailProps } from "../modules/resend/emails/order-placed"
 import { sendNotificationStep } from "./steps/send-notification"
+import { generateInvoicePdfStep } from "./steps/generate-invoice-pdf"
 
 type Input = { order_id: string }
 
@@ -24,28 +25,37 @@ const sendOrderConfirmationWorkflow = createWorkflow(
         "subtotal",
         "shipping_total",
         "tax_total",
+        "created_at",
         "items.*",
+        "items.tax_lines.*",
+        "billing_address.*",
         "shipping_address.*",
         "customer.*",
       ],
       filters: { id: input.order_id },
     })
 
-    const notificationInput = transform({ orders }, ({ orders }) => {
-      const order = orders[0] as unknown as OrderEmailProps
+    const invoicePdfBase64 = generateInvoicePdfStep({ orders })
 
-      const emailData: OrderConfirmationEmailData = {
-        ...order,
-        type: "order-placed",
-      }
+    const notificationInput = transform(
+      { orders, invoicePdfBase64 },
+      ({ orders, invoicePdfBase64 }) => {
+        const order = orders[0] as unknown as OrderEmailProps
 
-      return {
-        to: emailData.email ?? "",
-        channel: "email",
-        template: emailData.type,
-        data: emailData as unknown as Record<string, unknown>,
+        const emailData: OrderConfirmationEmailData = {
+          ...order,
+          type: "order-placed",
+          invoice_pdf_base64: invoicePdfBase64 ?? undefined,
+        }
+
+        return {
+          to: emailData.email ?? "",
+          channel: "email",
+          template: emailData.type,
+          data: emailData as unknown as Record<string, unknown>,
+        }
       }
-    })
+    )
 
     sendNotificationStep(notificationInput)
 

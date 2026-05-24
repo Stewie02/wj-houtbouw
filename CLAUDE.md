@@ -151,3 +151,5 @@ Two rules apply to all running text:
 ### Backend
 
 Standard Medusa v2 structure: `src/modules/` for custom modules, `src/api/` for custom route handlers, `src/workflows/` for custom workflows, `src/subscribers/` for event subscribers, `src/links/` for module links. Custom API routes are under `src/api/store/custom/` and `src/api/admin/custom/`.
+
+File uploads use `@medusajs/file-s3` when `S3_BUCKET` is set; falls back to local disk storage when unset (useful for dev). All six S3 env vars (`S3_BUCKET`, `S3_REGION`, `S3_ENDPOINT`, `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY`, `S3_FILE_URL`) are optional runtime-only vars — never build-time.
