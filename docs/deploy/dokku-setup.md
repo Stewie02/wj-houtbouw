@@ -52,7 +52,9 @@ dokku config:set medusa-backend \
   MEDUSA_BACKEND_URL=https://<backend-domain> \
   STOREFRONT_URL=https://<storefront-domain> \
   STRIPE_API_KEY=sk_live_<secret-key> \
-  STRIPE_WEBHOOK_SECRET=whsec_<signing-secret>
+  STRIPE_WEBHOOK_SECRET=whsec_<signing-secret> \
+  RESEND_API_KEY=re_<api-key> \
+  RESEND_FROM_EMAIL=<from-address>
 ```
 
 If using Contabo Object Storage for file uploads, also set (all optional — omit to keep local disk storage):
