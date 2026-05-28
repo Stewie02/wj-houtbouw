@@ -97,6 +97,13 @@ dokku letsencrypt:enable medusa-backend
 dokku letsencrypt:enable medusa-storefront
 ```
 
+## 6b. Set port mappings
+
+```bash
+dokku ports:set medusa-backend   http:80:9000 https:443:9000
+dokku ports:set medusa-storefront http:80:8000 https:443:8000
+```
+
 ## 7. Add git remotes and deploy the backend first
 
 Run from your local machine in the monorepo root:
