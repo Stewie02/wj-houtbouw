@@ -282,7 +282,7 @@ export async function setAddresses(currentState: unknown, formData: FormData) {
     if (!formData) {
       throw new Error("No form data found when setting addresses");
     }
-    const cartId = getCartId();
+    const cartId = await getCartId();
     if (!cartId) {
       throw new Error("No existing cart found when setting addresses");
     }
@@ -292,39 +292,54 @@ export async function setAddresses(currentState: unknown, formData: FormData) {
       return typeof v === "string" ? v : null;
     };
 
-    const data: HttpTypes.StoreUpdateCart = {
-      shipping_address: {
-        first_name: str("shipping_address.first_name"),
-        last_name: str("shipping_address.last_name"),
-        address_1: str("shipping_address.address_1"),
-        address_2: "",
-        company: str("shipping_address.company"),
-        postal_code: str("shipping_address.postal_code"),
-        city: str("shipping_address.city"),
-        country_code: str("shipping_address.country_code"),
-        province: str("shipping_address.province"),
-        phone: str("shipping_address.phone"),
-      },
-      email: str("email"),
+    const sameAsBilling = formData.get("same_as_billing");
+
+    const shippingAddress = {
+      first_name: str("shipping_address.first_name"),
+      last_name: str("shipping_address.last_name"),
+      address_1: str("shipping_address.address_1"),
+      address_2: "",
+      company: str("shipping_address.company"),
+      postal_code: str("shipping_address.postal_code"),
+      city: str("shipping_address.city"),
+      country_code: str("shipping_address.country_code"),
+      phone: str("shipping_address.phone"),
     };
 
-    const sameAsBilling = formData.get("same_as_billing");
-    if (sameAsBilling === "on") data.billing_address = data.shipping_address;
+    const billingAddress =
+      sameAsBilling === "on"
+        ? shippingAddress
+        : {
+            first_name: str("billing_address.first_name"),
+            last_name: str("billing_address.last_name"),
+            address_1: str("billing_address.address_1"),
+            address_2: "",
+            company: str("billing_address.company"),
+            postal_code: str("billing_address.postal_code"),
+            city: str("billing_address.city"),
+            country_code: str("billing_address.country_code"),
+            phone: str("billing_address.phone"),
+          };
 
-    if (sameAsBilling !== "on")
-      data.billing_address = {
-        first_name: str("billing_address.first_name"),
-        last_name: str("billing_address.last_name"),
-        address_1: str("billing_address.address_1"),
-        address_2: "",
-        company: str("billing_address.company"),
-        postal_code: str("billing_address.postal_code"),
-        city: str("billing_address.city"),
-        country_code: str("billing_address.country_code"),
-        province: str("billing_address.province"),
-        phone: str("billing_address.phone"),
-      };
-    await updateCart(data);
+    const headers = {
+      ...(await getAuthHeaders()),
+    };
+
+    // Province is derived from postal code on the backend so shipping zone routing works.
+    await sdk.client.fetch(`/store/custom/cart/${cartId}/address`, {
+      method: "POST",
+      body: {
+        shipping_address: shippingAddress,
+        billing_address: billingAddress,
+        email: str("email"),
+      },
+      headers,
+    });
+
+    const cartCacheTag = await getCacheTag("carts");
+    revalidateTag(cartCacheTag);
+    const fulfillmentCacheTag = await getCacheTag("fulfillment");
+    revalidateTag(fulfillmentCacheTag);
   } catch (e) {
     return (e as Error).message;
   }
