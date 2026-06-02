@@ -33,14 +33,38 @@ export const CustomerWelcomeEmail = (customer: CustomerEmailProps) => {
 
         <Container style={styles.container}>
           <Section style={styles.section}>
-            <Heading style={styles.h1}>Welkom bij WJ Houtbouw!</Heading>
+            <Heading style={styles.h1}>Hoi {firstName},</Heading>
             <Text style={styles.text}>
-              Beste {firstName}, je account is aangemaakt. Wij zijn blij dat je
-              er bij bent.
+              Welkom bij W&amp;J Houtbouw! Fijn dat je een account hebt
+              aangemaakt.
             </Text>
             <Text style={styles.text}>
-              In je account vind je je bestelgeschiedenis, kun je adressen
-              opslaan en reken je sneller af bij je volgende bestelling.
+              Wij maken met de hand ambachtelijke tuinmeubelen van Douglas
+              hout: duurzaam, eerlijk en gemaakt om jaren mee te gaan. Of je
+              nu op zoek bent naar een picknicktafel, een tuintafel of een
+              pergola, we helpen je graag aan iets moois voor buiten.
+            </Text>
+            <Text style={styles.text}>Met jouw account kun je:</Text>
+            <Text style={styles.listItem}>
+              &bull;&nbsp; Eenvoudig een offerte aanvragen
+            </Text>
+            <Text style={styles.listItem}>
+              &bull;&nbsp; Je bestellingen en status bijhouden
+            </Text>
+            <Text style={styles.listItem}>
+              &bull;&nbsp; Je favorieten opslaan
+            </Text>
+            <Text style={{ ...styles.text, marginTop: "16px" }}>
+              Heb je een vraag of wil je advies? We staan altijd voor je
+              klaar. Gewoon even mailen of bellen.
+            </Text>
+            <Text style={styles.text}>
+              📩{" "}
+              <a href="mailto:info@wjhoutbouw.nl" style={styles.link}>
+                info@wjhoutbouw.nl
+              </a>
+              <br />
+              📞 +31 6 24994842
             </Text>
           </Section>
 
@@ -53,14 +77,13 @@ export const CustomerWelcomeEmail = (customer: CustomerEmailProps) => {
           <Hr style={styles.hr} />
 
           <Section style={styles.footer}>
-            <Text style={styles.footerText}>
-              Vragen? Mail ons op{" "}
-              <a href="mailto:info@wjhoutbouw.nl" style={styles.link}>
-                info@wjhoutbouw.nl
-              </a>
+            <Text style={styles.signoff}>
+              Met vriendelijke groet,
+              <br />
+              Het team van WJ Houtbouw
             </Text>
-            <Text style={styles.footerText}>
-              © WJ Houtbouw — Buitenmeubilair van massief hout
+            <Text style={{ ...styles.footerText, marginTop: "24px" }}>
+              © WJ Houtbouw
             </Text>
           </Section>
         </Container>
@@ -119,6 +142,19 @@ const styles = {
     display: "inline-block",
   },
   hr: { borderColor: "#D5CFC7", margin: "0" },
+  listItem: {
+    color: "#1A1410",
+    fontSize: "15px",
+    lineHeight: "1.6",
+    margin: "0 0 4px",
+    paddingLeft: "8px",
+  },
+  signoff: {
+    color: "#1A1410",
+    fontSize: "15px",
+    lineHeight: "1.6",
+    margin: "0 0 8px",
+  },
   footer: { paddingTop: "24px" },
   footerText: { color: "#7B6F65", fontSize: "13px", margin: "0 0 8px" },
   link: { color: "#2B4D1A" },

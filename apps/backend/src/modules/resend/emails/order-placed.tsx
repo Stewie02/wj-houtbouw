@@ -43,14 +43,15 @@ const formatPrice = (amount: BigNumberValue, currency: string) =>
   }).format(Number(amount))
 
 export const OrderPlacedEmail = (order: OrderEmailProps) => {
-  const customerName = order.customer
-    ? `${order.customer.first_name ?? ""} ${order.customer.last_name ?? ""}`.trim()
-    : order.email
+  const firstName =
+    order.customer?.first_name?.trim() ||
+    order.shipping_address?.first_name?.trim() ||
+    order.email
 
   return (
     <Html>
       <Head />
-      <Preview>{`Bedankt voor je bestelling #${order.display_id}`}</Preview>
+      <Preview>{`Super, je bestelling is binnen! Ordernummer #${order.display_id}`}</Preview>
       <Body style={styles.body}>
         <Section style={styles.header}>
           <Text style={styles.brandName}>WJ Houtbouw</Text>
@@ -58,10 +59,10 @@ export const OrderPlacedEmail = (order: OrderEmailProps) => {
 
         <Container style={styles.container}>
           <Section style={styles.section}>
-            <Heading style={styles.h1}>Bedankt voor je bestelling!</Heading>
+            <Heading style={styles.h1}>Hoi {firstName},</Heading>
             <Text style={styles.text}>
-              Beste {customerName}, je bestelling #{order.display_id} is
-              ontvangen en wordt zo snel mogelijk verwerkt.
+              Super, je bestelling is binnen! We gaan er meteen mee aan de
+              slag.
             </Text>
           </Section>
 
@@ -85,6 +86,18 @@ export const OrderPlacedEmail = (order: OrderEmailProps) => {
                 </Column>
               </Row>
             ))}
+            <Text style={styles.itemMeta}>Levertijd: circa 3 weken</Text>
+            {order.shipping_address && (
+              <Text style={styles.itemMeta}>
+                Bezorgadres:{" "}
+                {[
+                  order.shipping_address.address_1,
+                  `${order.shipping_address.postal_code} ${order.shipping_address.city}`,
+                ]
+                  .filter(Boolean)
+                  .join(", ")}
+              </Text>
+            )}
           </Section>
 
           <Hr style={styles.hr} />
@@ -92,38 +105,31 @@ export const OrderPlacedEmail = (order: OrderEmailProps) => {
           <Section style={styles.section}>
             <Row style={styles.totalRow}>
               <Column>
-                <Text style={styles.totalLabel}>Subtotaal</Text>
+                <Text style={styles.totalLabel}>Ordernummer</Text>
+              </Column>
+              <Column style={styles.colRight}>
+                <Text style={styles.totalValue}>#{order.display_id}</Text>
+              </Column>
+            </Row>
+            <Row style={styles.totalRow}>
+              <Column>
+                <Text style={styles.totalLabel}>Orderdatum</Text>
               </Column>
               <Column style={styles.colRight}>
                 <Text style={styles.totalValue}>
-                  {formatPrice(order.subtotal, order.currency_code)}
+                  {order.created_at
+                    ? new Date(order.created_at).toLocaleDateString("nl-NL", {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      })
+                    : ""}
                 </Text>
               </Column>
             </Row>
             <Row style={styles.totalRow}>
               <Column>
-                <Text style={styles.totalLabel}>Verzendkosten</Text>
-              </Column>
-              <Column style={styles.colRight}>
-                <Text style={styles.totalValue}>
-                  {formatPrice(order.shipping_total, order.currency_code)}
-                </Text>
-              </Column>
-            </Row>
-            <Row style={styles.totalRow}>
-              <Column>
-                <Text style={styles.totalLabel}>BTW</Text>
-              </Column>
-              <Column style={styles.colRight}>
-                <Text style={styles.totalValue}>
-                  {formatPrice(order.tax_total, order.currency_code)}
-                </Text>
-              </Column>
-            </Row>
-            <Hr style={styles.hr} />
-            <Row style={styles.totalRow}>
-              <Column>
-                <Text style={styles.grandTotalLabel}>Totaal</Text>
+                <Text style={styles.grandTotalLabel}>Totaalbedrag</Text>
               </Column>
               <Column style={styles.colRight}>
                 <Text style={styles.grandTotalValue}>
@@ -133,30 +139,42 @@ export const OrderPlacedEmail = (order: OrderEmailProps) => {
             </Row>
           </Section>
 
-          {order.shipping_address && (
-            <>
-              <Hr style={styles.hr} />
-              <Section style={styles.section}>
-                <Heading style={styles.h2}>Bezorgadres</Heading>
-                <Text style={styles.text}>
-                  <AddressLines address={order.shipping_address} />
-                </Text>
-              </Section>
-            </>
-          )}
+          <Hr style={styles.hr} />
+
+          <Section style={styles.section}>
+            <Text style={styles.text}>
+              We maken jouw bestelling met de hand. Dat kost even tijd, maar
+              dan heb je ook wat moois voor de lange termijn :)
+            </Text>
+            <Text style={styles.text}>
+              Zodra je bestelling klaar is en op weg gaat, ontvang je van ons
+              een bericht.
+            </Text>
+            <Text style={styles.text}>
+              De factuur van je bestelling vind je als bijlage bij deze mail.
+            </Text>
+            <Text style={styles.text}>
+              Heb je in de tussentijd vragen? Geen probleem, we zijn gewoon te
+              bereiken.
+            </Text>
+            <Text style={styles.text}>
+              <a href="mailto:info@wjhoutbouw.nl" style={styles.link}>
+                info@wjhoutbouw.nl
+              </a>
+              <br />
+              06-24994842
+            </Text>
+            <Text style={styles.signoff}>
+              Tot snel,
+              <br />
+              Het team van WJ Houtbouw
+            </Text>
+          </Section>
 
           <Hr style={styles.hr} />
 
           <Section style={styles.footer}>
-            <Text style={styles.footerText}>
-              Vragen over je bestelling? Mail ons op{" "}
-              <a href="mailto:info@wjhoutbouw.nl" style={styles.link}>
-                info@wjhoutbouw.nl
-              </a>
-            </Text>
-            <Text style={styles.footerText}>
-              © WJ Houtbouw — Buitenmeubilair van massief hout
-            </Text>
+            <Text style={styles.footerText}>© WJ Houtbouw</Text>
           </Section>
         </Container>
       </Body>
@@ -254,6 +272,12 @@ const styles = {
     fontSize: "16px",
     fontWeight: "700",
     margin: "4px 0 0",
+  },
+  signoff: {
+    color: "#1A1410",
+    fontSize: "15px",
+    lineHeight: "1.6",
+    margin: "24px 0 0",
   },
   footer: { paddingTop: "24px" },
   footerText: { color: "#7B6F65", fontSize: "13px", margin: "0 0 8px" },
