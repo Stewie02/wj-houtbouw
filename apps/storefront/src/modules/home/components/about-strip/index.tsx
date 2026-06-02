@@ -1,6 +1,6 @@
+import Image from "next/image";
 import LocalizedClientLink from "@modules/common/components/localized-client-link";
 import BrandButton from "@modules/common/components/brand-button";
-import PlaceholderImage from "@modules/common/components/placeholder-image";
 
 const AboutStrip = () => {
   return (
@@ -34,7 +34,12 @@ const AboutStrip = () => {
 
           {/* Image */}
           <div className="relative min-h-[300px] lg:min-h-0">
-            <PlaceholderImage label="workshop — craftsman at work, timber joinery" />
+            <Image
+              src="/images/about-strip.webp"
+              alt="Werkplaats WJ Houtbouw in Drachten"
+              fill
+              className="object-cover"
+            />
           </div>
         </div>
       </div>

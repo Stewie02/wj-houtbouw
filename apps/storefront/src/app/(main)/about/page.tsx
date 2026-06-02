@@ -1,7 +1,7 @@
+import Image from "next/image";
 import { Metadata } from "next";
 import LocalizedClientLink from "@modules/common/components/localized-client-link";
 import BrandButton from "@modules/common/components/brand-button";
-import PlaceholderImage from "@modules/common/components/placeholder-image";
 
 export const metadata: Metadata = {
   title: "Over WJ Houtbouw — Ons verhaal",
@@ -130,7 +130,12 @@ export default function OverOnsPage() {
               </p>
             </div>
             <div className="relative min-h-[320px] lg:min-h-0">
-              <PlaceholderImage label="workshop — Peter en Benne aan het werk" />
+              <Image
+                src="/images/about-team.webp"
+                alt="Peter en Benne aan het werk in de werkplaats"
+                fill
+                className="object-cover"
+              />
             </div>
           </div>
         </div>
@@ -188,7 +193,12 @@ export default function OverOnsPage() {
         <div className="max-w-[1280px] mx-auto px-4 sm:px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 min-h-[480px]">
             <div className="relative min-h-[320px] lg:min-h-0 order-2 lg:order-1">
-              <PlaceholderImage label="toekomst — nieuwe collectie in de werkplaats" />
+              <Image
+                src="/images/about-collection.webp"
+                alt="Nieuwe collectie in de werkplaats van WJ Houtbouw"
+                fill
+                className="object-cover"
+              />
             </div>
             <div className="flex flex-col justify-center py-16 lg:py-20 lg:pl-16 order-1 lg:order-2">
               <div className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-wood mb-3.5">

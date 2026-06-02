@@ -1,26 +1,24 @@
+import Image from "next/image";
 import LocalizedClientLink from "@modules/common/components/localized-client-link";
 import BrandButton from "@modules/common/components/brand-button";
 import BrandTag from "@modules/common/components/brand-tag";
-import PlaceholderImage from "@modules/common/components/placeholder-image";
-
-const STATS = [
-  { value: "6+", label: "jaar vakmanschap" },
-  { value: "FSC 100%", label: "gecertificeerd hout" },
-  { value: "Dutch", label: "made" },
-];
 
 const Hero = () => {
   return (
     <div className="relative min-h-[600px] h-[92vh] overflow-hidden flex">
       {/* Background */}
       <div className="absolute inset-0">
-        <PlaceholderImage
-          label="hero — outdoor lifestyle, picnic table in garden setting"
-          dark
+        <Image
+          src="/images/hero.webp"
+          alt="Vakmanschap uit Nederland — WJ Houtbouw buitenmeubilair"
+          fill
+          className="object-cover"
+          priority
         />
       </div>
 
-      {/* Gradient overlay */}
+      {/* Dark base + gradient overlay */}
+      <div className="absolute inset-0 bg-[rgba(12,10,8,0.40)]" />
       <div
         className="absolute inset-0"
         style={{
@@ -71,18 +69,6 @@ const Hero = () => {
             </LocalizedClientLink>
           </div>
 
-          <div className="mt-10 sm:mt-12 flex flex-wrap gap-8 sm:gap-10">
-            {STATS.map(({ value, label }) => (
-              <div key={label}>
-                <div className="font-display font-bold text-[26px] sm:text-[28px] text-wj-white tracking-[-0.02em]">
-                  {value}
-                </div>
-                <div className="font-body text-[13px] text-[rgba(254,252,249,0.55)] mt-0.5">
-                  {label}
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
     </div>

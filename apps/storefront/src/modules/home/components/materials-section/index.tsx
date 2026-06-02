@@ -1,4 +1,4 @@
-import PlaceholderImage from "@modules/common/components/placeholder-image";
+import Image from "next/image";
 
 const MATERIALS = [
   {
@@ -7,6 +7,7 @@ const MATERIALS = [
     desc: "De frames van ons meubilair zijn voorzien van een tweelaagse poedercoating. Roestwerend en gebouwd voor alle weersomstandigheden. Strak in combinatie met het warme Douglas hout.",
     note: "Op elk product",
     dark: false,
+    image: "/images/material-staal.webp",
   },
   {
     num: "02",
@@ -14,6 +15,7 @@ const MATERIALS = [
     desc: "Douglas spar groeit van nature in de bossen van Noord-Amerika en West-Europa. Harsrijk, sterk en van nature weerbestendig zonder verduurzamingsmiddelen. Bij goed onderhoud gaat Douglas meubilair gemiddeld 20 jaar mee.",
     note: "Onze basis",
     dark: true,
+    image: "/images/material-douglas.webp",
   },
   {
     num: "03",
@@ -21,6 +23,7 @@ const MATERIALS = [
     desc: "Elk stuk wordt met de hand gemaakt in onze werkplaats in Drachten. Van zaag tot schroef, wij maken het zelf. Geen tussenhandel, geen fabriekswerk.",
     note: "Altijd persoonlijk",
     dark: false,
+    image: "/images/material-drachten.webp",
   },
 ];
 
@@ -47,10 +50,12 @@ const MaterialsSection = () => {
                 m.dark ? "bg-wj-green" : "bg-wj-surface"
               }`}
             >
-              <div className="mb-6 h-[120px] opacity-70">
-                <PlaceholderImage
-                  label={`${m.name} timber texture`}
-                  dark={m.dark}
+              <div className="relative mb-6 h-[120px] overflow-hidden">
+                <Image
+                  src={m.image}
+                  alt={m.name}
+                  fill
+                  className="object-cover"
                 />
               </div>
               <div
