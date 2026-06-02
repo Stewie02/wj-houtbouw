@@ -13,23 +13,13 @@ const NAV_LINKS = [
 ];
 
 const Logo = () => (
-  <LocalizedClientLink href="/" className="flex items-center gap-2.5 shrink-0">
-    <div className="w-8 h-8 bg-wj-green flex items-center justify-center">
-      <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-        <rect x="2" y="8" width="14" height="2.5" fill="#FEFCF9" />
-        <rect x="4" y="4" width="10" height="2" fill="#FEFCF9" opacity="0.7" />
-        <rect x="6" y="12.5" width="2.5" height="4" fill="#FEFCF9" />
-        <rect x="9.5" y="12.5" width="2.5" height="4" fill="#FEFCF9" />
-      </svg>
-    </div>
-    <div>
-      <div className="font-display font-semibold text-[17px] text-wj-text leading-tight">
-        WJ Houtbouw
-      </div>
-      <div className="font-body font-semibold text-[9px] tracking-[0.08em] uppercase text-wj-muted">
-        Buitenmeubilair
-      </div>
-    </div>
+  <LocalizedClientLink href="/" className="shrink-0">
+    <img
+      src="/wj_houtbouw_horizontal.svg"
+      alt="W&J Houtbouw"
+      width={190}
+      height={40}
+    />
   </LocalizedClientLink>
 );
 

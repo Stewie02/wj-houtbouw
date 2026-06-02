@@ -20,17 +20,14 @@ export default function CheckoutLayout({
 
           <LocalizedClientLink
             href="/"
-            className="flex items-center gap-2.5"
             data-testid="store-link"
           >
-            <div className="w-7 h-7 bg-wj-green flex items-center justify-center">
-              <span className="font-display font-bold text-[11px] text-wj-white leading-none">
-                WJ
-              </span>
-            </div>
-            <span className="font-display font-bold text-[15px] text-wj-text tracking-[-0.01em] hidden sm:block">
-              WJ Houtbouw
-            </span>
+            <img
+              src="/wj_houtbouw_horizontal.svg"
+              alt="W&J Houtbouw"
+              width={152}
+              height={32}
+            />
           </LocalizedClientLink>
 
           <div className="w-24" />

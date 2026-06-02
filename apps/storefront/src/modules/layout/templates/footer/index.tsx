@@ -41,34 +41,13 @@ export default function Footer() {
         <div className="grid grid-cols-2 gap-10 sm:grid-cols-3 lg:grid-cols-[2fr_1fr_1fr_1fr] lg:gap-12 mb-16">
           {/* Brand column */}
           <div className="col-span-2 sm:col-span-3 lg:col-span-1">
-            <LocalizedClientLink
-              href="/"
-              className="flex items-center gap-2.5 mb-5"
-            >
-              <div className="w-9 h-9 bg-wj-green flex items-center justify-center shrink-0">
-                <svg width="20" height="20" viewBox="0 0 18 18" fill="none">
-                  <rect x="2" y="8" width="14" height="2.5" fill="#FEFCF9" />
-                  <rect
-                    x="4"
-                    y="4"
-                    width="10"
-                    height="2"
-                    fill="#FEFCF9"
-                    opacity="0.7"
-                  />
-                  <rect x="6" y="12.5" width="2.5" height="4" fill="#FEFCF9" />
-                  <rect
-                    x="9.5"
-                    y="12.5"
-                    width="2.5"
-                    height="4"
-                    fill="#FEFCF9"
-                  />
-                </svg>
-              </div>
-              <div className="font-display font-semibold text-[18px] text-wj-white">
-                WJ Houtbouw
-              </div>
+            <LocalizedClientLink href="/" className="mb-5 inline-block">
+              <img
+                src="/wj_houtbouw_horizontal_white.svg"
+                alt="W&J Houtbouw"
+                width={190}
+                height={40}
+              />
             </LocalizedClientLink>
             <p className="font-body text-[14px] text-[#9A8F85] leading-[1.7] max-w-[240px]">
               Handgemaakt buitenmeubilair om generaties mee te gaan. Gemaakt in
