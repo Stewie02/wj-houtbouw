@@ -8,7 +8,7 @@ import BlogPreview from "@modules/home/components/blog-preview";
 import CtaBanner from "@modules/home/components/cta-banner";
 
 export const metadata: Metadata = {
-  title: "WJ Houtbouw — Handcrafted Outdoor Furniture",
+  title: "W&J Houtbouw — Handcrafted Outdoor Furniture",
   description:
     "Premium picnic tables and outdoor furniture crafted from sustainably sourced European timber. Built to weather every season.",
 };

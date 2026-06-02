@@ -4,9 +4,9 @@ import LocalizedClientLink from "@modules/common/components/localized-client-lin
 import BrandButton from "@modules/common/components/brand-button";
 
 export const metadata: Metadata = {
-  title: "Over WJ Houtbouw — Ons verhaal",
+  title: "Over W&J Houtbouw — Ons verhaal",
   description:
-    "Leer Peter Wiersma en Benne Jongsma kennen — de twee timmermannen achter WJ Houtbouw. Robuust buitenmeubilair van Douglas hout, gemaakt in Drachten.",
+    "Leer Peter Wiersma en Benne Jongsma kennen — de twee timmermannen achter W&J Houtbouw. Robuust buitenmeubilair van Douglas hout, gemaakt in Drachten.",
 };
 
 const VALUES = [
@@ -88,7 +88,7 @@ export default function OverOnsPage() {
       <div className="bg-wj-dark">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-8 lg:px-12 py-10 sm:py-14">
           <div className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-wood mb-3">
-            Over WJ Houtbouw
+            Over W&J Houtbouw
           </div>
           <h1 className="font-display font-bold text-[32px] sm:text-[40px] text-wj-white tracking-[-0.02em]">
             Gebouwd op vakmanschap{" "}
@@ -117,7 +117,7 @@ export default function OverOnsPage() {
                 </span>
               </h2>
               <p className="font-body text-[15px] sm:text-[16px] text-wj-muted leading-[1.75]">
-                WJ Houtbouw is opgericht door Peter Wiersma en Benne Jongsma —
+                W&J Houtbouw is opgericht door Peter Wiersma en Benne Jongsma —
                 twee timmermannen met een gedeelde achtergrond in de bouw en een
                 even gedeelde visie op wat buitenmeubilair zou moeten zijn. Niet
                 zomaar collega&apos;s, maar goede vrienden die besloten hun
@@ -145,7 +145,7 @@ export default function OverOnsPage() {
       <div className="bg-wj-surface">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-8 lg:px-12 py-16 sm:py-20">
           <div className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-wood mb-3.5">
-            Waarom WJ Houtbouw
+            Waarom W&J Houtbouw
           </div>
           <h2 className="font-display font-bold text-[28px] sm:text-[34px] text-wj-text leading-[1.15] tracking-[-0.02em] mb-12">
             We zijn gestart omdat het{" "}
@@ -182,7 +182,7 @@ export default function OverOnsPage() {
               bereikt die we onszelf hadden gesteld.&rdquo;
             </p>
             <div className="mt-6 font-body text-[13px] text-wj-muted">
-              — Peter &amp; Benne, oprichters WJ Houtbouw
+              — Peter &amp; Benne, oprichters W&J Houtbouw
             </div>
           </div>
         </div>
@@ -195,7 +195,7 @@ export default function OverOnsPage() {
             <div className="relative min-h-[320px] lg:min-h-0 order-2 lg:order-1">
               <Image
                 src="/images/about-collection.webp"
-                alt="Nieuwe collectie in de werkplaats van WJ Houtbouw"
+                alt="Nieuwe collectie in de werkplaats van W&J Houtbouw"
                 fill
                 className="object-cover"
               />
@@ -211,7 +211,7 @@ export default function OverOnsPage() {
                 </span>
               </h2>
               <p className="font-body text-[15px] sm:text-[16px] text-wj-muted leading-[1.75]">
-                WJ Houtbouw staat nog aan het begin. Over een paar jaar willen
+                W&J Houtbouw staat nog aan het begin. Over een paar jaar willen
                 we een bredere collectie aanbieden en met een groter team
                 werken.
               </p>

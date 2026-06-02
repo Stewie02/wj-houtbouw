@@ -43,7 +43,7 @@ export const BLOG_POSTS: BlogPost[] = [
       "Standaard is niet altijd voldoende. Zeker niet als je als bedrijf wil dat elk detail klopt — van de uitstraling van je terras tot het logo op je meubilair.",
     sections: [
       {
-        body: "Standaard is niet altijd voldoende. Zeker niet als je als bedrijf wil dat elk detail klopt — van de uitstraling van je terras tot het logo op je meubilair. Bij WJ Houtbouw maken we buitenmeubilair volledig naar wens, voor zakelijke opdrachtgevers die niet willen inleveren op kwaliteit of identiteit.",
+        body: "Standaard is niet altijd voldoende. Zeker niet als je als bedrijf wil dat elk detail klopt — van de uitstraling van je terras tot het logo op je meubilair. Bij W&J Houtbouw maken we buitenmeubilair volledig naar wens, voor zakelijke opdrachtgevers die niet willen inleveren op kwaliteit of identiteit.",
       },
       {
         heading: "Maatwerk zonder grenzen",
@@ -55,7 +55,7 @@ export const BLOG_POSTS: BlogPost[] = [
       },
       {
         heading: "Persoonlijk contact, van begin tot eind",
-        body: "Bij WJ Houtbouw werk je altijd rechtstreeks met de makers. Geen tussenhandel, geen accountmanagers. Jij vertelt wat je nodig hebt, wij denken mee en bouwen het. Zo weet je precies wat je krijgt — en waarom het zo gemaakt is.",
+        body: "Bij W&J Houtbouw werk je altijd rechtstreeks met de makers. Geen tussenhandel, geen accountmanagers. Jij vertelt wat je nodig hebt, wij denken mee en bouwen het. Zo weet je precies wat je krijgt — en waarom het zo gemaakt is.",
       },
     ],
   },

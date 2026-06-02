@@ -36,7 +36,7 @@ const AboutStrip = () => {
           <div className="relative min-h-[300px] lg:min-h-0">
             <Image
               src="/images/about-strip.webp"
-              alt="Werkplaats WJ Houtbouw in Drachten"
+              alt="Werkplaats W&J Houtbouw in Drachten"
               fill
               className="object-cover"
             />

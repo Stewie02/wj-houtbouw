@@ -83,7 +83,7 @@ Server components handle data fetching; client components (`"use client"`) handl
 
 ### Design System (Storefront)
 
-Brand: **WJ Houtbouw** — Dutch outdoor wood furniture. All brand colours are `wj.*` Tailwind tokens:
+Brand: **W&J Houtbouw** — Dutch outdoor wood furniture. All brand colours are `wj.*` Tailwind tokens:
 
 | Token            | Value     | Use                      |
 | ---------------- | --------- | ------------------------ |

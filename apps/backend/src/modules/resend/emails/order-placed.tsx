@@ -54,7 +54,7 @@ export const OrderPlacedEmail = (order: OrderEmailProps) => {
       <Preview>{`Super, je bestelling is binnen! Ordernummer #${order.display_id}`}</Preview>
       <Body style={styles.body}>
         <Section style={styles.header}>
-          <Text style={styles.brandName}>WJ Houtbouw</Text>
+          <Text style={styles.brandName}>W&J Houtbouw</Text>
         </Section>
 
         <Container style={styles.container}>
@@ -167,14 +167,14 @@ export const OrderPlacedEmail = (order: OrderEmailProps) => {
             <Text style={styles.signoff}>
               Tot snel,
               <br />
-              Het team van WJ Houtbouw
+              Het team van W&J Houtbouw
             </Text>
           </Section>
 
           <Hr style={styles.hr} />
 
           <Section style={styles.footer}>
-            <Text style={styles.footerText}>© WJ Houtbouw</Text>
+            <Text style={styles.footerText}>© W&J Houtbouw</Text>
           </Section>
         </Container>
       </Body>

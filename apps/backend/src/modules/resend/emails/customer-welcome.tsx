@@ -25,10 +25,10 @@ export const CustomerWelcomeEmail = (customer: CustomerEmailProps) => {
   return (
     <Html>
       <Head />
-      <Preview>Welkom bij WJ Houtbouw, {firstName}!</Preview>
+      <Preview>Welkom bij W&J Houtbouw, {firstName}!</Preview>
       <Body style={styles.body}>
         <Section style={styles.header}>
-          <Text style={styles.brandName}>WJ Houtbouw</Text>
+          <Text style={styles.brandName}>W&J Houtbouw</Text>
         </Section>
 
         <Container style={styles.container}>
@@ -80,10 +80,10 @@ export const CustomerWelcomeEmail = (customer: CustomerEmailProps) => {
             <Text style={styles.signoff}>
               Met vriendelijke groet,
               <br />
-              Het team van WJ Houtbouw
+              Het team van W&J Houtbouw
             </Text>
             <Text style={{ ...styles.footerText, marginTop: "24px" }}>
-              © WJ Houtbouw
+              © W&J Houtbouw
             </Text>
           </Section>
         </Container>

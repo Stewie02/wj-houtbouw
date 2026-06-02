@@ -10,7 +10,7 @@ const Hero = () => {
       <div className="absolute inset-0">
         <Image
           src="/images/hero.webp"
-          alt="Vakmanschap uit Nederland — WJ Houtbouw buitenmeubilair"
+          alt="Vakmanschap uit Nederland — W&J Houtbouw buitenmeubilair"
           fill
           className="object-cover"
           priority

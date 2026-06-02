@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = getBlogPost(slug);
   if (!post) return {};
   return {
-    title: `${post.title} — WJ Houtbouw`,
+    title: `${post.title} — W&J Houtbouw`,
     description: post.excerpt,
   };
 }

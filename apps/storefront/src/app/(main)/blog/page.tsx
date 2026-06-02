@@ -4,9 +4,9 @@ import LocalizedClientLink from "@modules/common/components/localized-client-lin
 import { BLOG_POSTS } from "@lib/data/blog";
 
 export const metadata: Metadata = {
-  title: "Blog — WJ Houtbouw",
+  title: "Blog — W&J Houtbouw",
   description:
-    "Tips, inspiratie en verhalen vanuit de werkplaats van WJ Houtbouw.",
+    "Tips, inspiratie en verhalen vanuit de werkplaats van W&J Houtbouw.",
 };
 
 export default function BlogPage() {

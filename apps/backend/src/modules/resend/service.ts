@@ -52,7 +52,7 @@ class ResendNotificationProviderService extends AbstractNotificationProviderServ
       case "order-placed":
         return `Bevestiging van je bestelling #${data.display_id ?? ""}`
       case "customer-welcome":
-        return "Welkom bij WJ Houtbouw"
+        return "Welkom bij W&J Houtbouw"
     }
   }
 

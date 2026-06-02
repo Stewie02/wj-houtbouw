@@ -2,9 +2,9 @@ import { Metadata } from "next";
 import SectionContainer from "@modules/common/components/section-container";
 
 export const metadata: Metadata = {
-  title: "Cookiebeleid — WJ Houtbouw",
+  title: "Cookiebeleid — W&J Houtbouw",
   description:
-    "Lees welke cookies WJ Houtbouw gebruikt, waarvoor ze dienen en hoe lang ze worden bewaard.",
+    "Lees welke cookies W&J Houtbouw gebruikt, waarvoor ze dienen en hoe lang ze worden bewaard.",
 };
 
 const NECESSARY_COOKIES = [
@@ -99,7 +99,7 @@ export default function CookiePolicyPage() {
       <SectionContainer className="py-12 sm:py-16">
         <div className="max-w-[800px]">
           <p className="font-body text-[15px] text-wj-muted leading-[1.7] mb-10">
-            WJ Houtbouw gebruikt cookies om de website goed te laten
+            W&J Houtbouw gebruikt cookies om de website goed te laten
             functioneren en jouw ervaring te verbeteren. Cookies zijn kleine
             tekstbestanden die door je browser worden opgeslagen. Op deze pagina
             leggen wij uit welke cookies wij gebruiken, waarom, en hoe lang ze

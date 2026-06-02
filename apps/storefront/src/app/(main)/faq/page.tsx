@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import FaqAccordion from "@modules/faq/components/faq-accordion";
 
 export const metadata: Metadata = {
-  title: "Veelgestelde vragen — WJ Houtbouw",
+  title: "Veelgestelde vragen — W&J Houtbouw",
   description:
     "Antwoorden op veelgestelde vragen over ons hout, maatwerk, onderhoud en bezorging.",
 };
