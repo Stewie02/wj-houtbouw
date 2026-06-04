@@ -27,15 +27,14 @@ const StoreTemplate = ({
           />
           <div className="mt-3 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-end">
             <h1 className="font-display font-bold text-[40px] sm:text-[52px] text-wj-white tracking-[-0.02em] leading-[1.08] mt-3">
-              Drie producten.{" "}
+              Ons assortiment.{" "}
               <span className="font-display font-normal italic text-wj-wood">
                 Goed gemaakt.
               </span>
             </h1>
             <p className="font-body text-[14px] sm:text-[15px] text-[rgba(254,252,249,0.6)] leading-[1.75]">
-              Geen breed assortiment, maar drie producten die we door en door
-              kennen. Elk formaat, elke afwerking en elke configuratie komt uit
-              onze eigen werkplaats in Drachten.
+              Elk formaat, elke afwerking en elke configuratie komt uit onze
+              eigen werkplaats in Drachten.
             </p>
           </div>
         </div>

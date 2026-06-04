@@ -1,7 +1,7 @@
 import { CreditCard } from "@medusajs/icons";
 
 export const USPS = [
-  { title: "Duurzaam hout", description: "FSC-gecertificeerd Europees hout" },
+  { title: "Duurzaam hout", description: "Weerbestand en sterk douglas" },
   { title: "Op maat gemaakt", description: "Elke order naar jouw wensen" },
   { title: "5 jaar garantie", description: "Gebouwd om te blijven" },
   {
@@ -56,4 +56,3 @@ export const isStripeLike = (providerId?: string) => {
 export const isManual = (providerId?: string) => {
   return providerId?.startsWith("pp_system_default");
 };
-

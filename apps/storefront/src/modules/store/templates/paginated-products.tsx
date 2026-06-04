@@ -167,10 +167,7 @@ export default async function PaginatedProducts({
       description: product.description ?? "",
       material: (product.metadata?.material as string) ?? "Hout",
       tag: (product.metadata?.tag as string) ?? null,
-      features: (product.metadata?.features as string[]) ?? [
-        "FSC-gecertificeerd hout",
-        "10 jaar garantie",
-      ],
+      features: (product.metadata?.features as string[]) ?? [],
       sizes: uniqueSizes.length > 0 ? uniqueSizes : ["Standaard"],
       priceFrom: cheapestPrice?.calculated_price ?? "—",
     };

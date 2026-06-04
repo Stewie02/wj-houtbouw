@@ -29,7 +29,7 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
       {/* Material */}
       {material && (
         <div className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-muted mt-2 mb-4">
-          {material} · FSC Certified
+          {material}
         </div>
       )}
 
