@@ -33,13 +33,13 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
         </div>
       )}
 
-      {/* Description */}
-      {product.description && (
+      {/* Subtitle */}
+      {product.subtitle && (
         <p
           className="font-body text-[15px] text-wj-muted leading-[1.75]"
-          data-testid="product-description"
+          data-testid="product-subtitle"
         >
-          {product.description}
+          {product.subtitle}
         </p>
       )}
     </div>
