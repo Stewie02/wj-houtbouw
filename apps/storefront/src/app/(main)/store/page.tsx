@@ -4,9 +4,12 @@ import { SortOptions } from "@modules/store/components/refinement-list/sort-prod
 import StoreTemplate from "@modules/store/templates";
 
 export const metadata: Metadata = {
-  title: "Winkel — W&J Houtbouw",
+  title: "Winkel",
   description:
-    "Robuust buitenmeubilair van Douglas hout, handgemaakt in Drachten. Picknicktafels, tuinbanken en rondetafels.",
+    "Robuust buitenmeubilair, handgemaakt in Drachten. Picknicktafels, loungesets en pergola's voor buiten.",
+  alternates: {
+    canonical: "/winkel",
+  },
 };
 
 type Params = {

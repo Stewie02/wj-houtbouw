@@ -2,7 +2,7 @@ export type BlogPost = {
   slug: string;
   title: string;
   category: string;
-  date: string;
+  date: string; // ISO 8601, e.g. "2026-05-01"
   excerpt: string;
   image?: string;
   sections: { heading?: string; body: string }[];
@@ -13,7 +13,7 @@ export const BLOG_POSTS: BlogPost[] = [
     slug: "douglas-buitenmeubilair-topconditie",
     title: "Zo houd je jouw Douglas buitenmeubilair in topconditie",
     category: "Onderhoud",
-    date: "Mei 2026",
+    date: "2026-05-01",
     excerpt:
       "Douglas hout staat bekend om zijn natuurlijke sterkte en weerbestendigheid. Toch is een beetje aandacht per jaar het verschil tussen meubilair dat er na vijf jaar versleten uitziet, en meubilair dat na twintig jaar nog steeds staat als een huis.",
     sections: [
@@ -38,7 +38,7 @@ export const BLOG_POSTS: BlogPost[] = [
     slug: "buitenmeubilair-zakelijke-opdrachtgevers",
     title: "Buitenmeubilair op maat voor zakelijke opdrachtgevers",
     category: "B2B",
-    date: "Mei 2026",
+    date: "2026-05-01",
     excerpt:
       "Standaard is niet altijd voldoende. Zeker niet als je als bedrijf wil dat elk detail klopt — van de uitstraling van je terras tot het logo op je meubilair.",
     sections: [
@@ -63,7 +63,7 @@ export const BLOG_POSTS: BlogPost[] = [
     slug: "van-ruwe-plank-tot-afgewerkt-meubelstuk",
     title: "Van ruwe plank tot afgewerkt meubelstuk — zo werken wij",
     category: "Achter de schermen",
-    date: "Mei 2026",
+    date: "2026-05-01",
     excerpt:
       "Elk stuk meubilair dat W&J Houtbouw verlaat heeft een reis gemaakt. Van ruwe plank tot afgewerkt product, elke stap wordt met zorg gezet. Geen fabriekswerk, geen shortcuts.",
     sections: [

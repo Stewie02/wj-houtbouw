@@ -117,3 +117,19 @@ export const listProductsWithSort = async ({
     queryParams,
   };
 };
+
+export const listAllProductHandles = async (): Promise<
+  { handle: string; updated_at?: string }[]
+> => {
+  return sdk.client
+    .fetch<{ products: { handle: string; updated_at?: string }[] }>(
+      "/store/products",
+      {
+        method: "GET",
+        query: { limit: 500, fields: "handle,updated_at" },
+        cache: "no-store",
+      }
+    )
+    .then(({ products }) => products)
+    .catch(() => []);
+};

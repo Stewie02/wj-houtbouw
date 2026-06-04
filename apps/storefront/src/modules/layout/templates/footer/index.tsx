@@ -102,7 +102,7 @@ export default function Footer() {
             voorbehouden.
           </span>
           <span className="font-body text-[13px] text-[#6B6058]">
-            KVK 12345678 · Handgemaakt in Nederland 🇳🇱
+            KVK 98439200 · Handgemaakt in Nederland 🇳🇱
           </span>
         </div>
       </div>

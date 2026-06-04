@@ -64,7 +64,7 @@ const CONTACT_ITEMS = [
   },
   {
     label: "KVK-nummer",
-    value: "12345678",
+    value: "98439200",
     href: null,
     icon: (
       <svg

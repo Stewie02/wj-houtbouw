@@ -2,7 +2,9 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { listProducts } from "@lib/data/products";
 import { getRegion } from "@lib/data/regions";
+import { getBaseURL } from "@lib/util/env";
 import ProductTemplate from "@modules/products/templates";
+import { JsonLd } from "@modules/common/components/json-ld";
 import { HttpTypes } from "@medusajs/types";
 
 type Props = {
@@ -44,12 +46,16 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     notFound();
   }
 
+  const description = product.subtitle || product.title;
   return {
-    title: `${product.title} | Medusa Store`,
-    description: `${product.title}`,
+    title: product.title,
+    description,
+    alternates: {
+      canonical: `/producten/${handle}`,
+    },
     openGraph: {
-      title: `${product.title} | Medusa Store`,
-      description: `${product.title}`,
+      title: product.title,
+      description,
       images: product.thumbnail ? [product.thumbnail] : [],
     },
   };
@@ -76,11 +82,100 @@ export default async function ProductPage(props: Props) {
     notFound();
   }
 
+  const base = getBaseURL();
+
   return (
-    <ProductTemplate
-      product={pricedProduct}
-      region={region}
-      images={images ?? []}
-    />
+    <>
+      <JsonLd
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "ProductGroup",
+          name: pricedProduct.title,
+          description: pricedProduct.subtitle || pricedProduct.description,
+          url: `${base}/producten/${pricedProduct.handle}`,
+          image: pricedProduct.images?.map((i) => i.url) ?? [],
+          brand: {
+            "@type": "Brand",
+            "@id": `${base}/#organization`,
+          },
+          productGroupID: pricedProduct.handle,
+          variesBy: pricedProduct.options?.map((o) => o.title) ?? [],
+          hasVariant:
+            pricedProduct.variants?.map((variant) => ({
+              "@type": "Product",
+              name: variant.title
+                ? `${pricedProduct.title} — ${variant.title}`
+                : pricedProduct.title,
+              sku: variant.sku,
+              url: `${base}/producten/${pricedProduct.handle}?v_id=${variant.id}`,
+              image: variant.images?.length
+                ? variant.images.map((i) => i.url)
+                : (pricedProduct.images?.map((i) => i.url) ?? []),
+              additionalProperty:
+                variant.options?.map((o) => ({
+                  "@type": "PropertyValue",
+                  name:
+                    pricedProduct.options?.find((po) => po.id === o.option_id)
+                      ?.title ?? o.option_id,
+                  value: o.value,
+                })) ?? [],
+              offers: {
+                "@type": "Offer",
+                url: `${base}/producten/${pricedProduct.handle}?v_id=${variant.id}`,
+                priceCurrency:
+                  variant.calculated_price?.currency_code?.toUpperCase() ??
+                  "EUR",
+                ...(variant.calculated_price?.calculated_amount != null
+                  ? {
+                      price: parseFloat(
+                        (variant.calculated_price.calculated_amount / 100).toFixed(2)
+                      ),
+                    }
+                  : {}),
+                availability:
+                  !variant.manage_inventory ||
+                  (variant.inventory_quantity ?? 0) > 0
+                    ? "https://schema.org/InStock"
+                    : "https://schema.org/OutOfStock",
+                seller: {
+                  "@type": "Organization",
+                  "@id": `${base}/#organization`,
+                },
+              },
+            })) ?? [],
+        }}
+      />
+      <JsonLd
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            {
+              "@type": "ListItem",
+              position: 1,
+              name: "Home",
+              item: base,
+            },
+            {
+              "@type": "ListItem",
+              position: 2,
+              name: "Producten",
+              item: `${base}/winkel`,
+            },
+            {
+              "@type": "ListItem",
+              position: 3,
+              name: pricedProduct.title,
+              item: `${base}/producten/${pricedProduct.handle}`,
+            },
+          ],
+        }}
+      />
+      <ProductTemplate
+        product={pricedProduct}
+        region={region}
+        images={images ?? []}
+      />
+    </>
   );
 }

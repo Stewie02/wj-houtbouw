@@ -3,6 +3,11 @@ import Image from "next/image";
 import LocalizedClientLink from "@modules/common/components/localized-client-link";
 import { BLOG_POSTS } from "@lib/data/blog";
 
+const formatDate = (iso: string) =>
+  new Intl.DateTimeFormat("nl-NL", { year: "numeric", month: "long" }).format(
+    new Date(iso)
+  );
+
 export const metadata: Metadata = {
   title: "Blog — W&J Houtbouw",
   description:
@@ -49,7 +54,7 @@ export default function BlogPage() {
                 {post.excerpt}
               </p>
               <div className="font-body text-[13px] text-wj-muted">
-                {post.date}
+                {formatDate(post.date)}
               </div>
             </LocalizedClientLink>
           ))}

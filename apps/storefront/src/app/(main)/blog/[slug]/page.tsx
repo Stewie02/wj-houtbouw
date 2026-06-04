@@ -4,6 +4,13 @@ import Image from "next/image";
 import LocalizedClientLink from "@modules/common/components/localized-client-link";
 import BrandTag from "@modules/common/components/brand-tag";
 import { getBlogPost } from "@lib/data/blog";
+import { JsonLd } from "@modules/common/components/json-ld";
+import { getBaseURL } from "@lib/util/env";
+
+const formatDate = (iso: string) =>
+  new Intl.DateTimeFormat("nl-NL", { year: "numeric", month: "long" }).format(
+    new Date(iso)
+  );
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -14,8 +21,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = getBlogPost(slug);
   if (!post) return {};
   return {
-    title: `${post.title} — W&J Houtbouw`,
+    title: post.title,
     description: post.excerpt,
+    alternates: {
+      canonical: `/blog/${slug}`,
+    },
   };
 }
 
@@ -25,8 +35,25 @@ export default async function BlogArticlePage({ params }: Props) {
 
   if (!post) notFound();
 
+  const base = getBaseURL();
+
   return (
     <div className="bg-wj-bg">
+      <JsonLd
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "Article",
+          headline: post.title,
+          description: post.excerpt,
+          url: `${base}/blog/${post.slug}`,
+          datePublished: post.date,
+          ...(post.image ? { image: `${base}${post.image}` } : {}),
+          publisher: {
+            "@type": "Organization",
+            "@id": `${base}/#organization`,
+          },
+        }}
+      />
       <div className="bg-wj-dark">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-8 lg:px-12 py-10 sm:py-14">
           <LocalizedClientLink
@@ -38,7 +65,7 @@ export default async function BlogArticlePage({ params }: Props) {
           <div className="flex items-center gap-3 mb-4">
             <BrandTag variant="wood">{post.category}</BrandTag>
             <span className="font-body text-[13px] text-[rgba(254,252,249,0.6)]">
-              {post.date}
+              {formatDate(post.date)}
             </span>
           </div>
           <h1 className="font-display font-bold text-[28px] sm:text-[40px] text-wj-white tracking-[-0.02em] max-w-[720px]">
