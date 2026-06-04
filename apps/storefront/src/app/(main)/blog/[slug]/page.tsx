@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import LocalizedClientLink from "@modules/common/components/localized-client-link";
+import BrandButton from "@modules/common/components/brand-button";
 import BrandTag from "@modules/common/components/brand-tag";
 import { getBlogPost } from "@lib/data/blog";
 import { JsonLd } from "@modules/common/components/json-ld";
@@ -59,6 +60,22 @@ export default async function BlogArticlePage({ params }: Props) {
           },
         }}
       />
+      <JsonLd
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: `${base}/` },
+            { "@type": "ListItem", position: 2, name: "Blog", item: `${base}/blog` },
+            {
+              "@type": "ListItem",
+              position: 3,
+              name: post.title,
+              item: `${base}/blog/${post.slug}`,
+            },
+          ],
+        }}
+      />
       <div className="bg-wj-dark">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-8 lg:px-12 py-10 sm:py-14">
           <LocalizedClientLink
@@ -105,6 +122,22 @@ export default async function BlogArticlePage({ params }: Props) {
               </p>
             </div>
           ))}
+        </div>
+
+        <div className="mt-16 pt-10 border-t border-wj-border">
+          <div className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-wood mb-2.5">
+            Bekijk ook
+          </div>
+          <h3 className="font-display font-semibold text-[20px] sm:text-[24px] text-wj-text mb-4">
+            Ontdek ons assortiment
+          </h3>
+          <p className="font-body text-[14px] sm:text-[15px] text-wj-muted leading-[1.7] mb-6">
+            Handgemaakt buitenmeubilair van Douglas hout, rechtstreeks uit onze
+            werkplaats in Drachten.
+          </p>
+          <LocalizedClientLink href="/winkel">
+            <BrandButton>Bekijk alle producten</BrandButton>
+          </LocalizedClientLink>
         </div>
       </div>
     </div>
