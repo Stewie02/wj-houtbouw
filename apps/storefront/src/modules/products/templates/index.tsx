@@ -41,7 +41,7 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
       >
         {/* Gallery */}
         <div className="lg:sticky lg:top-24">
-          <ImageGallery images={images} />
+          <ImageGallery images={images} productTitle={product.title ?? ""} />
         </div>
 
         {/* Info + Actions */}

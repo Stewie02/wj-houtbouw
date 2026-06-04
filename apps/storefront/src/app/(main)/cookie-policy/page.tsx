@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import SectionContainer from "@modules/common/components/section-container";
 
 export const metadata: Metadata = {
-  title: "Cookiebeleid — W&J Houtbouw",
+  title: "Cookiebeleid",
   description:
     "Lees welke cookies W&J Houtbouw gebruikt, waarvoor ze dienen en hoe lang ze worden bewaard.",
 };

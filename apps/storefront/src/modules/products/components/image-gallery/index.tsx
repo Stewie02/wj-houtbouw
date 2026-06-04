@@ -7,9 +7,10 @@ import PlaceholderImage from "@modules/common/components/placeholder-image";
 
 type ImageGalleryProps = {
   images: HttpTypes.StoreProductImage[];
+  productTitle: string;
 };
 
-const ImageGallery = ({ images }: ImageGalleryProps) => {
+const ImageGallery = ({ images, productTitle }: ImageGalleryProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const thumbs = images.length > 0 ? images.slice(0, 4) : Array(4).fill(null);
   const activeImage = images[activeIndex] ?? null;
@@ -21,7 +22,7 @@ const ImageGallery = ({ images }: ImageGalleryProps) => {
         {activeImage?.url ? (
           <Image
             src={activeImage.url}
-            alt="Productafbeelding"
+            alt={productTitle}
             fill
             className="object-cover"
             priority
@@ -47,7 +48,7 @@ const ImageGallery = ({ images }: ImageGalleryProps) => {
             {img?.url ? (
               <Image
                 src={img.url}
-                alt={`Productafbeelding ${i + 1}`}
+                alt={`${productTitle}, afbeelding ${i + 1}`}
                 fill
                 className="object-cover"
                 sizes="120px"

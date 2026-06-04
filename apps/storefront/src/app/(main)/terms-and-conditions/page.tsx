@@ -1,9 +1,9 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Algemene Voorwaarden — W&J Houtbouw",
+  title: "Algemene voorwaarden",
   description:
-    "De algemene voorwaarden van W&J Houtbouw V.O.F. — van bestelling en betaling tot garantie, retour en aansprakelijkheid.",
+    "De algemene voorwaarden van W&J Houtbouw V.O.F.: bestelling en betaling, garantie, retour en aansprakelijkheid.",
 };
 
 export default function TermsAndConditionsPage() {

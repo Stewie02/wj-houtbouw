@@ -24,10 +24,10 @@ const CartTemplate = ({
               Home
             </LocalizedClientLink>
             {" / "}
-            <span className="text-wj-white">Cart</span>
+            <span className="text-wj-white">Winkelwagen</span>
           </p>
           <h1 className="font-display font-bold text-[32px] sm:text-[40px] text-wj-white tracking-[-0.02em]">
-            Your cart
+            Winkelwagen
           </h1>
         </div>
       </div>

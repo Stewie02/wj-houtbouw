@@ -9,9 +9,12 @@ const formatDate = (iso: string) =>
   );
 
 export const metadata: Metadata = {
-  title: "Blog — W&J Houtbouw",
+  title: "Blog",
   description:
     "Tips, inspiratie en verhalen vanuit de werkplaats van W&J Houtbouw.",
+  alternates: {
+    canonical: "/blog",
+  },
 };
 
 export default function BlogPage() {

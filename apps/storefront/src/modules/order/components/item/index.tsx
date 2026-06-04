@@ -25,7 +25,7 @@ const Item = ({ item, currencyCode }: ItemProps) => {
       data-testid="product-row"
     >
       <div className="w-20 h-20 flex-shrink-0 bg-wj-surface overflow-hidden">
-        <Thumbnail thumbnail={item.thumbnail} size="square" />
+        <Thumbnail thumbnail={item.thumbnail} size="square" alt={item.product_title ?? "Product"} />
       </div>
       <div className="flex flex-1 justify-between gap-4 min-w-0">
         <div className="min-w-0">

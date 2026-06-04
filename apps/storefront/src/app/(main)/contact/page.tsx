@@ -3,7 +3,7 @@ import LocalizedClientLink from "@modules/common/components/localized-client-lin
 import BrandButton from "@modules/common/components/brand-button";
 
 export const metadata: Metadata = {
-  title: "Contact — W&J Houtbouw",
+  title: "Contact",
   description:
     "Neem contact op met W&J Houtbouw. Bel, mail of bezoek ons in Drachten voor al uw vragen over handgemaakt buitenmeubilair.",
 };

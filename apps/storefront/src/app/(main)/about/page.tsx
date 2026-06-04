@@ -4,9 +4,9 @@ import LocalizedClientLink from "@modules/common/components/localized-client-lin
 import BrandButton from "@modules/common/components/brand-button";
 
 export const metadata: Metadata = {
-  title: "Over W&J Houtbouw — Ons verhaal",
+  title: { absolute: "Over W&J Houtbouw — Ons verhaal" },
   description:
-    "Leer Peter Wiersma en Benne Jongsma kennen — de twee timmermannen achter W&J Houtbouw. Robuust buitenmeubilair van Douglas hout, gemaakt in Drachten.",
+    "Leer Peter Wiersma en Benne Jongsma kennen, de twee timmermannen achter W&J Houtbouw. Robuust buitenmeubilair van Douglas hout, gemaakt in Drachten.",
 };
 
 const VALUES = [
