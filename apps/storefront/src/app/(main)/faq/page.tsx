@@ -1,10 +1,14 @@
 import { Metadata } from "next";
 import FaqAccordion from "@modules/faq/components/faq-accordion";
+import { JsonLd } from "@modules/common/components/json-ld";
 
 export const metadata: Metadata = {
   title: "Veelgestelde vragen",
   description:
     "Antwoorden op veelgestelde vragen over ons hout, maatwerk, onderhoud en bezorging.",
+  alternates: {
+    canonical: "/faq",
+  },
 };
 
 const FAQ_CATEGORIES = [
@@ -85,9 +89,25 @@ const FAQ_CATEGORIES = [
   },
 ];
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQ_CATEGORIES.flatMap((cat) =>
+    cat.items.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    }))
+  ),
+};
+
 export default function FaqPage() {
   return (
     <div className="bg-wj-bg">
+      <JsonLd schema={faqSchema} />
       <div className="bg-wj-dark">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-8 lg:px-12 py-10 sm:py-14">
           <h1 className="font-display font-bold text-[32px] sm:text-[40px] text-wj-white tracking-[-0.02em]">
