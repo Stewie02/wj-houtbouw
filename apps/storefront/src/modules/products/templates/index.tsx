@@ -40,10 +40,12 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
         data-testid="product-container"
       >
         {/* Gallery */}
-        <ImageGallery images={images} />
+        <div className="lg:sticky lg:top-24">
+          <ImageGallery images={images} />
+        </div>
 
         {/* Info + Actions */}
-        <div className="lg:sticky lg:top-24">
+        <div>
           <ProductInfo product={product} />
           <Suspense
             fallback={
