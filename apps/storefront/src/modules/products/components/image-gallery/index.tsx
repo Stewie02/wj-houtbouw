@@ -26,6 +26,7 @@ const ImageGallery = ({ images, productTitle }: ImageGalleryProps) => {
             fill
             className="object-cover"
             priority
+            quality={85}
             sizes="(max-width: 1024px) 100vw, 50vw"
           />
         ) : (
@@ -51,6 +52,7 @@ const ImageGallery = ({ images, productTitle }: ImageGalleryProps) => {
                 alt={`${productTitle}, afbeelding ${i + 1}`}
                 fill
                 className="object-cover"
+                quality={70}
                 sizes="120px"
               />
             ) : (

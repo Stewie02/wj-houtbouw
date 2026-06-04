@@ -39,6 +39,7 @@ const AboutStrip = () => {
               alt="Werkplaats W&J Houtbouw in Drachten"
               fill
               className="object-cover"
+              quality={85}
             />
           </div>
         </div>

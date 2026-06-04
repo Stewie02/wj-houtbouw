@@ -56,6 +56,8 @@ const MaterialsSection = () => {
                   alt={m.name}
                   fill
                   className="object-cover"
+                  quality={80}
+                  sizes="(max-width: 768px) 50vw, 200px"
                 />
               </div>
               <div

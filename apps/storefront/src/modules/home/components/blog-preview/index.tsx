@@ -39,6 +39,7 @@ const BlogPreview = () => {
                     alt={post.title}
                     width={640}
                     height={360}
+                    quality={75}
                     className="w-full h-full object-cover"
                   />
                 </div>
