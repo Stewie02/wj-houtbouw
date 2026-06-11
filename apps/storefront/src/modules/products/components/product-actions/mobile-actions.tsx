@@ -6,17 +6,14 @@ import useToggleState from "@lib/hooks/use-toggle-state";
 import ChevronDown from "@modules/common/icons/chevron-down";
 import X from "@modules/common/icons/x";
 
-import {
-  getCheapestFromVariants,
-  getProductPrice,
-} from "@lib/util/get-product-price";
+import { getPricesForVariant, VariantWithPrice } from "@lib/util/get-product-price";
 import OptionSelect from "./option-select";
 import { HttpTypes } from "@medusajs/types";
 import { isSimpleProduct } from "@lib/util/product";
 
 type MobileActionsProps = {
   product: HttpTypes.StoreProduct;
-  variant?: HttpTypes.StoreProductVariant;
+  variant?: HttpTypes.StoreProductVariant | null;
   options: Record<string, string | undefined>;
   updateOptions: (title: string, value: string) => void;
   inStock?: boolean;
@@ -24,7 +21,6 @@ type MobileActionsProps = {
   isAdding?: boolean;
   show: boolean;
   optionsDisabled: boolean;
-  partialMatchVariants?: HttpTypes.StoreProductVariant[];
 };
 
 const MobileActions: React.FC<MobileActionsProps> = ({
@@ -37,23 +33,13 @@ const MobileActions: React.FC<MobileActionsProps> = ({
   isAdding,
   show,
   optionsDisabled,
-  partialMatchVariants,
 }) => {
   const { state, open, close } = useToggleState();
 
-  const price = getProductPrice({
-    product: product,
-    variantId: variant?.id,
-  });
-
   const selectedPrice = useMemo(() => {
-    if (!price) return null;
-    const { variantPrice, cheapestPrice } = price;
-    if (variantPrice) return variantPrice;
-    if (partialMatchVariants?.length)
-      return getCheapestFromVariants(partialMatchVariants);
-    return cheapestPrice || null;
-  }, [price, partialMatchVariants]);
+    if (!variant) return null;
+    return getPricesForVariant(variant as VariantWithPrice);
+  }, [variant]);
 
   const isSimple = isSimpleProduct(product);
 
@@ -118,7 +104,7 @@ const MobileActions: React.FC<MobileActionsProps> = ({
                   <div className="flex items-center justify-between w-full">
                     <span>
                       {variant
-                        ? Object.values(options).join(" / ")
+                        ? Object.values(options).join(" / ")
                         : "Kies opties"}
                     </span>
                     <ChevronDown />
@@ -181,7 +167,7 @@ const MobileActions: React.FC<MobileActionsProps> = ({
                     </button>
                   </div>
                   <div className="bg-white px-6 py-12">
-                    {(product.variants?.length ?? 0) > 1 && (
+                    {(product.options?.length ?? 0) > 0 && (
                       <div className="flex flex-col gap-y-6">
                         {(product.options || []).map((option) => {
                           return (

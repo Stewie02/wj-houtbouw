@@ -5,29 +5,11 @@ import { getRegion } from "@lib/data/regions";
 import { getBaseURL } from "@lib/util/env";
 import ProductTemplate from "@modules/products/templates";
 import { JsonLd } from "@modules/common/components/json-ld";
-import { HttpTypes } from "@medusajs/types";
 
 type Props = {
   params: Promise<{ handle: string }>;
-  searchParams: Promise<{ v_id?: string }>;
+  searchParams: Promise<Record<string, never>>;
 };
-
-function getImagesForVariant(
-  product: HttpTypes.StoreProduct,
-  selectedVariantId?: string
-) {
-  if (!selectedVariantId || !product.variants) {
-    return product.images;
-  }
-
-  const variant = product.variants!.find((v) => v.id === selectedVariantId);
-  if (!variant || !variant.images?.length) {
-    return product.images;
-  }
-
-  const imageIdsMap = new Map(variant.images!.map((i) => [i.id, true]));
-  return product.images?.filter((i) => imageIdsMap.has(i.id)) ?? null;
-}
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const params = await props.params;
@@ -39,7 +21,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   }
 
   const product = await listProducts({
-    queryParams: { handle },
+    queryParams: { handle, fields: "*options,+images,+metadata,+tags" },
   }).then(({ response }) => response.products[0]);
 
   if (!product) {
@@ -64,19 +46,16 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 export default async function ProductPage(props: Props) {
   const params = await props.params;
   const region = await getRegion();
-  const searchParams = await props.searchParams;
-
-  const selectedVariantId = searchParams.v_id;
 
   if (!region) {
     notFound();
   }
 
   const pricedProduct = await listProducts({
-    queryParams: { handle: params.handle },
+    queryParams: { handle: params.handle, fields: "*options,+images,+metadata,+tags" },
   }).then(({ response }) => response.products[0]);
 
-  const images = getImagesForVariant(pricedProduct, selectedVariantId);
+  const images = pricedProduct?.images ?? [];
 
   if (!pricedProduct) {
     notFound();
@@ -100,49 +79,6 @@ export default async function ProductPage(props: Props) {
           },
           productGroupID: pricedProduct.handle,
           variesBy: pricedProduct.options?.map((o) => o.title) ?? [],
-          hasVariant:
-            pricedProduct.variants?.map((variant) => ({
-              "@type": "Product",
-              name: variant.title
-                ? `${pricedProduct.title} — ${variant.title}`
-                : pricedProduct.title,
-              sku: variant.sku,
-              url: `${base}/producten/${pricedProduct.handle}?v_id=${variant.id}`,
-              image: variant.images?.length
-                ? variant.images.map((i) => i.url)
-                : (pricedProduct.images?.map((i) => i.url) ?? []),
-              additionalProperty:
-                variant.options?.map((o) => ({
-                  "@type": "PropertyValue",
-                  name:
-                    pricedProduct.options?.find((po) => po.id === o.option_id)
-                      ?.title ?? o.option_id,
-                  value: o.value,
-                })) ?? [],
-              offers: {
-                "@type": "Offer",
-                url: `${base}/producten/${pricedProduct.handle}?v_id=${variant.id}`,
-                priceCurrency:
-                  variant.calculated_price?.currency_code?.toUpperCase() ??
-                  "EUR",
-                ...(variant.calculated_price?.calculated_amount != null
-                  ? {
-                      price: parseFloat(
-                        (variant.calculated_price.calculated_amount / 100).toFixed(2)
-                      ),
-                    }
-                  : {}),
-                availability:
-                  !variant.manage_inventory ||
-                  (variant.inventory_quantity ?? 0) > 0
-                    ? "https://schema.org/InStock"
-                    : "https://schema.org/OutOfStock",
-                seller: {
-                  "@type": "Organization",
-                  "@id": `${base}/#organization`,
-                },
-              },
-            })) ?? [],
         }}
       />
       <JsonLd

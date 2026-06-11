@@ -49,7 +49,7 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
           <ProductInfo product={product} />
           <Suspense
             fallback={
-              <ProductActions disabled product={product} region={region} />
+              <ProductActions disabled product={product} />
             }
           >
             <ProductActionsWrapper id={product.id} region={region} />

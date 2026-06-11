@@ -13,12 +13,15 @@ export default async function ProductActionsWrapper({
   region: HttpTypes.StoreRegion;
 }) {
   const product = await listProducts({
-    queryParams: { id: [id] },
+    queryParams: {
+      id: [id],
+      fields: "*options,+metadata,+tags",
+    },
   }).then(({ response }) => response.products[0]);
 
   if (!product) {
     return null;
   }
 
-  return <ProductActions product={product} region={region} />;
+  return <ProductActions product={product} />;
 }

@@ -15,7 +15,6 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
       {/* Tags */}
       <div className="flex flex-wrap gap-2 mb-4">
         {tag && <BrandTag>{tag}</BrandTag>}
-        <BrandTag variant="wood">In stock</BrandTag>
       </div>
 
       {/* Title */}
