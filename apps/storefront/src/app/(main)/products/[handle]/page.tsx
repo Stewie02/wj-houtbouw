@@ -109,7 +109,6 @@ export default async function ProductPage(props: Props) {
       />
       <ProductTemplate
         product={pricedProduct}
-        region={region}
         images={images ?? []}
       />
     </>

@@ -38,12 +38,6 @@ export const getPricesForVariant = (variant: VariantWithPrice) => {
   };
 };
 
-const hasCalculatedPrice = (
-  v: HttpTypes.StoreProductVariant
-): v is VariantWithPrice =>
-  !!(v as VariantWithPrice).calculated_price?.calculated_amount;
-
-
 export function getProductPrice({
   product,
   variantId,

@@ -1,14 +1,16 @@
-import { listProductsWithSort } from "@lib/data/products";
+import { listProducts } from "@lib/data/products";
 import { getProductPrice } from "@lib/util/get-product-price";
 import LocalizedClientLink from "@modules/common/components/localized-client-link";
 import BrandButton from "@modules/common/components/brand-button";
 import ProductCard from "@modules/common/components/product-card";
 
 export default async function FeaturedProducts() {
-  const { response } = await listProductsWithSort({
-    page: 1,
-    queryParams: { limit: 3, fields: "*variants.calculated_price" },
-    sortBy: "created_at",
+  const { response } = await listProducts({
+    queryParams: {
+      limit: 3,
+      fields: "*variants.calculated_price,+metadata,+tags",
+      order: "-created_at",
+    },
   }).catch(() => ({ response: { products: [], count: 0 } }));
 
   const cards = response.products.map((product) => {

@@ -10,13 +10,11 @@ import Breadcrumb from "@modules/common/components/breadcrumb";
 
 type ProductTemplateProps = {
   product: HttpTypes.StoreProduct;
-  region: HttpTypes.StoreRegion;
   images: HttpTypes.StoreProductImage[];
 };
 
 const ProductTemplate: React.FC<ProductTemplateProps> = ({
   product,
-  region,
   images,
 }) => {
   if (!product?.id) return notFound();
@@ -52,7 +50,7 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
               <ProductActions disabled product={product} />
             }
           >
-            <ProductActionsWrapper id={product.id} region={region} />
+            <ProductActionsWrapper id={product.id} />
           </Suspense>
         </div>
       </div>
