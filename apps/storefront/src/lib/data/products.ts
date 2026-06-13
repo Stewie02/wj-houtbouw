@@ -186,3 +186,53 @@ export const listAllProductHandles = async (): Promise<
     .then(({ products }) => products)
     .catch(() => []);
 };
+
+export type ProductSummary = {
+  id: string;
+  handle: string;
+  title: string;
+  description: string;
+  metadata: {
+    material?: string;
+    tag?: string | null;
+    features?: string[];
+  };
+  min_price: { calculated_amount: number; currency_code: string } | null;
+  sizes: string[];
+};
+
+export const listProductSummaries = async ({
+  limit = 12,
+  offset = 0,
+  order = "created_at",
+  collectionId,
+  categoryId,
+}: {
+  limit?: number;
+  offset?: number;
+  order?: "created_at" | "price_asc" | "price_desc";
+  collectionId?: string;
+  categoryId?: string;
+} = {}): Promise<{ products: ProductSummary[]; count: number }> => {
+  const region = await getRegion();
+  if (!region) return { products: [], count: 0 };
+
+  const headers = { ...(await getAuthHeaders()) };
+
+  const query: Record<string, unknown> = { region_id: region.id, limit, offset, order };
+  if (collectionId) query.collection_id = collectionId;
+  if (categoryId) query.category_id = categoryId;
+
+  return sdk.client
+    .fetch<{ products: ProductSummary[]; count: number }>(
+      "/store/custom/products/list",
+      {
+        method: "GET",
+        query,
+        headers,
+        next: { tags: ["products"] },
+        cache: "force-cache",
+      }
+    )
+    .catch(() => ({ products: [], count: 0 }));
+};

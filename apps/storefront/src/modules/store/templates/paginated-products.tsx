@@ -1,7 +1,5 @@
-import { listProductsWithSort } from "@lib/data/products";
-import { getRegion } from "@lib/data/regions";
-import { getProductPrice } from "@lib/util/get-product-price";
-import { HttpTypes } from "@medusajs/types";
+import { listProductSummaries, ProductSummary } from "@lib/data/products";
+import { convertToLocale } from "@lib/util/money";
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products";
 import PlaceholderImage from "@modules/common/components/placeholder-image";
 import BrandButton from "@modules/common/components/brand-button";
@@ -9,14 +7,6 @@ import BrandTag from "@modules/common/components/brand-tag";
 import LocalizedClientLink from "@modules/common/components/localized-client-link";
 
 const PRODUCT_LIMIT = 12;
-
-type PaginatedProductsParams = {
-  limit: number;
-  collection_id?: string[];
-  category_id?: string[];
-  id?: string[];
-  order?: string;
-};
 
 // ── Editorial product row ──────────────────────────────────────────────────────
 type ProductRowProps = {
@@ -128,50 +118,41 @@ export default async function PaginatedProducts({
   page,
   collectionId,
   categoryId,
-  productsIds,
 }: {
   sortBy?: SortOptions;
   page: number;
   collectionId?: string;
   categoryId?: string;
-  productsIds?: string[];
 }) {
-  const region = await getRegion();
-  if (!region) return null;
+  const offset = (page - 1) * PRODUCT_LIMIT;
+  const order = (sortBy as "created_at" | "price_asc" | "price_desc") ?? "created_at";
 
-  const queryParams: PaginatedProductsParams = { limit: PRODUCT_LIMIT };
-  if (collectionId) queryParams.collection_id = [collectionId];
-  if (categoryId) queryParams.category_id = [categoryId];
-  if (productsIds) queryParams.id = productsIds;
-  if (sortBy === "created_at") queryParams.order = "created_at";
-
-  const {
-    response: { products },
-  } = await listProductsWithSort({
-    page,
-    queryParams: { ...queryParams, fields: "*variants.calculated_price" },
-    sortBy,
+  const { products } = await listProductSummaries({
+    limit: PRODUCT_LIMIT,
+    offset,
+    order,
+    collectionId,
+    categoryId,
   });
 
-  const rows = products.map((product: HttpTypes.StoreProduct, i: number) => {
-    const { cheapestPrice } = getProductPrice({ product });
-    const variantOptions = product.variants
-      ?.flatMap((v) => v.options?.map((o) => o.value) ?? [])
-      .filter(Boolean) as string[];
-    const uniqueSizes = Array.from(new Set(variantOptions)).slice(0, 6);
+  if (products.length === 0) return null;
 
-    return {
-      index: i,
-      handle: product.handle ?? product.id!,
-      title: product.title,
-      description: product.description ?? "",
-      material: (product.metadata?.material as string) ?? "Hout",
-      tag: (product.metadata?.tag as string) ?? null,
-      features: (product.metadata?.features as string[]) ?? [],
-      sizes: uniqueSizes.length > 0 ? uniqueSizes : ["Standaard"],
-      priceFrom: cheapestPrice?.calculated_price ?? "—",
-    };
-  });
+  const rows = products.map((product: ProductSummary, i: number) => ({
+    index: i,
+    handle: product.handle,
+    title: product.title,
+    description: product.description,
+    material: product.metadata?.material ?? "Hout",
+    tag: product.metadata?.tag ?? null,
+    features: product.metadata?.features ?? [],
+    sizes: product.sizes.length > 0 ? product.sizes : ["Standaard"],
+    priceFrom: product.min_price
+      ? convertToLocale({
+          amount: product.min_price.calculated_amount,
+          currency_code: product.min_price.currency_code,
+        })
+      : "—",
+  }));
 
   return (
     <div data-testid="products-list">

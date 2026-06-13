@@ -1,28 +1,24 @@
-import { listProducts } from "@lib/data/products";
-import { getProductPrice } from "@lib/util/get-product-price";
+import { listProductSummaries } from "@lib/data/products";
+import { convertToLocale } from "@lib/util/money";
 import LocalizedClientLink from "@modules/common/components/localized-client-link";
 import BrandButton from "@modules/common/components/brand-button";
 import ProductCard from "@modules/common/components/product-card";
 
 export default async function FeaturedProducts() {
-  const { response } = await listProducts({
-    queryParams: {
-      limit: 3,
-      fields: "*variants.calculated_price,+metadata,+tags",
-      order: "-created_at",
-    },
-  }).catch(() => ({ response: { products: [], count: 0 } }));
+  const { products } = await listProductSummaries({ limit: 3 });
 
-  const cards = response.products.map((product) => {
-    const { cheapestPrice } = getProductPrice({ product });
-    return {
-      name: product.title,
-      price: cheapestPrice?.calculated_price ?? "—",
-      material: (product.metadata?.material as string) ?? undefined,
-      tag: (product.metadata?.tag as string) ?? undefined,
-      href: `/producten/${product.handle}`,
-    };
-  });
+  const cards = products.map((product) => ({
+    name: product.title,
+    price: product.min_price
+      ? convertToLocale({
+          amount: product.min_price.calculated_amount,
+          currency_code: product.min_price.currency_code,
+        })
+      : "—",
+    material: product.metadata?.material,
+    tag: product.metadata?.tag ?? undefined,
+    href: `/producten/${product.handle}`,
+  }));
 
   if (cards.length === 0) return null;
 
