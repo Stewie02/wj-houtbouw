@@ -5,8 +5,8 @@ checkEnvVariables();
 /**
  * Medusa Cloud-related environment variables
  */
-const S3_HOSTNAME = process.env.MEDUSA_CLOUD_S3_HOSTNAME;
-const S3_PATHNAME = process.env.MEDUSA_CLOUD_S3_PATHNAME;
+const S3_HOSTNAME = process.env.S3_HOSTNAME;
+const S3_PATHNAME = process.env.S3_PATHNAME;
 
 /**
  * @type {import('next').NextConfig}

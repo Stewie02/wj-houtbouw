@@ -141,7 +141,9 @@ dokku docker-options:add medusa-storefront build \
   "--build-arg NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY=<publishable-api-key>" \
   "--build-arg NEXT_PUBLIC_DEFAULT_REGION=nl" \
   "--build-arg NEXT_PUBLIC_BASE_URL=https://<storefront-domain>" \
-  "--build-arg NEXT_PUBLIC_STRIPE_KEY=pk_live_<publishable-key>"
+  "--build-arg NEXT_PUBLIC_STRIPE_KEY=pk_live_<publishable-key>" \
+  "--build-arg S3_HOSTNAME=<contabo-region>.contabostorage.com" \
+  "--build-arg S3_PATHNAME=/<bucket-id>:<container-name>/**"
 ```
 
 Then deploy the storefront from your local machine:
