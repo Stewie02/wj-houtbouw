@@ -102,11 +102,7 @@ const MobileActions: React.FC<MobileActionsProps> = ({
                   data-testid="mobile-actions-button"
                 >
                   <div className="flex items-center justify-between w-full">
-                    <span>
-                      {variant
-                        ? Object.values(options).join(" / ")
-                        : "Kies opties"}
-                    </span>
+                    <span>Kies opties</span>
                     <ChevronDown />
                   </div>
                 </Button>
