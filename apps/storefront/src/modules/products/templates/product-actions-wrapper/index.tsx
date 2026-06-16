@@ -12,7 +12,7 @@ export default async function ProductActionsWrapper({
   const product = await listProducts({
     queryParams: {
       id: [id],
-      fields: "*options,+metadata,+tags",
+      fields: "*options,+metadata,+tags,-variants",
     },
   }).then(({ response }) => response.products[0]);
 

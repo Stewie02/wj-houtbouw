@@ -21,7 +21,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   }
 
   const product = await listProducts({
-    queryParams: { handle, fields: "*options,+images,+metadata,+tags" },
+    queryParams: { handle, fields: "*options,+images,+metadata,+tags,-variants" },
   }).then(({ response }) => response.products[0]);
 
   if (!product) {
@@ -52,7 +52,7 @@ export default async function ProductPage(props: Props) {
   }
 
   const pricedProduct = await listProducts({
-    queryParams: { handle: params.handle, fields: "*options,+images,+metadata,+tags" },
+    queryParams: { handle: params.handle, fields: "*options,+images,+metadata,+tags,-variants" },
   }).then(({ response }) => response.products[0]);
 
   const images = pricedProduct?.images ?? [];
