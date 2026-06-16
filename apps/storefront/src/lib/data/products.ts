@@ -146,9 +146,9 @@ export const getVariantForOptions = async ({
 };
 
 export type MinPrice = {
-  calculated_amount: number
-  currency_code: string
-}
+  calculated_amount: number;
+  currency_code: string;
+};
 
 export const getProductMinPrice = async (
   productId: string,
@@ -191,14 +191,8 @@ export type ProductSummary = {
   id: string;
   handle: string;
   title: string;
-  description: string;
-  metadata: {
-    material?: string;
-    tag?: string | null;
-    features?: string[];
-  };
+  subtitle: string;
   min_price: { calculated_amount: number; currency_code: string } | null;
-  sizes: string[];
 };
 
 export const listProductSummaries = async ({
@@ -219,7 +213,12 @@ export const listProductSummaries = async ({
 
   const headers = { ...(await getAuthHeaders()) };
 
-  const query: Record<string, unknown> = { region_id: region.id, limit, offset, order };
+  const query: Record<string, unknown> = {
+    region_id: region.id,
+    limit,
+    offset,
+    order,
+  };
   if (collectionId) query.collection_id = collectionId;
   if (categoryId) query.category_id = categoryId;
 
