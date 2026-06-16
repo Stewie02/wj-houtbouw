@@ -47,6 +47,7 @@ export default function ProductActions({
     return initial;
   });
   const [isAdding, setIsAdding] = useState(false);
+  const [quantityInput, setQuantityInput] = useState("1");
   const [selectedVariant, setSelectedVariant] =
     useState<HttpTypes.StoreProductVariant | null>(null);
   const [variantLoading, setVariantLoading] = useState(() => {
@@ -144,8 +145,9 @@ export default function ProductActions({
 
   const handleAddToCart = async () => {
     if (!selectedVariant?.id) return;
+    const qty = Math.max(1, parseInt(quantityInput, 10) || 1);
     setIsAdding(true);
-    await addToCart({ variantId: selectedVariant.id, quantity: 1 });
+    await addToCart({ variantId: selectedVariant.id, quantity: qty });
     setIsAdding(false);
   };
 
@@ -175,17 +177,47 @@ export default function ProductActions({
 
         <ProductPrice variant={selectedVariant} isLoading={variantLoading} minPrice={minPrice} />
 
-        <BrandButton
-          size="lg"
-          full
-          onClick={handleAddToCart}
-          disabled={
-            !inStock || !selectedVariant || !!disabled || isAdding || variantNotFound
-          }
-          data-testid="add-product-button"
-        >
-          {isAdding ? "Toevoegen..." : buttonLabel}
-        </BrandButton>
+        <div className="flex items-center gap-3">
+          <div className="flex items-center border border-wj-border bg-wj-white self-stretch">
+            <button
+              type="button"
+              onClick={() => setQuantityInput((s) => String(Math.max(1, (parseInt(s, 10) || 1) - 1)))}
+              disabled={!!disabled || isAdding}
+              className="w-12 h-full flex items-center justify-center text-wj-text hover:bg-wj-surface disabled:opacity-40 transition-colors text-lg"
+              aria-label="Minder"
+            >
+              −
+            </button>
+            <input
+              type="number"
+              min={1}
+              value={quantityInput}
+              onChange={(e) => setQuantityInput(e.target.value)}
+              disabled={!!disabled || isAdding}
+              className="w-10 text-center font-body text-[15px] text-wj-text bg-transparent border-none outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none disabled:opacity-40"
+            />
+            <button
+              type="button"
+              onClick={() => setQuantityInput((s) => String((parseInt(s, 10) || 1) + 1))}
+              disabled={!!disabled || isAdding}
+              className="w-12 h-full flex items-center justify-center text-wj-text hover:bg-wj-surface disabled:opacity-40 transition-colors text-lg"
+              aria-label="Meer"
+            >
+              +
+            </button>
+          </div>
+          <BrandButton
+            size="lg"
+            className="flex-1"
+            onClick={handleAddToCart}
+            disabled={
+              !inStock || !selectedVariant || !!disabled || isAdding || variantNotFound
+            }
+            data-testid="add-product-button"
+          >
+            {isAdding ? "Toevoegen..." : buttonLabel}
+          </BrandButton>
+        </div>
 
         <MobileActions
           product={product}
