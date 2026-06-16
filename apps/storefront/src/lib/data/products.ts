@@ -192,6 +192,7 @@ export type ProductSummary = {
   handle: string;
   title: string;
   subtitle: string;
+  thumbnail: string | null;
   min_price: { calculated_amount: number; currency_code: string } | null;
 };
 

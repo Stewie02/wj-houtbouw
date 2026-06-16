@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { listProductSummaries, ProductSummary } from "@lib/data/products";
 import { convertToLocale } from "@lib/util/money";
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products";
@@ -13,6 +14,7 @@ type ProductRowProps = {
   handle: string;
   title: string;
   subtitle: string;
+  thumbnail: string | null;
   priceFrom: string;
 };
 
@@ -21,6 +23,7 @@ function ProductRow({
   handle,
   title,
   subtitle,
+  thumbnail,
   priceFrom,
 }: ProductRowProps) {
   const imageFirst = index % 2 === 0;
@@ -32,7 +35,17 @@ function ProductRow({
         <div
           className={`relative min-h-[280px] lg:min-h-[500px] ${imageFirst ? "lg:order-first" : "lg:order-last"}`}
         >
-          <PlaceholderImage label={`${title} — product photo`} />
+          {thumbnail ? (
+            <Image
+              src={thumbnail}
+              alt={title}
+              fill
+              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
+          ) : (
+            <PlaceholderImage label={`${title} — product photo`} />
+          )}
         </div>
 
         {/* Info */}
@@ -99,6 +112,7 @@ export default async function PaginatedProducts({
     handle: product.handle,
     title: product.title,
     subtitle: product.subtitle,
+    thumbnail: product.thumbnail ?? null,
     priceFrom: product.min_price
       ? convertToLocale({
           amount: product.min_price.calculated_amount,

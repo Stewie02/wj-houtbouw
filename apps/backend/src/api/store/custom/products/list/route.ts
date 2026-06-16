@@ -14,6 +14,7 @@ type RawProduct = {
   handle: string;
   title: string;
   subtitle: string | null;
+  thumbnail: string | null;
   metadata: Record<string, unknown> | null;
   created_at: string;
   options?: RawOption[];
@@ -29,6 +30,7 @@ export type ProductSummary = {
   handle: string;
   title: string;
   subtitle: string;
+  thumbnail: string | null;
   min_price: { calculated_amount: number; currency_code: string } | null;
 };
 
@@ -79,6 +81,7 @@ export async function GET(req: MedusaRequest, res: MedusaResponse) {
       "handle",
       "title",
       "subtitle",
+      "thumbnail",
       "metadata",
       "created_at",
       "options.values.value",
@@ -147,6 +150,7 @@ export async function GET(req: MedusaRequest, res: MedusaResponse) {
       handle: product.handle,
       title: product.title,
       subtitle: product.subtitle ?? "",
+      thumbnail: product.thumbnail ?? null,
       min_price,
     };
   });
