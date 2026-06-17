@@ -19,7 +19,7 @@ export const retrieveOrder = async (id: string) => {
       method: "GET",
       query: {
         fields:
-          "*payment_collections.payments,*items,*items.metadata,*items.variant,*items.product",
+          "*payment_collections.payments,*items,*items.metadata,*items.variant,*items.product,+metadata",
       },
       headers,
       next,
@@ -109,4 +109,41 @@ export const declineTransferRequest = async (id: string, token: string) => {
     .declineTransfer(id, { token }, {}, headers)
     .then(({ order }) => ({ success: true, error: null, order }))
     .catch((err) => ({ success: false, error: err.message, order: null }));
+};
+
+export const requestWithdrawal = async (
+  orderId: string,
+  reason?: string
+): Promise<{ success: boolean; error: string | null }> => {
+  const headers = {
+    ...(await getAuthHeaders()),
+  };
+
+  return sdk.client
+    .fetch<{ success: boolean }>(
+      `/store/custom/orders/${orderId}/withdrawal`,
+      {
+        method: "POST",
+        body: { reason },
+        headers,
+      }
+    )
+    .then(() => ({ success: true, error: null }))
+    .catch((err) => ({ success: false, error: err.message as string }));
+};
+
+export const confirmWithdrawal = async (
+  orderId: string,
+  token: string
+): Promise<{ success: boolean; error: string | null }> => {
+  return sdk.client
+    .fetch<{ success: boolean }>(
+      `/store/custom/orders/${orderId}/withdrawal/confirm`,
+      {
+        method: "POST",
+        body: { token },
+      }
+    )
+    .then(() => ({ success: true, error: null }))
+    .catch((err) => ({ success: false, error: err.message as string }));
 };

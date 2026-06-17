@@ -42,6 +42,10 @@ const nextConfig = {
         source: "/bestelling/:id/overdracht/:token",
         destination: "/order/:id/transfer/:token",
       },
+      {
+        source: "/bestelling/:id/herroeping/bevestig",
+        destination: "/order/:id/withdrawal/confirmation",
+      },
       { source: "/account/profiel", destination: "/account/profile" },
       { source: "/account/adressen", destination: "/account/addresses" },
       {

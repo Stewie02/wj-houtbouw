@@ -6,6 +6,7 @@ import OrderSummary from "@modules/order/components/order-summary";
 import ShippingDetails from "@modules/order/components/shipping-details";
 import PaymentDetails from "@modules/order/components/payment-details";
 import Help from "@modules/order/components/help";
+import WithdrawalButton from "@modules/order/components/withdrawal-button";
 
 type OrderCompletedTemplateProps = {
   order: HttpTypes.StoreOrder;
@@ -47,6 +48,7 @@ export default async function OrderCompletedTemplate({
             <Items order={order} />
             <ShippingDetails order={order} />
             <PaymentDetails order={order} />
+            <WithdrawalButton order={order} />
             <Help />
           </div>
           <div className="lg:sticky lg:top-24">

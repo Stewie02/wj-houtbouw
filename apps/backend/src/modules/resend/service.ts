@@ -2,6 +2,9 @@ import { AbstractNotificationProviderService } from "@medusajs/framework/utils"
 import { Resend } from "resend"
 import { CustomerWelcomeEmail } from "./emails/customer-welcome"
 import { OrderPlacedEmail } from "./emails/order-placed"
+import { WithdrawalRequestEmail } from "./emails/withdrawal-request"
+import { WithdrawalConfirmedEmail } from "./emails/withdrawal-confirmed"
+import { WithdrawalAdminEmail } from "./emails/withdrawal-admin"
 import type { EmailData } from "./types"
 
 type ResendOptions = {
@@ -44,6 +47,12 @@ class ResendNotificationProviderService extends AbstractNotificationProviderServ
         return OrderPlacedEmail(data)
       case "customer-welcome":
         return CustomerWelcomeEmail(data)
+      case "withdrawal-request":
+        return WithdrawalRequestEmail(data)
+      case "withdrawal-confirmed":
+        return WithdrawalConfirmedEmail(data)
+      case "withdrawal-admin":
+        return WithdrawalAdminEmail(data)
     }
   }
 
@@ -53,6 +62,12 @@ class ResendNotificationProviderService extends AbstractNotificationProviderServ
         return `Bevestiging van je bestelling #${data.display_id ?? ""}`
       case "customer-welcome":
         return "Welkom bij W&J Houtbouw"
+      case "withdrawal-request":
+        return `Bevestig uw herroeping van bestelling #${data.display_id ?? ""}`
+      case "withdrawal-confirmed":
+        return `Uw herroeping is bevestigd — bestelling #${data.display_id ?? ""}`
+      case "withdrawal-admin":
+        return `Herroeping bevestigd — bestelling #${data.display_id ?? ""}`
     }
   }
 
@@ -76,9 +91,11 @@ class ResendNotificationProviderService extends AbstractNotificationProviderServ
       })
     }
 
+    const recipient = process.env.RESEND_TEST_EMAIL ?? notification.to
+
     const { data: result, error } = await this.resendClient.emails.send({
       from: this.options.from,
-      to: notification.to,
+      to: recipient,
       subject: this.getSubject(data),
       react: template,
       ...(attachments.length > 0 && { attachments }),
