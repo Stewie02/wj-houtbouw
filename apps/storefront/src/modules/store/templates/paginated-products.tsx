@@ -33,7 +33,7 @@ function ProductRow({
       <div className="flex flex-col lg:grid lg:grid-cols-2">
         {/* Image */}
         <div
-          className={`relative min-h-[280px] lg:min-h-[500px] ${imageFirst ? "lg:order-first" : "lg:order-last"}`}
+          className={`relative aspect-[3/2] ${imageFirst ? "lg:order-first" : "lg:order-last"}`}
         >
           {thumbnail ? (
             <Image

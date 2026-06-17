@@ -18,7 +18,7 @@ const ImageGallery = ({ images, productTitle }: ImageGalleryProps) => {
   return (
     <div>
       {/* Main image */}
-      <div className="relative aspect-square border border-wj-border overflow-hidden mb-3">
+      <div className="relative aspect-[3/2] border border-wj-border overflow-hidden mb-3">
         {activeImage?.url ? (
           <Image
             src={activeImage.url}
@@ -40,7 +40,7 @@ const ImageGallery = ({ images, productTitle }: ImageGalleryProps) => {
           <button
             key={i}
             onClick={() => img && setActiveIndex(i)}
-            className={`relative aspect-square overflow-hidden border-2 transition-colors ${
+            className={`relative aspect-[3/2] overflow-hidden border-2 transition-colors ${
               activeIndex === i
                 ? "border-wj-green"
                 : "border-wj-border hover:border-wj-muted"
