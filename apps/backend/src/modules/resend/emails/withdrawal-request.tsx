@@ -38,8 +38,9 @@ export const WithdrawalRequestEmail = ({
               Klik op de knop hieronder om uw herroeping te bevestigen.
             </Text>
             <Text style={styles.text}>
-              Na uw bevestiging start de retourperiode van 14 dagen. U ontvangt
-              dan instructies over het terugsturen van uw bestelling.
+              Na uw bevestiging start de retourperiode van 14 dagen. Wij nemen
+              daarna contact met u op per e-mail of telefoon om de verdere
+              afhandeling te regelen. U hoeft verder niets te doen.
             </Text>
           </Section>
 
@@ -55,13 +56,6 @@ export const WithdrawalRequestEmail = ({
             <Text style={styles.text}>
               Heeft u dit verzoek niet ingediend? Dan hoeft u niets te doen. Uw
               bestelling wordt gewoon verwerkt.
-            </Text>
-            <Text style={styles.text}>
-              Vragen? Neem contact op via{" "}
-              <a href="mailto:info@wjhoutbouw.nl" style={styles.link}>
-                info@wjhoutbouw.nl
-              </a>{" "}
-              of 06-24994842.
             </Text>
             <Text style={styles.signoff}>
               Met vriendelijke groet,

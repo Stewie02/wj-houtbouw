@@ -49,13 +49,9 @@ export const WithdrawalConfirmedEmail = ({
           <Section style={styles.section}>
             <Heading style={styles.h2}>Wat nu?</Heading>
             <Text style={styles.text}>
-              Stuur uw bestelling terug in de originele verpakking, indien
-              aanwezig. Neem contact met ons op zodat wij de retourzending
-              kunnen afhandelen.
-            </Text>
-            <Text style={styles.text}>
-              Na ontvangst en controle van de retourzending wordt het
-              aankoopbedrag teruggestort.
+              U hoeft verder niets te doen. Wij nemen zo snel mogelijk contact
+              met u op per e-mail of telefoon om de verdere afhandeling samen
+              te regelen.
             </Text>
           </Section>
 
@@ -63,11 +59,11 @@ export const WithdrawalConfirmedEmail = ({
 
           <Section style={styles.section}>
             <Text style={styles.text}>
-              Neem contact op via{" "}
+              Vragen? U kunt ons bereiken via{" "}
               <a href="mailto:info@wjhoutbouw.nl" style={styles.link}>
                 info@wjhoutbouw.nl
               </a>{" "}
-              of 06-24994842 om de retourzending te regelen.
+              of 06-24994842.
             </Text>
             <Text style={styles.signoff}>
               Met vriendelijke groet,

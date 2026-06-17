@@ -13,17 +13,15 @@ export default async function fulfillmentDeliveredHandler({
   try {
     const query = container.resolve("query")
 
-    const { data: orders } = await query.graph({
-      entity: "order",
-      fields: ["id", "metadata"],
-      filters: {
-        fulfillments: { id: fulfillmentId } as unknown as undefined,
-      },
+    const { data: fulfillments } = await query.graph({
+      entity: "fulfillment",
+      fields: ["id", "order.id", "order.metadata"],
+      filters: { id: fulfillmentId },
     })
 
-    const order = orders[0] as
-      | { id: string; metadata: Record<string, unknown> | null }
-      | undefined
+    const order = (fulfillments[0] as unknown as {
+      order?: { id: string; metadata: Record<string, unknown> | null }
+    } | undefined)?.order
 
     if (!order) {
       logger.warn(
