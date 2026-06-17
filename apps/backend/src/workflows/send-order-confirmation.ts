@@ -23,6 +23,7 @@ const sendOrderConfirmationWorkflow = createWorkflow(
         "currency_code",
         "total",
         "subtotal",
+        "item_subtotal",
         "shipping_total",
         "tax_total",
         "created_at",

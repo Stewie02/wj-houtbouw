@@ -45,6 +45,7 @@ export type InvoiceOrder = {
   email: string
   currency_code: string
   subtotal: unknown
+  item_subtotal: unknown
   tax_total: unknown
   shipping_total: unknown
   total: unknown
@@ -308,7 +309,6 @@ export const InvoicePDF = ({ order }: { order: InvoiceOrder }) => {
         {/* Header */}
         <View style={styles.header}>
           <Text style={styles.headerCompany}>W&J Houtbouw</Text>
-          <Text style={styles.headerTagline}>Buitenmeubilair van massief hout</Text>
         </View>
 
         <View style={styles.body}>
@@ -384,7 +384,7 @@ export const InvoicePDF = ({ order }: { order: InvoiceOrder }) => {
                 {formatCurrency(toNum(item.unit_price), currency)}
               </Text>
               <Text style={[styles.cellText, styles.colTotal]}>
-                {formatCurrency(toNum(item.total), currency)}
+                {formatCurrency(toNum(item.unit_price) * toNum(item.quantity), currency)}
               </Text>
             </View>
           ))}
@@ -395,7 +395,7 @@ export const InvoicePDF = ({ order }: { order: InvoiceOrder }) => {
               <View style={styles.totalRow}>
                 <Text style={styles.totalLabel}>Subtotaal excl. BTW</Text>
                 <Text style={styles.totalValue}>
-                  {formatCurrency(toNum(order.subtotal), currency)}
+                  {formatCurrency(toNum(order.item_subtotal), currency)}
                 </Text>
               </View>
               {toNum(order.shipping_total) > 0 && (
