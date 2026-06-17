@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import SectionContainer from "@modules/common/components/section-container";
 
 export const metadata: Metadata = {
   title: "Algemene voorwaarden",
@@ -24,8 +25,8 @@ export default function TermsAndConditionsPage() {
         </div>
       </div>
 
-      {/* Content */}
-      <div className="max-w-[860px] mx-auto px-4 sm:px-8 lg:px-12 py-14 sm:py-20">
+      <SectionContainer className="py-12 sm:py-16">
+      <div className="max-w-[800px] mx-auto">
         {/* Company info table */}
         <div className="bg-wj-white border border-wj-border mb-12 overflow-x-auto">
           <table className="w-full font-body text-[14px]">
@@ -950,6 +951,7 @@ export default function TermsAndConditionsPage() {
           </Section>
         </div>
       </div>
+      </SectionContainer>
     </div>
   );
 }
@@ -963,7 +965,7 @@ function Section({
 }) {
   return (
     <section className="border-t border-wj-border pt-8">
-      <h2 className="font-display font-bold text-[20px] text-wj-text tracking-[-0.01em] mb-5">
+      <h2 className="font-display font-semibold text-[22px] text-wj-text tracking-[-0.01em] mb-5">
         {title}
       </h2>
       <div className="flex flex-col gap-3">{children}</div>

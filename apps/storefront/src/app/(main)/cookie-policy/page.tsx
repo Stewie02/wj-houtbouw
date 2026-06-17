@@ -97,7 +97,7 @@ export default function CookiePolicyPage() {
       </div>
 
       <SectionContainer className="py-12 sm:py-16">
-        <div className="max-w-[800px]">
+        <div className="max-w-[800px] mx-auto">
           <p className="font-body text-[15px] text-wj-muted leading-[1.7] mb-10">
             W&J Houtbouw gebruikt cookies om de website goed te laten
             functioneren en jouw ervaring te verbeteren. Cookies zijn kleine

@@ -18,7 +18,7 @@ const FOOTER_COLS = [
   {
     title: "Juridisch",
     links: [
-      { label: "Privacybeleid", href: "/legal" },
+      { label: "Privacybeleid", href: "/privacybeleid" },
       { label: "Algemene voorwaarden", href: "/algemene-voorwaarden" },
       { label: "Cookiebeleid", href: "/cookiebeleid" },
     ],
