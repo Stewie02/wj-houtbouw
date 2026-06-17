@@ -47,7 +47,7 @@ const VALUES = [
   },
   {
     label: "Persoonlijk contact",
-    description: "Van eerste idee tot laatste schroef — altijd direct contact.",
+    description: "Van eerste idee tot laatste schroef, altijd direct contact.",
     icon: (
       <svg
         width="20"
@@ -117,7 +117,7 @@ export default function OverOnsPage() {
                 </span>
               </h2>
               <p className="font-body text-[15px] sm:text-[16px] text-wj-muted leading-[1.75]">
-                W&J Houtbouw is opgericht door Peter Wiersma en Benne Jongsma —
+                W&J Houtbouw is opgericht door Peter Wiersma en Benne Jongsma,
                 twee timmermannen met een gedeelde achtergrond in de bouw en een
                 even gedeelde visie op wat buitenmeubilair zou moeten zijn. Niet
                 zomaar collega&apos;s, maar goede vrienden die besloten hun
@@ -182,7 +182,7 @@ export default function OverOnsPage() {
               bereikt die we onszelf hadden gesteld.&rdquo;
             </p>
             <div className="mt-6 font-body text-[13px] text-wj-muted">
-              — Peter &amp; Benne, oprichters W&J Houtbouw
+              Peter &amp; Benne, oprichters W&J Houtbouw
             </div>
           </div>
         </div>

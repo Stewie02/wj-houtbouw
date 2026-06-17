@@ -22,7 +22,7 @@ export const BLOG_POSTS: BlogPost[] = [
       },
       {
         heading: "Eén keer per jaar beitsen, meer heb je niet nodig",
-        body: "Het mooie aan Douglas is dat het weinig vraagt. Wie zijn meubilair één keer per jaar opnieuw beitst, geeft het hout een beschermende laag tegen vocht, UV-straling en temperatuurwisselingen. Het resultaat: een langere levensduur én een consistent mooie uitstraling, jaar na jaar. Het beste moment? Het voorjaar — als het droog is en het buitenseizoen weer begint.",
+        body: "Het mooie aan Douglas is dat het weinig vraagt. Wie zijn meubilair één keer per jaar opnieuw beitst, geeft het hout een beschermende laag tegen vocht, UV-straling en temperatuurwisselingen. Het resultaat: een langere levensduur én een consistent mooie uitstraling, jaar na jaar. Het beste moment? Het voorjaar, als het droog is en het buitenseizoen weer begint.",
       },
       {
         heading: "Slim plaatsen is het halve werk",
@@ -30,7 +30,7 @@ export const BLOG_POSTS: BlogPost[] = [
       },
       {
         heading: "Weinig moeite, tientallen jaren plezier",
-        body: "Douglas meubilair is geen wegwerpartikel. Met een jaarlijkse beitsbeurt en een doordachte opstelling gaat het gemakkelijk twintig jaar mee — zonder grote ingrepen of hoge kosten. Dat is waar wij voor bouwen, en waar jij jarenlang van geniet.",
+        body: "Douglas meubilair is geen wegwerpartikel. Met een jaarlijkse beitsbeurt en een doordachte opstelling gaat het gemakkelijk twintig jaar mee, zonder grote ingrepen of hoge kosten. Dat is waar wij voor bouwen, en waar jij jarenlang van geniet.",
       },
     ],
   },
@@ -40,28 +40,28 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "B2B",
     date: "2026-05-01",
     excerpt:
-      "Standaard is niet altijd voldoende. Zeker niet als je als bedrijf wil dat elk detail klopt — van de uitstraling van je terras tot het logo op je meubilair.",
+      "Standaard is niet altijd voldoende. Zeker niet als je als bedrijf wil dat elk detail klopt, van de uitstraling van je terras tot het logo op je meubilair.",
     sections: [
       {
-        body: "Standaard is niet altijd voldoende. Zeker niet als je als bedrijf wil dat elk detail klopt — van de uitstraling van je terras tot het logo op je meubilair. Bij W&J Houtbouw maken we buitenmeubilair volledig naar wens, voor zakelijke opdrachtgevers die niet willen inleveren op kwaliteit of identiteit.",
+        body: "Standaard is niet altijd voldoende. Zeker niet als je als bedrijf wil dat elk detail klopt, van de uitstraling van je terras tot het logo op je meubilair. Bij W&J Houtbouw maken we buitenmeubilair volledig naar wens, voor zakelijke opdrachtgevers die niet willen inleveren op kwaliteit of identiteit.",
       },
       {
         heading: "Maatwerk zonder grenzen",
-        body: "Of je nu een specifieke maat nodig hebt, een bijzonder ontwerp voor ogen hebt, of je bedrijfslogo wil laten inlaseren in het hout — wij maken het. Geen catalogus waar je uit moet kiezen, maar een gesprek over wat jij nodig hebt. Van picknicktafel tot loungeset, van standaardmodel tot volledig uniek ontwerp. Als jij het kan bedenken, bouwen wij het.",
+        body: "Of je nu een specifieke maat nodig hebt, een bijzonder ontwerp voor ogen hebt, of je bedrijfslogo wil laten inlaseren in het hout: wij maken het. Geen catalogus waar je uit moet kiezen, maar een gesprek over wat jij nodig hebt. Van picknicktafel tot loungeset, van standaardmodel tot volledig uniek ontwerp. Als jij het kan bedenken, bouwen wij het.",
       },
       {
         heading: "Douglas hout voor zwaar gebruik",
-        body: "Zakelijk meubilair krijgt het zwaarder te verduren dan meubilair bij particulieren thuis. Meer gebruikers, meer wisselende weersomstandigheden, meer slijtage. Douglas hout is daar uitermate geschikt voor — van nature sterk, harsrijk en weerbestendig. Met een jaarlijkse beitsbeurt gaat het tientallen jaren mee, ook bij intensief gebruik.",
+        body: "Zakelijk meubilair krijgt het zwaarder te verduren dan meubilair bij particulieren thuis. Meer gebruikers, meer wisselende weersomstandigheden, meer slijtage. Douglas hout is daar uitermate geschikt voor: van nature sterk, harsrijk en weerbestendig. Met een jaarlijkse beitsbeurt gaat het tientallen jaren mee, ook bij intensief gebruik.",
       },
       {
         heading: "Persoonlijk contact, van begin tot eind",
-        body: "Bij W&J Houtbouw werk je altijd rechtstreeks met de makers. Geen tussenhandel, geen accountmanagers. Jij vertelt wat je nodig hebt, wij denken mee en bouwen het. Zo weet je precies wat je krijgt — en waarom het zo gemaakt is.",
+        body: "Bij W&J Houtbouw werk je altijd rechtstreeks met de makers. Geen tussenhandel, geen accountmanagers. Jij vertelt wat je nodig hebt, wij denken mee en bouwen het. Zo weet je precies wat je krijgt, en waarom het zo gemaakt is.",
       },
     ],
   },
   {
     slug: "van-ruwe-plank-tot-afgewerkt-meubelstuk",
-    title: "Van ruwe plank tot afgewerkt meubelstuk — zo werken wij",
+    title: "Van ruwe plank tot afgewerkt meubelstuk: zo werken wij",
     category: "Achter de schermen",
     date: "2026-05-01",
     excerpt:
@@ -71,28 +71,28 @@ export const BLOG_POSTS: BlogPost[] = [
         body: "Elk stuk meubilair dat W&J Houtbouw verlaat heeft een reis gemaakt. Van ruwe plank tot afgewerkt product, elke stap wordt met zorg gezet. Geen fabriekswerk, geen shortcuts. Dit is hoe het bij ons gaat.",
       },
       {
-        heading: "Stap 1 — Het hout",
+        heading: "Stap 1: Het hout",
         body: "Alles begint bij de juiste grondstof. Wij kopen ons Douglas hout in bij een vaste, betrouwbare leverancier die net zo hoog inzet op kwaliteit als wij. Geen compromissen aan het begin betekent geen teleurstellingen aan het einde.",
       },
       {
-        heading: "Stap 2 — Op maat maken",
+        heading: "Stap 2: Op maat maken",
         body: "Het hout wordt in onze werkplaats in Drachten op maat gezaagd en bewerkt met de juiste machines. Elke maat, elke hoek, elke verbinding wordt nauwkeurig uitgevoerd. Hier begint het vakmanschap.",
       },
       {
-        heading: "Stap 3 — De frames",
-        body: "Terwijl het hout klaarligt, komen de stalen frames binnen van onze vaste staal leverancier. Elke frame wordt voorzien van een tweelaagse poedercoating — roestwerend en gebouwd voor buiten. Sterk van binnen, strak van buiten.",
+        heading: "Stap 3: De frames",
+        body: "Terwijl het hout klaarligt, komen de stalen frames binnen van onze vaste staal leverancier. Elke frame wordt voorzien van een tweelaagse poedercoating, roestwerend en gebouwd voor buiten. Sterk van binnen, strak van buiten.",
       },
       {
-        heading: "Stap 4 — Jouw voorkeuren",
+        heading: "Stap 4: Jouw voorkeuren",
         body: "Voordat alles in elkaar gaat, lopen we alle opties door die de klant heeft aangevraagd. Wil je een rugleuning? Welke beitskleur? Stoelen erbij? Specifieke wensen? Dit is het moment waarop jouw meubilair écht van jou wordt.",
       },
       {
-        heading: "Stap 5 — Assemblage en afwerking",
+        heading: "Stap 5: Assemblage en afwerking",
         body: "Dan komt alles samen. Hout op frame, schroef voor schroef, met de hand afgewerkt. Elk product verlaat onze werkplaats pas als het aan onze eigen standaard voldoet.",
       },
       {
-        heading: "Stap 6 — Bezorging door onszelf",
-        body: "Wij bezorgen onze producten zelf. Geen anonieme pakketdienst, maar de mensen die het gemaakt hebben. Zo zijn we zeker dat het goed aankomt — en kunnen we je meteen alles vertellen over onderhoud en gebruik.",
+        heading: "Stap 6: Bezorging door onszelf",
+        body: "Wij bezorgen onze producten zelf. Geen anonieme pakketdienst, maar de mensen die het gemaakt hebben. Zo zijn we zeker dat het goed aankomt, en kunnen we je meteen alles vertellen over onderhoud en gebruik.",
       },
     ],
   },
