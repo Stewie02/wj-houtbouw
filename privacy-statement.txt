@@ -15,7 +15,7 @@ Hieronder vindt u een overzicht van de persoonsgegevens die wij verwerken:
 - Adresgegevens
 - Telefoonnummer
 - E-mailadres
-- IP-adres
+- IP-adres (voor beveiliging, fraudepreventie en analyse van websitegebruik)
 - Overige persoonsgegevens die de klant actief verstrekt bijvoorbeeld door een profiel op uw website aan te maken, in correspondentie en telefonisch
 - Gegevens over uw activiteiten op onze website
 
@@ -35,18 +35,37 @@ W&J Houtbouw verwerkt jouw persoonsgegevens voor de volgende doelen:
 - W&J Houtbouw verwerkt ook persoonsgegevens als wij hier wettelijk toe verplicht zijn, zoals gegevens die wij nodig hebben voor onze belastingaangifte.
 
 
+Grondslagen voor verwerking
+W&J Houtbouw verwerkt persoonsgegevens uitsluitend op basis van een van de volgende wettelijke grondslagen:
+
+Verwerking                                        | Grondslag
+--------------------------------------------------|------------------------------------------
+Bestellingen, leveringen, betalingen, account     | Uitvoering van een overeenkomst
+Belastingadministratie en factuurplicht           | Wettelijke verplichting
+Nieuwsbrief en reclamefolder                      | Toestemming
+Websiteanalyse, beveiliging en IP-adresverwerking | Gerechtvaardigd belang
+
+
 Geautomatiseerde besluitvorming
 W&J Houtbouw maakt geen gebruik van geautomatiseerde besluitvorming.
 
 
 Hoe lang we persoonsgegevens bewaren
-W&J Houtbouw bewaart uw persoonsgegevens niet langer dan strikt nodig is om de doelen te realiseren waarvoor uw gegevens worden verzameld. Wij hanteren de volgende bewaartermijn voor persoonsgegevens:
+W&J Houtbouw bewaart uw persoonsgegevens niet langer dan strikt nodig is om de doelen te realiseren waarvoor uw gegevens worden verzameld. Voor sommige gegevens gelden wettelijke bewaartermijnen. Wij hanteren de volgende bewaartermijnen:
 
-24 maanden
+Categorie                              | Bewaartermijn
+---------------------------------------|----------------------------------------------
+Facturen en ordergegevens              | 7 jaar (fiscale bewaarplicht)
+Accountgegevens                        | Tot verwijdering account + 24 maanden
+Contactverzoeken en offertes           | 24 maanden
+Nieuwsbriefinschrijving                | Tot uitschrijving
+Websitegedrag en analysedata           | 24 maanden
 
 
 Delen van persoonsgegevens met derden
 W&J Houtbouw deelt uw persoonsgegevens met verschillende derden als dit noodzakelijk is voor het uitvoeren van de overeenkomst en om te voldoen aan een eventuele wettelijke verplichting. Met bedrijven die uw gegevens verwerken in onze opdracht, sluiten wij een verwerkersovereenkomst om te zorgen voor eenzelfde niveau van beveiliging en vertrouwelijkheid van uw gegevens. W&J Houtbouw blijft verantwoordelijk voor deze verwerkingen. Daarnaast verstrekt W&J Houtbouw uw persoonsgegevens aan andere derden. Dit doen wij alleen met uw nadrukkelijke toestemming.
+
+Sommige van onze verwerkers bevinden zich buiten de Europese Economische Ruimte (EER). In dergelijke gevallen zorgen wij voor passende waarborgen, zoals Standard Contractual Clauses (SCCs) of deelname aan het EU-VS Data Privacy Framework (DPF).
 
 Categorie      | Naam            | Jurisdictie                          | Doel                                              | Gegevens
 ---------------|-----------------|--------------------------------------|---------------------------------------------------|------------------------------------------------------------
@@ -57,7 +76,7 @@ W&J Houtbouw verkoopt uw gegevens niet aan derden.
 
 
 Cookies, of vergelijkbare technieken, die wij gebruiken
-Voor meer informatie over het gebruik van cookies verwijzen wij u naar ons cookiebeleid: https://wjhoutbouw.nl/cookie-policy
+Voor meer informatie over het gebruik van cookies verwijzen wij u naar ons cookiebeleid: https://wjhoutbouw.nl/cookiebeleid
 
 
 Gegevens inzien, aanpassen of verwijderen
@@ -65,7 +84,7 @@ U heeft het recht om uw persoonsgegevens in te zien, te corrigeren of te verwijd
 
 U kunt een verzoek tot inzage, correctie, verwijdering, gegevensoverdraging van uw persoonsgegevens of verzoek tot intrekking van uw toestemming of bezwaar op de verwerking van uw persoonsgegevens sturen naar info@wjhoutbouw.nl.
 
-Om er zeker van te zijn dat het verzoek tot inzage door u is gedaan, vragen wij u een kopie van uw identiteitsbewijs met het verzoek mee te sturen. Maak in deze kopie uw pasfoto, MRZ (machine readable zone, de strook met nummers onderaan het paspoort), paspoortnummer en Burgerservicenummer (BSN) zwart. Dit ter bescherming van uw privacy. We reageren zo snel mogelijk, maar binnen vier weken, op uw verzoek.
+Om er zeker van te zijn dat het verzoek tot inzage door u is gedaan, vragen wij u een kopie van uw identiteitsbewijs met het verzoek mee te sturen. Maak in deze kopie uw pasfoto, MRZ (machine readable zone, de strook met nummers onderaan het paspoort), paspoortnummer en Burgerservicenummer (BSN) zwart. Dit ter bescherming van uw privacy. We reageren zo snel mogelijk, maar binnen één maand, op uw verzoek.
 
 W&J Houtbouw wil u er tevens op wijzen dat u de mogelijkheid heeft om een klacht in te dienen bij de nationale toezichthouder, de Autoriteit Persoonsgegevens. Dat kan via de volgende link: https://autoriteitpersoonsgegevens.nl/nl/contact-met-de-autoriteit-persoonsgegevens/tip-ons
 
@@ -75,3 +94,7 @@ W&J Houtbouw neemt de bescherming van uw gegevens serieus en neemt passende maat
 - TLS (voorheen SSL) Wij versturen uw gegevens via een beveiligde internetverbinding. Dit kunt u zien aan de adresbalk 'https' en het hangslotje in de adresbalk.
 - DKIM, SPF en DMARC zijn drie internetstandaarden die wij gebruiken om te voorkomen dat u uit onze naam e-mails ontvangt die virussen bevatten, spam zijn of bedoelt zijn om persoonlijke (inlog)gegevens te bemachtigen.
 - DNSSEC is een extra beveiliging (aanvullend op DNS) voor het omzetten van een domeinnaam (https://wjhoutbouw.nl) naar het hieraan gekoppelde IP-adres (servernaam); het wordt voorzien van een digitale handtekening. U kunt die handtekening automatisch laten controleren. Op die manier voorkomen wij dat u omgeleid wordt naar een vals IP-adres.
+
+
+Wijzigingen
+W&J Houtbouw behoudt zich het recht voor dit privacybeleid te wijzigen. De meest actuele versie is altijd beschikbaar op onze website. Deze versie is voor het laatst bijgewerkt op 17 juni 2026.

@@ -8,6 +8,33 @@ export const metadata: Metadata = {
     "Lees hoe W&J Houtbouw omgaat met jouw persoonsgegevens, welke gegevens wij verwerken en met wie wij ze delen.",
 };
 
+const LEGAL_BASES = [
+  {
+    processing: "Bestellingen, leveringen, betalingen, account",
+    basis: "Uitvoering van een overeenkomst",
+  },
+  {
+    processing: "Belastingadministratie en factuurplicht",
+    basis: "Wettelijke verplichting",
+  },
+  {
+    processing: "Nieuwsbrief en reclamefolder",
+    basis: "Toestemming",
+  },
+  {
+    processing: "Websiteanalyse, beveiliging en IP-adresverwerking",
+    basis: "Gerechtvaardigd belang",
+  },
+];
+
+const RETENTION = [
+  { category: "Facturen en ordergegevens", period: "7 jaar (fiscale bewaarplicht)" },
+  { category: "Accountgegevens", period: "Tot verwijdering account + 24 maanden" },
+  { category: "Contactverzoeken en offertes", period: "24 maanden" },
+  { category: "Nieuwsbriefinschrijving", period: "Tot uitschrijving" },
+  { category: "Websitegedrag en analysedata", period: "24 maanden" },
+];
+
 const THIRD_PARTIES = [
   {
     category: "Verwerker",
@@ -25,6 +52,47 @@ const THIRD_PARTIES = [
   },
 ];
 
+function SimpleTable({
+  headers,
+  rows,
+}: {
+  headers: string[];
+  rows: string[][];
+}) {
+  return (
+    <div className="overflow-x-auto">
+      <table className="w-full font-body text-[14px] text-wj-text border-collapse">
+        <thead>
+          <tr className="border-b border-wj-border">
+            {headers.map((h) => (
+              <th
+                key={h}
+                className="text-left py-3 pr-5 font-semibold text-[12px] tracking-[0.06em] uppercase text-wj-muted last:pr-0"
+              >
+                {h}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row, i) => (
+            <tr key={i} className="border-b border-wj-border last:border-0">
+              {row.map((cell, j) => (
+                <td
+                  key={j}
+                  className="py-3 pr-5 align-top text-wj-muted leading-[1.6] last:pr-0"
+                >
+                  {cell}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 export default function PrivacyPolicyPage() {
   return (
     <div className="bg-wj-bg">
@@ -37,7 +105,7 @@ export default function PrivacyPolicyPage() {
             Privacybeleid
           </h1>
           <p className="mt-4 font-body text-[15px] text-[#9A8F85] leading-[1.7]">
-            W&amp;J Houtbouw V.O.F. · Versie 2026
+            W&amp;J Houtbouw V.O.F. · Laatste wijziging: 17 juni 2026
           </p>
         </div>
       </div>
@@ -75,7 +143,7 @@ export default function PrivacyPolicyPage() {
                 "Adresgegevens",
                 "Telefoonnummer",
                 "E-mailadres",
-                "IP-adres",
+                "IP-adres (voor beveiliging, fraudepreventie en analyse van websitegebruik)",
                 "Gegevens over uw activiteiten op onze website",
                 "Overige persoonsgegevens die u actief verstrekt, bijvoorbeeld via correspondentie of telefonisch contact",
               ].map((item) => (
@@ -139,6 +207,20 @@ export default function PrivacyPolicyPage() {
           </section>
 
           <section>
+            <h2 className="font-display font-semibold text-[22px] text-wj-text tracking-[-0.01em] mb-2">
+              Grondslagen voor verwerking
+            </h2>
+            <p className="font-body text-[14px] text-wj-muted leading-[1.6] mb-5">
+              Wij verwerken persoonsgegevens uitsluitend op basis van een van de
+              volgende wettelijke grondslagen:
+            </p>
+            <SimpleTable
+              headers={["Verwerking", "Grondslag"]}
+              rows={LEGAL_BASES.map((r) => [r.processing, r.basis])}
+            />
+          </section>
+
+          <section>
             <h2 className="font-display font-semibold text-[22px] text-wj-text tracking-[-0.01em] mb-4">
               Geautomatiseerde besluitvorming
             </h2>
@@ -149,28 +231,36 @@ export default function PrivacyPolicyPage() {
           </section>
 
           <section>
-            <h2 className="font-display font-semibold text-[22px] text-wj-text tracking-[-0.01em] mb-4">
-              Bewaartermijn
+            <h2 className="font-display font-semibold text-[22px] text-wj-text tracking-[-0.01em] mb-2">
+              Bewaartermijnen
             </h2>
-            <p className="font-body text-[15px] text-wj-muted leading-[1.7]">
-              W&amp;J Houtbouw bewaart uw persoonsgegevens niet langer dan
-              strikt nodig is om de doelen te realiseren waarvoor uw gegevens
-              worden verzameld. Wij hanteren een bewaartermijn van{" "}
-              <strong className="text-wj-text font-semibold">24 maanden</strong>
-              .
+            <p className="font-body text-[14px] text-wj-muted leading-[1.6] mb-5">
+              Wij bewaren persoonsgegevens niet langer dan noodzakelijk. Voor
+              sommige gegevens gelden wettelijke bewaartermijnen, zoals de
+              fiscale bewaarplicht van 7 jaar.
             </p>
+            <SimpleTable
+              headers={["Categorie", "Bewaartermijn"]}
+              rows={RETENTION.map((r) => [r.category, r.period])}
+            />
           </section>
 
           <section>
             <h2 className="font-display font-semibold text-[22px] text-wj-text tracking-[-0.01em] mb-2">
               Delen met derden
             </h2>
-            <p className="font-body text-[14px] text-wj-muted leading-[1.6] mb-5">
+            <p className="font-body text-[14px] text-wj-muted leading-[1.6] mb-3">
               W&amp;J Houtbouw deelt uw persoonsgegevens met derden wanneer dit
               noodzakelijk is voor de uitvoering van de overeenkomst of om te
               voldoen aan een wettelijke verplichting. Met verwerkers sluiten wij
               een verwerkersovereenkomst. W&amp;J Houtbouw verkoopt uw gegevens
               niet aan derden.
+            </p>
+            <p className="font-body text-[14px] text-wj-muted leading-[1.6] mb-5">
+              Sommige verwerkers bevinden zich buiten de Europese Economische
+              Ruimte. In dergelijke gevallen zorgen wij voor passende waarborgen
+              via Standard Contractual Clauses (SCCs) of deelname aan het EU-VS
+              Data Privacy Framework (DPF).
             </p>
             <div className="overflow-x-auto">
               <table className="w-full font-body text-[14px] text-wj-text border-collapse">
@@ -194,21 +284,11 @@ export default function PrivacyPolicyPage() {
                       key={row.name}
                       className="border-b border-wj-border last:border-0"
                     >
-                      <td className="py-3 pr-5 align-top text-wj-muted">
-                        {row.category}
-                      </td>
-                      <td className="py-3 pr-5 align-top font-semibold text-wj-text whitespace-nowrap">
-                        {row.name}
-                      </td>
-                      <td className="py-3 pr-5 align-top text-wj-muted whitespace-nowrap">
-                        {row.jurisdiction}
-                      </td>
-                      <td className="py-3 pr-5 align-top text-wj-muted">
-                        {row.purpose}
-                      </td>
-                      <td className="py-3 align-top text-wj-muted leading-[1.6]">
-                        {row.data}
-                      </td>
+                      <td className="py-3 pr-5 align-top text-wj-muted">{row.category}</td>
+                      <td className="py-3 pr-5 align-top font-semibold text-wj-text whitespace-nowrap">{row.name}</td>
+                      <td className="py-3 pr-5 align-top text-wj-muted whitespace-nowrap">{row.jurisdiction}</td>
+                      <td className="py-3 pr-5 align-top text-wj-muted">{row.purpose}</td>
+                      <td className="py-3 align-top text-wj-muted leading-[1.6]">{row.data}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -253,7 +333,7 @@ export default function PrivacyPolicyPage() {
               </a>
               . Stuur ter verificatie een kopie van uw identiteitsbewijs mee en
               maak uw pasfoto, MRZ, paspoortnummer en BSN onleesbaar. Wij
-              reageren binnen vier weken.
+              reageren binnen één maand.
             </p>
             <p className="font-body text-[15px] text-wj-muted leading-[1.7]">
               U kunt ook een klacht indienen bij de{" "}
@@ -296,14 +376,21 @@ export default function PrivacyPolicyPage() {
                 <li key={item.label} className="flex gap-2 font-body text-[15px] leading-[1.6]">
                   <span className="text-wj-wood mt-[2px] shrink-0">—</span>
                   <span>
-                    <strong className="text-wj-text font-semibold">
-                      {item.label}
-                    </strong>{" "}
+                    <strong className="text-wj-text font-semibold">{item.label}</strong>{" "}
                     <span className="text-wj-muted">{item.desc}</span>
                   </span>
                 </li>
               ))}
             </ul>
+          </section>
+
+          <section className="border-t border-wj-border pt-6">
+            <p className="font-body text-[14px] text-wj-muted leading-[1.7]">
+              W&amp;J Houtbouw behoudt zich het recht voor dit privacybeleid te
+              wijzigen. De meest actuele versie is altijd beschikbaar op onze
+              website. Deze versie is voor het laatst bijgewerkt op{" "}
+              <strong className="text-wj-text font-semibold">17 juni 2026</strong>.
+            </p>
           </section>
 
         </div>
