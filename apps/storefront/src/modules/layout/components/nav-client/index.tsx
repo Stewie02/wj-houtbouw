@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import LocalizedClientLink from "@modules/common/components/localized-client-link";
@@ -14,7 +15,7 @@ const NAV_LINKS = [
 
 const Logo = () => (
   <LocalizedClientLink href="/" className="shrink-0">
-    <img
+    <Image
       src="/wj_houtbouw_horizontal.svg"
       alt="W&J Houtbouw"
       width={190}

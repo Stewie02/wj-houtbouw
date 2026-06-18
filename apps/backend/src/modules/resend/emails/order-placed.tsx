@@ -182,20 +182,6 @@ export const OrderPlacedEmail = (order: OrderEmailProps) => {
   )
 }
 
-function AddressLines({ address }: { address: OrderAddressDTO }) {
-  return (
-    <>
-      {address.first_name} {address.last_name}
-      <br />
-      {address.address_1}
-      <br />
-      {address.postal_code} {address.city}
-      <br />
-      {address.country_code?.toUpperCase()}
-    </>
-  )
-}
-
 const styles = {
   body: {
     backgroundColor: "#F7F3EE",

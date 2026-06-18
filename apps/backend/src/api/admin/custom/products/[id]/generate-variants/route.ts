@@ -1,5 +1,4 @@
 import { MedusaRequest, MedusaResponse } from "@medusajs/framework/http"
-import { MedusaError } from "@medusajs/framework/utils"
 import { generateProductVariantsWorkflow } from "../../../../../../workflows/generate-product-variants"
 
 type GenerateVariantsBody = {

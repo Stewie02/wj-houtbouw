@@ -95,7 +95,8 @@ export default async function PaginatedProducts({
 }) {
   const offset = (page - 1) * PRODUCT_LIMIT;
   const order =
-    (sortBy as "created_at" | "price_asc" | "price_desc") ?? "created_at";
+    (sortBy as "created_at" | "price_asc" | "price_desc" | "position") ??
+    "position";
 
   const { products } = await listProductSummaries({
     limit: PRODUCT_LIMIT,

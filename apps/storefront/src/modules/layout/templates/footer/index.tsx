@@ -1,3 +1,4 @@
+import Image from "next/image";
 import LocalizedClientLink from "@modules/common/components/localized-client-link";
 
 const FOOTER_COLS = [
@@ -42,7 +43,7 @@ export default function Footer() {
           {/* Brand column */}
           <div className="col-span-2 sm:col-span-3 lg:col-span-1">
             <LocalizedClientLink href="/" className="mb-5 inline-block">
-              <img
+              <Image
                 src="/wj_houtbouw_horizontal_white.svg"
                 alt="W&J Houtbouw"
                 width={190}

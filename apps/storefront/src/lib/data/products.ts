@@ -193,19 +193,20 @@ export type ProductSummary = {
   title: string;
   subtitle: string;
   thumbnail: string | null;
+  metadata: Record<string, unknown> | null;
   min_price: { calculated_amount: number; currency_code: string } | null;
 };
 
 export const listProductSummaries = async ({
   limit = 12,
   offset = 0,
-  order = "created_at",
+  order = "position",
   collectionId,
   categoryId,
 }: {
   limit?: number;
   offset?: number;
-  order?: "created_at" | "price_asc" | "price_desc";
+  order?: "created_at" | "price_asc" | "price_desc" | "position";
   collectionId?: string;
   categoryId?: string;
 } = {}): Promise<{ products: ProductSummary[]; count: number }> => {
@@ -230,8 +231,7 @@ export const listProductSummaries = async ({
         method: "GET",
         query,
         headers,
-        next: { tags: ["products"] },
-        cache: "force-cache",
+        cache: "no-store",
       }
     )
     .catch(() => ({ products: [], count: 0 }));

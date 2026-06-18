@@ -1,3 +1,4 @@
+import Image from "next/image";
 import LocalizedClientLink from "@modules/common/components/localized-client-link";
 
 export default function CheckoutLayout({
@@ -22,7 +23,7 @@ export default function CheckoutLayout({
             href="/"
             data-testid="store-link"
           >
-            <img
+            <Image
               src="/wj_houtbouw_horizontal.svg"
               alt="W&J Houtbouw"
               width={152}

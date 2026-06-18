@@ -15,8 +15,8 @@ export default async function FeaturedProducts() {
           currency_code: product.min_price.currency_code,
         })
       : "—",
-    material: product.metadata?.material,
-    tag: product.metadata?.tag ?? undefined,
+    material: product.metadata?.material as string | undefined,
+    tag: product.metadata?.tag as string | undefined,
     href: `/producten/${product.handle}`,
   }));
 
