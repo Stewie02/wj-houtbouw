@@ -91,11 +91,14 @@ class ResendNotificationProviderService extends AbstractNotificationProviderServ
       })
     }
 
+    const BCC_ADDRESS = "info@wjhoutbouw.nl"
     const recipient = process.env.RESEND_TEST_EMAIL ?? notification.to
+    const bcc = recipient !== BCC_ADDRESS ? BCC_ADDRESS : undefined
 
     const { data: result, error } = await this.resendClient.emails.send({
       from: this.options.from,
       to: recipient,
+      bcc,
       subject: this.getSubject(data),
       react: template,
       ...(attachments.length > 0 && { attachments }),
