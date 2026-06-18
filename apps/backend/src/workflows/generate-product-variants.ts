@@ -61,23 +61,36 @@ const fetchOptionsStep = createStep(
 
     const rawOptions = await productModule.listProductOptions(
       { product_id: productId },
-      { select: ["id", "title"], relations: ["values"] }
+      { select: ["id", "title"] }
     )
 
-    const options: ParsedOption[] = rawOptions.map(
-      (opt: {
-        id: string
-        title: string
-        values: Array<{ id: string; value: string }>
-      }) => ({
+    const optionIds = rawOptions.map((o: { id: string }) => o.id)
+
+    // Use listProductOptionValues instead of the "values" relation so that
+    // soft-deleted values are excluded (relations: ["values"] returns them).
+    const activeValues = optionIds.length
+      ? await productModule.listProductOptionValues({ option_id: optionIds }, {})
+      : []
+
+    const valuesByOptionId = new Map<string, Array<{ value: string }>>()
+    for (const v of activeValues as Array<{ option_id: string; value: string }>) {
+      const arr = valuesByOptionId.get(v.option_id) ?? []
+      arr.push(v)
+      valuesByOptionId.set(v.option_id, arr)
+    }
+
+    const options: ParsedOption[] = (
+      rawOptions as Array<{ id: string; title: string }>
+    )
+      .map((opt) => ({
         id: opt.id,
-        title: opt.title,
-        values: opt.values.map((val) => ({
+        title: opt.title, // preserve exact title — Medusa matches by exact string
+        values: (valuesByOptionId.get(opt.id) ?? []).map((val) => ({
           raw: val.value,
           surcharge: parseSurcharge(val.value),
         })),
-      })
-    )
+      }))
+      .filter((opt) => opt.values.length > 0) // skip options with no active values
 
     return new StepResponse({ options })
   }
@@ -213,7 +226,7 @@ const upsertVariantsStep = createStep(
           product_id: productId,
           title: combo.map((v) => v.value.trim()).join(" / "),
           manage_inventory: false,
-          options: Object.fromEntries(combo.map((v) => [v.optionTitle.trim(), v.value.trim()])),
+          options: Object.fromEntries(combo.map((v) => [v.optionTitle, v.value.trim()])),
         }))
       )
 
