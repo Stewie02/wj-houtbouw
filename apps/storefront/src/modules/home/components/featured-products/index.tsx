@@ -18,6 +18,7 @@ export default async function FeaturedProducts() {
     material: product.metadata?.material as string | undefined,
     tag: product.metadata?.tag as string | undefined,
     href: `/producten/${product.handle}`,
+    thumbnail: product.thumbnail,
   }));
 
   if (cards.length === 0) return null;

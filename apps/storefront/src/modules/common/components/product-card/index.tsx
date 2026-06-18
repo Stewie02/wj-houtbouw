@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import LocalizedClientLink from "@modules/common/components/localized-client-link";
 import PlaceholderImage from "@modules/common/components/placeholder-image";
 import BrandTag from "@modules/common/components/brand-tag";
@@ -11,6 +12,7 @@ type ProductCardProps = {
   material?: string;
   tag?: string;
   href: string;
+  thumbnail?: string | null;
 };
 
 const ProductCard = ({
@@ -19,6 +21,7 @@ const ProductCard = ({
   material,
   tag,
   href,
+  thumbnail,
 }: ProductCardProps) => {
   const [hovered, setHovered] = useState(false);
 
@@ -39,7 +42,17 @@ const ProductCard = ({
             className="w-full h-full transition-transform duration-500"
             style={{ transform: hovered ? "scale(1.03)" : "scale(1)" }}
           >
-            <PlaceholderImage label={name} />
+            {thumbnail ? (
+              <Image
+                src={thumbnail}
+                alt={name}
+                fill
+                className="object-cover"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              />
+            ) : (
+              <PlaceholderImage label={name} />
+            )}
           </div>
           {tag && (
             <div className="absolute top-3 left-3">
