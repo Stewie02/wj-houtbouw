@@ -114,6 +114,9 @@ const upsertVariantsStep = createStep(
     const pricingModule = container.resolve(Modules.PRICING)
     const remoteLink = container.resolve(ContainerRegistrationKeys.LINK)
     const query = container.resolve(ContainerRegistrationKeys.QUERY)
+    const logger = container.resolve("logger")
+
+    try {
 
     // Build optionId -> title map for fingerprinting existing variants
     const optionTitleById = new Map(options.map((o) => [o.id, o.title]))
@@ -189,28 +192,35 @@ const upsertVariantsStep = createStep(
       }
     }
 
+    logger.info(`[generate-variants] product=${productId} plan: toCreate=${toCreate.length} toUpdatePrices=${toUpdatePrices.length} toCreatePriceLink=${toCreatePriceLink.length} staleCount=${currentVariantIds.filter((id: string) => !touchedVariantIds.has(id)).length}`)
+
     // Update prices: dismiss old link → delete old price set → create new → re-link
     if (toUpdatePrices.length > 0) {
+      logger.info(`[generate-variants] product=${productId} dismissing ${toUpdatePrices.length} price links`)
       await remoteLink.dismiss(
         toUpdatePrices.map(({ variantId, priceSetId }) => ({
           [Modules.PRODUCT]: { variant_id: variantId },
           [Modules.PRICING]: { price_set_id: priceSetId },
         }))
       )
+      logger.info(`[generate-variants] product=${productId} deleting ${toUpdatePrices.length} old price sets`)
       await pricingModule.deletePriceSets(
         toUpdatePrices.map((u) => u.priceSetId)
       )
+      logger.info(`[generate-variants] product=${productId} creating ${toUpdatePrices.length} replacement price sets`)
       const replacedPriceSets = await pricingModule.createPriceSets(
         toUpdatePrices.map(({ price }) => ({
           prices: [{ amount: price, currency_code: "eur" }],
         }))
       )
+      logger.info(`[generate-variants] product=${productId} re-linking ${toUpdatePrices.length} price sets`)
       await remoteLink.create(
         toUpdatePrices.map(({ variantId }, idx) => ({
           [Modules.PRODUCT]: { variant_id: variantId },
           [Modules.PRICING]: { price_set_id: replacedPriceSets[idx].id },
         }))
       )
+      logger.info(`[generate-variants] product=${productId} price updates done`)
     }
 
     // Create new variants + price sets in batches
@@ -220,6 +230,9 @@ const upsertVariantsStep = createStep(
 
     for (let i = 0; i < toCreate.length; i += BATCH_SIZE) {
       const batch = toCreate.slice(i, i + BATCH_SIZE)
+      const batchNum = Math.floor(i / BATCH_SIZE) + 1
+      const totalBatches = Math.ceil(toCreate.length / BATCH_SIZE)
+      logger.info(`[generate-variants] product=${productId} creating variants batch ${batchNum}/${totalBatches} (${batch.length} items, ${createdVariantIds.length} created so far)`)
 
       const newVariants = await productModule.createProductVariants(
         batch.map(({ combo }) => ({
@@ -229,12 +242,14 @@ const upsertVariantsStep = createStep(
           options: Object.fromEntries(combo.map((v) => [v.optionTitle, v.value.trim()])),
         }))
       )
+      logger.info(`[generate-variants] product=${productId} batch ${batchNum}/${totalBatches} variants created, creating price sets`)
 
       const newPriceSets = await pricingModule.createPriceSets(
         batch.map(({ price }) => ({
           prices: [{ amount: price, currency_code: "eur" }],
         }))
       )
+      logger.info(`[generate-variants] product=${productId} batch ${batchNum}/${totalBatches} price sets created, linking`)
 
       await remoteLink.create(
         newVariants.map((v: { id: string }, idx: number) => ({
@@ -242,6 +257,7 @@ const upsertVariantsStep = createStep(
           [Modules.PRICING]: { price_set_id: newPriceSets[idx].id },
         }))
       )
+      logger.info(`[generate-variants] product=${productId} batch ${batchNum}/${totalBatches} done`)
 
       newVariants.forEach((v: { id: string }) => {
         touchedVariantIds.add(v.id)
@@ -254,6 +270,7 @@ const upsertVariantsStep = createStep(
 
     // Create price sets for existing variants that had no price link
     if (toCreatePriceLink.length > 0) {
+      logger.info(`[generate-variants] product=${productId} creating ${toCreatePriceLink.length} price sets for variants missing a link`)
       const newPriceSets = await pricingModule.createPriceSets(
         toCreatePriceLink.map(({ price }) => ({
           prices: [{ amount: price, currency_code: "eur" }],
@@ -272,8 +289,11 @@ const upsertVariantsStep = createStep(
       (id: string) => !touchedVariantIds.has(id)
     )
     if (staleIds.length > 0) {
+      logger.info(`[generate-variants] product=${productId} soft-deleting ${staleIds.length} stale variants`)
       await productModule.softDeleteProductVariants(staleIds)
     }
+
+    logger.info(`[generate-variants] product=${productId} done: created=${createdVariantIds.length} updated=${toUpdatePrices.length + toCreatePriceLink.length} archived=${staleIds.length}`)
 
     return new StepResponse(
       {
@@ -283,6 +303,11 @@ const upsertVariantsStep = createStep(
       },
       { variantIds: createdVariantIds, priceSetIds: createdPriceSetIds }
     )
+
+    } catch (err) {
+      logger.error(`[generate-variants] product=${productId} FAILED: ${err}`)
+      throw err
+    }
   },
   async (
     {
@@ -291,13 +316,19 @@ const upsertVariantsStep = createStep(
     }: { variantIds: string[]; priceSetIds: string[] },
     { container }
   ) => {
-    const productModule = container.resolve(Modules.PRODUCT)
-    const pricingModule = container.resolve(Modules.PRICING)
-    if (variantIds.length > 0) {
-      await productModule.softDeleteProductVariants(variantIds)
-    }
-    if (priceSetIds.length > 0) {
-      await pricingModule.deletePriceSets(priceSetIds)
+    const logger = container.resolve("logger")
+    try {
+      const productModule = container.resolve(Modules.PRODUCT)
+      const pricingModule = container.resolve(Modules.PRICING)
+      if (variantIds.length > 0) {
+        await productModule.softDeleteProductVariants(variantIds)
+      }
+      if (priceSetIds.length > 0) {
+        await pricingModule.deletePriceSets(priceSetIds)
+      }
+    } catch (err) {
+      logger.error(`[generate-variants] compensation FAILED: ${err}`)
+      throw err
     }
   }
 )
