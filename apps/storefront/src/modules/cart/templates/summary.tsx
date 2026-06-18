@@ -49,7 +49,7 @@ const Summary = ({ cart }: SummaryProps) => {
 
       {/* Payment badges */}
       <div className="flex items-center justify-center gap-3 pt-1">
-        {["iDEAL", "Visa", "Mastercard", "PayPal"].map((method) => (
+        {["iDEAL", "Visa", "Mastercard"].map((method) => (
           <span
             key={method}
             className="font-body text-[10px] font-semibold tracking-[0.06em] uppercase text-wj-muted border border-wj-border px-2 py-1"
@@ -58,10 +58,6 @@ const Summary = ({ cart }: SummaryProps) => {
           </span>
         ))}
       </div>
-
-      <p className="font-body text-[12px] text-wj-muted text-center -mt-2">
-        Veilig betalen · 30 dagen retour
-      </p>
     </div>
   );
 };
