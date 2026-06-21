@@ -115,6 +115,10 @@ git remote add dokku-storefront dokku@<server-ip>:medusa-storefront
 git push dokku-backend main
 ```
 
+> **Procfile note:** Dokku reads `Procfile` from the repository root (not from inside the Docker image).
+> The root `Procfile` defines `web` and `worker` process types — it works for both apps because
+> both use `npm run start` and the `MEDUSA_WORKER_MODE` env var is ignored by Next.js.
+
 ## 8. Scale the worker process
 
 After the backend is running, enable the worker process type:
