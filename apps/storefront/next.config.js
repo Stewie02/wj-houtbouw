@@ -21,6 +21,7 @@ const nextConfig = {
       { source: "/cookiebeleid", destination: "/cookie-policy" },
       { source: "/privacybeleid", destination: "/privacy-policy" },
       { source: "/algemene-voorwaarden", destination: "/terms-and-conditions" },
+      { source: "/retourbeleid", destination: "/return-policy" },
       { source: "/producten/:handle", destination: "/products/:handle" },
       { source: "/winkelwagen", destination: "/cart" },
       { source: "/afrekenen", destination: "/checkout" },

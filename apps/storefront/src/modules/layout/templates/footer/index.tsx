@@ -13,6 +13,7 @@ const FOOTER_COLS = [
     title: "Klantenservice",
     links: [
       { label: "Veelgestelde vragen", href: "/veelgestelde-vragen" },
+      { label: "Retourbeleid", href: "/retourbeleid" },
       { label: "Contact", href: "/contact" },
     ],
   },
