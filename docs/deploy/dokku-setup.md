@@ -18,11 +18,15 @@ dokku apps:create medusa-backend
 dokku apps:create medusa-storefront
 ```
 
-## 3. Point each app to its Dockerfile
+## 3. Point each app to its Dockerfile and Procfile
 
 ```bash
 dokku builder-dockerfile:set medusa-backend   dockerfile-path apps/backend/Dockerfile
 dokku builder-dockerfile:set medusa-storefront dockerfile-path apps/storefront/Dockerfile
+
+# Tell Dokku where to find the backend Procfile (defines web + worker process types).
+# The storefront needs no Procfile — Dokku falls back to its Dockerfile CMD.
+dokku ps:set medusa-backend procfile-path apps/backend/Procfile
 ```
 
 ## 4. Provision databases and link
@@ -42,7 +46,6 @@ dokku redis:link medusa-redis medusa-backend
 ```bash
 dokku config:set medusa-backend \
   NODE_ENV=production \
-  MEDUSA_WORKER_MODE=server \
   DISABLE_MEDUSA_ADMIN=false \
   JWT_SECRET=$(openssl rand -hex 32) \
   COOKIE_SECRET=$(openssl rand -hex 32) \
@@ -115,9 +118,9 @@ git remote add dokku-storefront dokku@<server-ip>:medusa-storefront
 git push dokku-backend main
 ```
 
-> **Procfile note:** Dokku reads `Procfile` from the repository root (not from inside the Docker image).
-> The root `Procfile` defines `web` and `worker` process types — it works for both apps because
-> both use `npm run start` and the `MEDUSA_WORKER_MODE` env var is ignored by Next.js.
+> **Procfile:** `apps/backend/Procfile` defines `web` and `worker` process types and sets
+> `MEDUSA_WORKER_MODE` per process via `env`. Do **not** set `MEDUSA_WORKER_MODE` in
+> `dokku config:set` — a global config var overrides the per-process `env` command in the Procfile.
 
 ## 8. Scale the worker process
 
