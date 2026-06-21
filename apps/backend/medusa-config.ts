@@ -1,6 +1,9 @@
 import { loadEnv, defineConfig } from "@medusajs/framework/utils";
+import { logger } from "@medusajs/framework";
 
 loadEnv(process.env.NODE_ENV || "development", process.cwd());
+
+logger.info(`[medusa-config] MEDUSA_WORKER_MODE = ${process.env.MEDUSA_WORKER_MODE}`);
 
 const isProduction = process.env.NODE_ENV === "production";
 
