@@ -63,7 +63,7 @@ export const WithdrawalConfirmedEmail = ({
               <a href="mailto:info@wjhoutbouw.nl" style={styles.link}>
                 info@wjhoutbouw.nl
               </a>{" "}
-              of 06-24994842.
+              of +31 512 20 20 95.
             </Text>
             <Text style={styles.signoff}>
               Met vriendelijke groet,

@@ -124,7 +124,7 @@ export default function PrivacyPolicyPage() {
               >
                 info@wjhoutbouw.nl
               </a>{" "}
-              of 06 24994842.
+              of +31 512 20 20 95.
             </p>
           </section>
 

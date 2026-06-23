@@ -50,7 +50,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
                 "@id": `${base}/#organization`,
                 name: "W&J Houtbouw",
                 url: base,
-                telephone: "+31624994842",
+                telephone: "+31512202095",
                 email: "info@wjhoutbouw.nl",
                 logo: {
                   "@type": "ImageObject",

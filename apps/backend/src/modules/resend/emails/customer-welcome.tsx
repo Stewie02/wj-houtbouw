@@ -64,7 +64,7 @@ export const CustomerWelcomeEmail = (customer: CustomerEmailProps) => {
                 info@wjhoutbouw.nl
               </a>
               <br />
-              📞 +31 6 24994842
+              📞 +31 512 20 20 95
             </Text>
           </Section>
 

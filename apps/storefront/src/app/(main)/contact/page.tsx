@@ -29,8 +29,8 @@ const CONTACT_ITEMS = [
   },
   {
     label: "Telefoon",
-    value: "06-24994842",
-    href: "tel:0624994842",
+    value: "+31 512 20 20 95",
+    href: "tel:+31512202095",
     icon: (
       <svg
         width="20"

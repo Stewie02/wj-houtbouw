@@ -162,7 +162,7 @@ export const OrderPlacedEmail = (order: OrderEmailProps) => {
                 info@wjhoutbouw.nl
               </a>
               <br />
-              06-24994842
+              +31 512 20 20 95
             </Text>
             <Text style={styles.signoff}>
               Tot snel,
