@@ -1,6 +1,7 @@
 import { HttpTypes } from "@medusajs/types";
 
 import LocalizedClientLink from "@modules/common/components/localized-client-link";
+import OrderTracker from "@modules/order/components/order-tracker";
 import Items from "@modules/order/components/items";
 import OrderSummary from "@modules/order/components/order-summary";
 import ShippingDetails from "@modules/order/components/shipping-details";
@@ -17,6 +18,7 @@ export default async function OrderCompletedTemplate({
 }: OrderCompletedTemplateProps) {
   return (
     <div className="bg-wj-bg min-h-screen">
+      <OrderTracker order={order} />
       <div className="bg-wj-dark">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-8 lg:px-12 py-10 sm:py-14">
           <p className="font-body text-[12px] tracking-[0.1em] uppercase text-wj-muted mb-3">

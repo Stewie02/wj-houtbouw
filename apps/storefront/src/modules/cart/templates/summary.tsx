@@ -38,14 +38,24 @@ const Summary = ({ cart }: SummaryProps) => {
       </div>
 
       {/* Checkout CTA */}
-      <LocalizedClientLink
-        href={"/checkout?step=" + step}
-        data-testid="checkout-button"
+      <div
+        onClick={() =>
+          window.fbq?.("track", "InitiateCheckout", {
+            value: cart.total,
+            currency: (cart.currency_code ?? "eur").toUpperCase(),
+            num_items: cart.items?.length,
+          })
+        }
       >
-        <BrandButton size="lg" full>
-          Afrekenen
-        </BrandButton>
-      </LocalizedClientLink>
+        <LocalizedClientLink
+          href={"/checkout?step=" + step}
+          data-testid="checkout-button"
+        >
+          <BrandButton size="lg" full>
+            Afrekenen
+          </BrandButton>
+        </LocalizedClientLink>
+      </div>
 
       {/* Payment badges */}
       <div className="flex items-center justify-center gap-3 pt-1">

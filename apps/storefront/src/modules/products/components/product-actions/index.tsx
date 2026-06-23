@@ -140,6 +140,14 @@ export default function ProductActions({
       !!selectedVariant.allow_backorder ||
       (selectedVariant.inventory_quantity ?? 0) > 0);
 
+  useEffect(() => {
+    window.fbq?.("track", "ViewContent", {
+      content_ids: [product.id],
+      content_name: product.title,
+      content_type: "product",
+    });
+  }, []);
+
   const actionsRef = useRef<HTMLDivElement>(null);
   const inView = useIntersection(actionsRef, "0px");
 
@@ -148,6 +156,13 @@ export default function ProductActions({
     const qty = Math.max(1, parseInt(quantityInput, 10) || 1);
     setIsAdding(true);
     await addToCart({ variantId: selectedVariant.id, quantity: qty });
+    window.fbq?.("track", "AddToCart", {
+      content_ids: [selectedVariant.id],
+      content_name: product.title,
+      content_type: "product",
+      value: selectedVariant.calculated_price?.calculated_amount,
+      currency: "EUR",
+    });
     setIsAdding(false);
   };
 

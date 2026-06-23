@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import SectionContainer from "@modules/common/components/section-container";
+import { ConsentResetButton } from "@modules/common/components/cookie-consent";
 
 export const metadata: Metadata = {
   title: "Cookiebeleid",
@@ -23,6 +24,21 @@ const NECESSARY_COOKIES = [
     purpose:
       "Unieke identifier voor de caching van paginadata per gebruiker, zodat wijzigingen direct zichtbaar zijn.",
     retention: "24 uur",
+  },
+];
+
+const META_COOKIES = [
+  {
+    name: "_fbp",
+    purpose:
+      "Ingesteld door Meta (Facebook) om bezoekers te identificeren en te herkennen voor advertentiedoeleinden.",
+    retention: "90 dagen",
+  },
+  {
+    name: "_fbc",
+    purpose:
+      "Ingesteld door Meta wanneer de bezoeker via een Facebook-advertentie op de website terechtkomt. Wordt gebruikt voor conversietracking.",
+    retention: "90 dagen",
   },
 ];
 
@@ -103,8 +119,10 @@ export default function CookiePolicyPage() {
             functioneren en jouw ervaring te verbeteren. Cookies zijn kleine
             tekstbestanden die door je browser worden opgeslagen. Op deze pagina
             leggen wij uit welke cookies wij gebruiken, waarom, en hoe lang ze
-            worden bewaard. Wij gebruiken uitsluitend noodzakelijke cookies. Heb
-            je vragen? Neem contact met ons op via{" "}
+            worden bewaard. Naast noodzakelijke cookies plaatsen wij, met jouw
+            toestemming, marketingcookies via Meta. Je kunt jouw keuze altijd
+            aanpassen via de browserinstellingen. Heb je vragen? Neem contact
+            met ons op via{" "}
             <a
               href="mailto:info@wjhoutbouw.nl"
               className="text-wj-green underline hover:text-wj-text transition-colors"
@@ -148,16 +166,38 @@ export default function CookiePolicyPage() {
             <CookieTable rows={STRIPE_COOKIES} />
           </section>
 
+          <section className="mb-10">
+            <h2 className="font-display font-semibold text-[22px] text-wj-text tracking-[-0.01em] mb-1">
+              Marketingcookies (Meta Pixel)
+            </h2>
+            <p className="font-body text-[14px] text-wj-muted leading-[1.6] mb-5">
+              Met jouw toestemming gebruiken wij de Meta Pixel van Meta Platforms
+              Ireland Ltd. De pixel plaatst cookies waarmee wij het effect van
+              onze advertenties op Facebook en Instagram kunnen meten. Zie het{" "}
+              <a
+                href="https://www.facebook.com/privacy/policy/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-wj-green underline hover:text-wj-text transition-colors"
+              >
+                privacybeleid van Meta
+              </a>{" "}
+              voor meer informatie.
+            </p>
+            <CookieTable rows={META_COOKIES} />
+          </section>
+
           <section>
             <h2 className="font-display font-semibold text-[22px] text-wj-text tracking-[-0.01em] mb-1">
               Cookies beheren
             </h2>
-            <p className="font-body text-[15px] text-wj-muted leading-[1.7]">
+            <p className="font-body text-[15px] text-wj-muted leading-[1.7] mb-4">
               Je kunt cookies verwijderen of blokkeren via de instellingen van
               je browser. Houd er rekening mee dat het verwijderen van
               noodzakelijke cookies ertoe kan leiden dat je winkelwagen wordt
               gewist en je uitgelogd wordt.
             </p>
+            <ConsentResetButton />
           </section>
         </div>
       </SectionContainer>

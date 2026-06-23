@@ -22,7 +22,7 @@ const FOOTER_COLS = [
     links: [
       { label: "Privacybeleid", href: "/privacybeleid" },
       { label: "Algemene voorwaarden", href: "/algemene-voorwaarden" },
-      { label: "Cookiebeleid", href: "/cookiebeleid" },
+      { label: "Cookies", href: "/cookiebeleid" },
     ],
   },
 ];

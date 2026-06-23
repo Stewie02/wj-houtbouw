@@ -2,6 +2,7 @@ import { getBaseURL } from "@lib/util/env";
 import { Metadata } from "next";
 import { Playfair_Display, DM_Sans } from "next/font/google";
 import { JsonLd } from "@modules/common/components/json-ld";
+import CookieConsent from "@modules/common/components/cookie-consent";
 import "styles/globals.css";
 
 export const metadata: Metadata = {
@@ -71,6 +72,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
             ],
           }}
         />
+        <CookieConsent />
         <main className="relative">{props.children}</main>
       </body>
     </html>
