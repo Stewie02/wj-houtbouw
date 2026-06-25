@@ -18,7 +18,9 @@ const OptionSelect: React.FC<OptionSelectProps> = ({
   "data-testid": dataTestId,
   disabled,
 }) => {
-  const options = (option.values ?? []).map((v) => ({ value: v.value, label: v.value }));
+  const options = (option.values ?? [])
+    .sort((a, b) => a.value.localeCompare(b.value))
+    .map((v) => ({ value: v.value, label: v.value }));
 
   return (
     <Dropdown
