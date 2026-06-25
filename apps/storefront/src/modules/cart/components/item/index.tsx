@@ -10,6 +10,7 @@ import LineItemUnitPrice from "@modules/common/components/line-item-unit-price";
 import LocalizedClientLink from "@modules/common/components/localized-client-link";
 import Spinner from "@modules/common/icons/spinner";
 import PlaceholderImage from "@modules/common/components/placeholder-image";
+import Image from "next/image";
 import { useState } from "react";
 
 type ItemProps = {
@@ -35,8 +36,18 @@ const Item = ({ item, type = "full", currencyCode }: ItemProps) => {
   if (type === "preview") {
     return (
       <div className="flex gap-3 items-center py-2" data-testid="product-row">
-        <div className="w-12 h-12 shrink-0 border border-wj-border overflow-hidden">
-          <PlaceholderImage label={item.product_title ?? ""} />
+        <div className="w-12 h-12 shrink-0 border border-wj-border overflow-hidden relative">
+          {item.thumbnail ? (
+            <Image
+              src={item.thumbnail}
+              alt={item.product_title ?? ""}
+              fill
+              className="object-cover object-center"
+              sizes="48px"
+            />
+          ) : (
+            <PlaceholderImage label={item.product_title ?? ""} />
+          )}
         </div>
         <div className="flex-1 min-w-0">
           <p className="font-body text-[13px] font-medium text-wj-text truncate">
@@ -70,9 +81,19 @@ const Item = ({ item, type = "full", currencyCode }: ItemProps) => {
       <div className="flex gap-4 items-center">
         <LocalizedClientLink
           href={`/producten/${item.product_handle}`}
-          className="w-20 h-20 shrink-0 border border-wj-border overflow-hidden"
+          className="w-20 h-20 shrink-0 border border-wj-border overflow-hidden relative"
         >
-          <PlaceholderImage label={item.product_title ?? ""} />
+          {item.thumbnail ? (
+            <Image
+              src={item.thumbnail}
+              alt={item.product_title ?? ""}
+              fill
+              className="object-cover object-center"
+              sizes="80px"
+            />
+          ) : (
+            <PlaceholderImage label={item.product_title ?? ""} />
+          )}
         </LocalizedClientLink>
         <div className="flex-1 min-w-0">
           <LocalizedClientLink href={`/producten/${item.product_handle}`}>
