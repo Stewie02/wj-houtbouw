@@ -25,7 +25,7 @@ export async function GET(req: MedusaRequest, res: MedusaResponse) {
     WHERE po.product_id = ?
       AND po.deleted_at IS NULL
       AND pov.deleted_at IS NULL
-    ORDER BY po.created_at ASC, po.id ASC, pov.value ASC
+    ORDER BY COALESCE((po.metadata->>'position')::int, 999) ASC, po.created_at ASC, po.id ASC, pov.value ASC
     `,
     [id]
   )
