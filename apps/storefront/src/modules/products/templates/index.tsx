@@ -49,7 +49,7 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
               <ProductActions disabled product={product} />
             }
           >
-            <ProductActionsWrapper id={product.id} />
+            <ProductActionsWrapper id={product.id} title={product.title ?? undefined} />
           </Suspense>
         </div>
       </div>

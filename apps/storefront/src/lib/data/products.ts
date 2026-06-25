@@ -171,6 +171,30 @@ export const getProductMinPrice = async (
   return min_price;
 };
 
+export type SimpleProductOption = {
+  id: string
+  title: string
+  values: string[]
+}
+
+export const getProductOptions = async (
+  productId: string
+): Promise<SimpleProductOption[]> => {
+  const headers = { ...(await getAuthHeaders()) }
+
+  const { options } = await sdk.client.fetch<{ options: SimpleProductOption[] }>(
+    `/store/custom/products/${productId}/options`,
+    {
+      method: "GET",
+      headers,
+      cache: "force-cache",
+      next: { tags: ["products"] },
+    }
+  )
+
+  return options
+}
+
 export const listAllProductHandles = async (): Promise<
   { handle: string; updated_at?: string }[]
 > => {
