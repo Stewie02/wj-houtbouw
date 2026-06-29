@@ -18,11 +18,13 @@ function parseSurcharge(raw: string): number {
   return isNaN(surcharge) ? 0 : surcharge
 }
 
-function cartesian<T>(arrays: T[][]): T[][] {
-  return arrays.reduce<T[][]>(
-    (acc, curr) => acc.flatMap((a) => curr.map((c) => [...a, c])),
-    [[]]
-  )
+function* cartesianGen<T>(arrays: T[][], index = 0): Generator<T[]> {
+  if (index === arrays.length) { yield []; return }
+  for (const item of arrays[index]) {
+    for (const rest of cartesianGen(arrays, index + 1)) {
+      yield [item, ...rest]
+    }
+  }
 }
 
 // Strip price suffix so "200 cm +€40" and "200 cm +€50" both fingerprint as "200 cm"
@@ -160,7 +162,7 @@ const upsertVariantsStep = createStep(
       })
     }
 
-    // Generate all new combinations
+    // Generate combinations lazily — never materialise the full set
     const axes = options.map((opt) =>
       opt.values.map((val) => ({
         optionTitle: opt.title,
@@ -168,16 +170,57 @@ const upsertVariantsStep = createStep(
         surcharge: val.surcharge,
       }))
     )
-    const combinations = cartesian(axes)
 
     const touchedVariantIds = new Set<string>()
     const toUpdatePrices: PriceUpdate[] = []
-    const toCreate: Array<{ combo: ComboItem[]; price: number }> = []
     const toCreatePriceLink: Array<{ variantId: string; price: number }> = []
 
-    for (const combo of combinations) {
-      const fp = comboFingerprint(combo)
-      const price = basePrice + combo.reduce((sum, v) => sum + v.surcharge, 0)
+    // Flush creates inline so we never hold more than BATCH_SIZE combos in memory
+    const BATCH_SIZE = 100
+    const createdVariantIds: string[] = []
+    const createdPriceSetIds: string[] = []
+    let createBatch: Array<{ combo: ComboItem[]; price: number }> = []
+    let totalCreated = 0
+
+    const flushCreateBatch = async () => {
+      if (createBatch.length === 0) return
+      const batch = createBatch
+      createBatch = []
+      logger.info(`[generate-variants] product=${productId} creating variants batch (${batch.length} items, ${totalCreated} created so far)`)
+
+      const newVariants = await productModule.createProductVariants(
+        batch.map(({ combo }) => ({
+          product_id: productId,
+          title: combo.map((v) => v.value.trim()).join(" / "),
+          manage_inventory: false,
+          options: Object.fromEntries(combo.map((v) => [v.optionTitle, v.value.trim()])),
+        }))
+      )
+
+      const newPriceSets = await pricingModule.createPriceSets(
+        batch.map(({ price }) => ({
+          prices: [{ amount: price, currency_code: "eur" }],
+        }))
+      )
+
+      await remoteLink.create(
+        newVariants.map((v: { id: string }, idx: number) => ({
+          [Modules.PRODUCT]: { variant_id: v.id },
+          [Modules.PRICING]: { price_set_id: newPriceSets[idx].id },
+        }))
+      )
+
+      newVariants.forEach((v: { id: string }) => {
+        touchedVariantIds.add(v.id)
+        createdVariantIds.push(v.id)
+      })
+      newPriceSets.forEach((ps: { id: string }) => createdPriceSetIds.push(ps.id))
+      totalCreated += batch.length
+    }
+
+    for (const combo of cartesianGen(axes)) {
+      const fp = comboFingerprint(combo as ComboItem[])
+      const price = basePrice + (combo as ComboItem[]).reduce((sum, v) => sum + v.surcharge, 0)
       const existing = existingByFingerprint.get(fp)
 
       if (existing) {
@@ -188,11 +231,15 @@ const upsertVariantsStep = createStep(
           toCreatePriceLink.push({ variantId: existing.variantId, price })
         }
       } else {
-        toCreate.push({ combo, price })
+        createBatch.push({ combo: combo as ComboItem[], price })
+        if (createBatch.length >= BATCH_SIZE) {
+          await flushCreateBatch()
+        }
       }
     }
+    await flushCreateBatch()
 
-    logger.info(`[generate-variants] product=${productId} plan: toCreate=${toCreate.length} toUpdatePrices=${toUpdatePrices.length} toCreatePriceLink=${toCreatePriceLink.length} staleCount=${currentVariantIds.filter((id: string) => !touchedVariantIds.has(id)).length}`)
+    logger.info(`[generate-variants] product=${productId} plan summary: created=${totalCreated} toUpdatePrices=${toUpdatePrices.length} toCreatePriceLink=${toCreatePriceLink.length} staleCount=${currentVariantIds.filter((id: string) => !touchedVariantIds.has(id)).length}`)
 
     // Update prices: dismiss old link → delete old price set → create new → re-link
     if (toUpdatePrices.length > 0) {
@@ -221,51 +268,6 @@ const upsertVariantsStep = createStep(
         }))
       )
       logger.info(`[generate-variants] product=${productId} price updates done`)
-    }
-
-    // Create new variants + price sets in batches
-    const BATCH_SIZE = 100
-    const createdVariantIds: string[] = []
-    const createdPriceSetIds: string[] = []
-
-    for (let i = 0; i < toCreate.length; i += BATCH_SIZE) {
-      const batch = toCreate.slice(i, i + BATCH_SIZE)
-      const batchNum = Math.floor(i / BATCH_SIZE) + 1
-      const totalBatches = Math.ceil(toCreate.length / BATCH_SIZE)
-      logger.info(`[generate-variants] product=${productId} creating variants batch ${batchNum}/${totalBatches} (${batch.length} items, ${createdVariantIds.length} created so far)`)
-
-      const newVariants = await productModule.createProductVariants(
-        batch.map(({ combo }) => ({
-          product_id: productId,
-          title: combo.map((v) => v.value.trim()).join(" / "),
-          manage_inventory: false,
-          options: Object.fromEntries(combo.map((v) => [v.optionTitle, v.value.trim()])),
-        }))
-      )
-      logger.info(`[generate-variants] product=${productId} batch ${batchNum}/${totalBatches} variants created, creating price sets`)
-
-      const newPriceSets = await pricingModule.createPriceSets(
-        batch.map(({ price }) => ({
-          prices: [{ amount: price, currency_code: "eur" }],
-        }))
-      )
-      logger.info(`[generate-variants] product=${productId} batch ${batchNum}/${totalBatches} price sets created, linking`)
-
-      await remoteLink.create(
-        newVariants.map((v: { id: string }, idx: number) => ({
-          [Modules.PRODUCT]: { variant_id: v.id },
-          [Modules.PRICING]: { price_set_id: newPriceSets[idx].id },
-        }))
-      )
-      logger.info(`[generate-variants] product=${productId} batch ${batchNum}/${totalBatches} done`)
-
-      newVariants.forEach((v: { id: string }) => {
-        touchedVariantIds.add(v.id)
-        createdVariantIds.push(v.id)
-      })
-      newPriceSets.forEach((ps: { id: string }) =>
-        createdPriceSetIds.push(ps.id)
-      )
     }
 
     // Create price sets for existing variants that had no price link
@@ -297,7 +299,7 @@ const upsertVariantsStep = createStep(
 
     return new StepResponse(
       {
-        created: toCreate.length,
+        created: createdVariantIds.length,
         updated: toUpdatePrices.length + toCreatePriceLink.length,
         archived: staleIds.length,
       },
