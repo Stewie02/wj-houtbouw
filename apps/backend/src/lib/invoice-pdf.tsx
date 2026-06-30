@@ -22,7 +22,7 @@ function toNum(value: unknown): number {
 export type InvoiceOrderItem = {
   id: string
   title: string
-  variant_title?: string | null
+  metadata?: Record<string, unknown> | null
   quantity: unknown
   unit_price: unknown
   total: unknown
@@ -373,18 +373,20 @@ export const InvoicePDF = ({ order }: { order: InvoiceOrder }) => {
             <View key={item.id} style={styles.tableRow}>
               <View style={styles.colDescription}>
                 <Text style={styles.itemTitle}>{item.title}</Text>
-                {item.variant_title && (
-                  <Text style={styles.itemVariant}>{item.variant_title}</Text>
+                {typeof item.metadata?.options_label === "string" && (
+                  item.metadata.options_label.split(", ").map((part, i) => (
+                    <Text key={i} style={styles.itemVariant}>{part}</Text>
+                  ))
                 )}
               </View>
               <Text style={[styles.cellText, styles.colQty]}>
                 {String(toNum(item.quantity))}
               </Text>
               <Text style={[styles.cellText, styles.colUnitPrice]}>
-                {formatCurrency(toNum(item.unit_price), currency)}
+                {formatCurrency(toNum(item.total) / toNum(item.quantity), currency)}
               </Text>
               <Text style={[styles.cellText, styles.colTotal]}>
-                {formatCurrency(toNum(item.unit_price) * toNum(item.quantity), currency)}
+                {formatCurrency(toNum(item.total), currency)}
               </Text>
             </View>
           ))}
@@ -409,9 +411,7 @@ export const InvoicePDF = ({ order }: { order: InvoiceOrder }) => {
               {taxGroups.length > 0
                 ? taxGroups.map(({ rate, total }) => (
                     <View key={rate} style={styles.totalRow}>
-                      <Text style={styles.totalLabel}>
-                        BTW {String(rate)}%
-                      </Text>
+                      <Text style={styles.totalLabel}>BTW {String(rate)}%</Text>
                       <Text style={styles.totalValue}>
                         {formatCurrency(total, currency)}
                       </Text>

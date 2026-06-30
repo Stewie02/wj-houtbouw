@@ -1,22 +1,24 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Button, clx } from "@modules/common/components/ui";
-import React, { Fragment, useMemo } from "react";
+import React, { Fragment } from "react";
 
 import useToggleState from "@lib/hooks/use-toggle-state";
 import ChevronDown from "@modules/common/icons/chevron-down";
 import X from "@modules/common/icons/x";
 
-import { getPricesForVariant, VariantWithPrice } from "@lib/util/get-product-price";
 import OptionSelect from "./option-select";
 import { HttpTypes } from "@medusajs/types";
 import { isSimpleProduct } from "@lib/util/product";
+import { convertToLocale } from "@lib/util/money";
 
 type MobileActionsProps = {
   product: HttpTypes.StoreProduct;
-  variant?: HttpTypes.StoreProductVariant | null;
+  amount: number | null;
+  currency_code: string;
+  isFrom?: boolean;
   options: Record<string, string | undefined>;
   updateOptions: (title: string, value: string) => void;
-  inStock?: boolean;
+  allSelected: boolean;
   handleAddToCart: () => void;
   isAdding?: boolean;
   show: boolean;
@@ -25,23 +27,23 @@ type MobileActionsProps = {
 
 const MobileActions: React.FC<MobileActionsProps> = ({
   product,
-  variant,
+  amount,
+  currency_code,
+  isFrom,
   options,
   updateOptions,
-  inStock,
+  allSelected,
   handleAddToCart,
   isAdding,
   show,
   optionsDisabled,
 }) => {
   const { state, open, close } = useToggleState();
-
-  const selectedPrice = useMemo(() => {
-    if (!variant) return null;
-    return getPricesForVariant(variant as VariantWithPrice);
-  }, [variant]);
-
   const isSimple = isSimpleProduct(product);
+
+  const priceLabel = amount != null
+    ? `${isFrom ? "Vanaf " : ""}${convertToLocale({ amount, currency_code })}`
+    : null;
 
   return (
     <>
@@ -66,27 +68,11 @@ const MobileActions: React.FC<MobileActionsProps> = ({
           >
             <div className="flex items-center gap-x-2">
               <span data-testid="mobile-title">{product.title}</span>
-              <span>—</span>
-              {selectedPrice ? (
-                <div className="flex items-end gap-x-2 text-ui-fg-base">
-                  {selectedPrice.price_type === "sale" && (
-                    <p>
-                      <span className="line-through text-small-regular">
-                        {selectedPrice.original_price}
-                      </span>
-                    </p>
-                  )}
-                  <span
-                    className={clx({
-                      "text-ui-fg-interactive":
-                        selectedPrice.price_type === "sale",
-                    })}
-                  >
-                    {selectedPrice.calculated_price}
-                  </span>
-                </div>
-              ) : (
-                <div></div>
+              {priceLabel && (
+                <>
+                  <span>—</span>
+                  <span className="text-ui-fg-base">{priceLabel}</span>
+                </>
               )}
             </div>
             <div
@@ -109,16 +95,12 @@ const MobileActions: React.FC<MobileActionsProps> = ({
               )}
               <Button
                 onClick={handleAddToCart}
-                disabled={!inStock || !variant}
+                disabled={!allSelected}
                 className="w-full"
                 isLoading={isAdding}
                 data-testid="mobile-cart-button"
               >
-                {!variant
-                  ? "Kies een variant"
-                  : !inStock
-                    ? "Niet op voorraad"
-                    : "In winkelwagen"}
+                {!allSelected ? "Kies alle opties" : "In winkelwagen"}
               </Button>
             </div>
           </div>

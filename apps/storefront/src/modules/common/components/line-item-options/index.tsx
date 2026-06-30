@@ -1,25 +1,23 @@
-import { HttpTypes } from "@medusajs/types";
-import { Text } from "@modules/common/components/ui";
-
 type LineItemOptionsProps = {
-  variant: HttpTypes.StoreProductVariant | undefined;
+  metadata?: Record<string, unknown> | null;
   "data-testid"?: string;
-  "data-value"?: HttpTypes.StoreProductVariant;
 };
 
 const LineItemOptions = ({
-  variant,
+  metadata,
   "data-testid": dataTestid,
-  "data-value": dataValue,
 }: LineItemOptionsProps) => {
+  const label = metadata?.options_label as string | undefined;
+  if (!label) return null;
+
   return (
-    <Text
-      data-testid={dataTestid}
-      data-value={dataValue}
-      className="inline-block txt-medium text-ui-fg-subtle w-full overflow-hidden text-ellipsis"
-    >
-      Variant: {variant?.title}
-    </Text>
+    <div data-testid={dataTestid} className="flex flex-col">
+      {label.split(", ").map((part, i) => (
+        <p key={i} className="font-body text-[13px] text-wj-muted">
+          {part}
+        </p>
+      ))}
+    </div>
   );
 };
 

@@ -11,6 +11,7 @@ const config: KnipConfig = {
         "src/api/**/*.ts",
         "src/subscribers/**/*.ts",
         "src/migration-scripts/**/*.ts",
+        "src/scripts/**/*.ts",
         "src/admin/**/*.{ts,tsx}",
       ],
       ignore: ["jest.config.js"],

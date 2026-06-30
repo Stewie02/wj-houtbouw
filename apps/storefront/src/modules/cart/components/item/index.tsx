@@ -56,7 +56,7 @@ const Item = ({ item, type = "full", currencyCode }: ItemProps) => {
             {item.product_title}
           </p>
           <LineItemOptions
-            variant={item.variant}
+            metadata={item.metadata as Record<string, unknown> | null}
             data-testid="product-variant"
           />
         </div>
@@ -107,7 +107,7 @@ const Item = ({ item, type = "full", currencyCode }: ItemProps) => {
             </p>
           </LocalizedClientLink>
           <LineItemOptions
-            variant={item.variant}
+            metadata={item.metadata as Record<string, unknown> | null}
             data-testid="product-variant"
           />
           <span className="hidden sm:inline-flex mt-1">

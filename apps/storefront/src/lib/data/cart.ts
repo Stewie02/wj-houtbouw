@@ -23,7 +23,7 @@ import { getRegion } from "./regions";
 export async function retrieveCart(cartId?: string, fields?: string) {
   const id = cartId || (await getCartId());
   fields ??=
-    "*items, *region, *items.product, *items.variant, *items.thumbnail, *items.metadata, +items.total, *promotions, +shipping_methods.name";
+    "*items, *region, *items.product, *items.variant, *items.thumbnail, +items.metadata, +items.total, *promotions, +shipping_methods.name";
 
   if (!id) {
     return null;
@@ -114,12 +114,14 @@ export async function updateCart(data: HttpTypes.StoreUpdateCart) {
     .catch(medusaError);
 }
 
-export async function addToCart({
+export async function addConfiguredItem({
   variantId,
   quantity,
+  selectedOptions,
 }: {
   variantId: string;
   quantity: number;
+  selectedOptions: Record<string, string>;
 }) {
   if (!variantId) {
     throw new Error("Missing variant ID when adding to cart");
@@ -135,16 +137,12 @@ export async function addToCart({
     ...(await getAuthHeaders()),
   };
 
-  await sdk.store.cart
-    .createLineItem(
-      cart.id,
-      {
-        variant_id: variantId,
-        quantity,
-      },
-      {},
-      headers
-    )
+  await sdk.client
+    .fetch(`/store/custom/cart/${cart.id}/items`, {
+      method: "POST",
+      body: { variantId, quantity, selectedOptions },
+      headers,
+    })
     .then(async () => {
       const cartCacheTag = await getCacheTag("carts");
       revalidateTag(cartCacheTag);

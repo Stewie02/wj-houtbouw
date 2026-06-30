@@ -1,7 +1,6 @@
 "use client";
 
-import { addToCart } from "@lib/data/cart";
-import { getProductMinPrice, getVariantForOptions, MinPrice } from "@lib/data/products";
+import { addConfiguredItem } from "@lib/data/cart";
 import { useIntersection } from "@lib/hooks/use-in-view";
 import { HttpTypes } from "@medusajs/types";
 import OptionSelect from "@modules/products/components/product-actions/option-select";
@@ -17,17 +16,11 @@ type ProductActionsProps = {
   disabled?: boolean;
 };
 
-function getButtonLabel(
-  variantLoading: boolean,
-  selectedVariant: HttpTypes.StoreProductVariant | null,
-  variantNotFound: boolean,
-  inStock: boolean
-): string {
-  if (variantLoading) return "Laden...";
-  if (variantNotFound) return "Combinatie niet beschikbaar";
-  if (!selectedVariant) return "Kies een variant";
-  if (!inStock) return "Niet op voorraad";
-  return "In winkelwagen";
+function parseSurcharge(raw: string): number {
+  const match = raw.trim().match(/\+?€([\d]+(?:[.,]\d+)?)\s*$/)
+  if (!match) return 0
+  const surcharge = parseFloat(match[1].replace(",", "."))
+  return isNaN(surcharge) ? 0 : surcharge
 }
 
 export default function ProductActions({
@@ -48,75 +41,22 @@ export default function ProductActions({
   });
   const [isAdding, setIsAdding] = useState(false);
   const [quantityInput, setQuantityInput] = useState("1");
-  const [selectedVariant, setSelectedVariant] =
-    useState<HttpTypes.StoreProductVariant | null>(null);
-  const [variantLoading, setVariantLoading] = useState(() => {
-    const opts = product.options ?? [];
-    return opts.length > 0 && opts.every((opt) => !!searchParams.get(opt.id));
-  });
-  const [variantNotFound, setVariantNotFound] = useState(false);
   const didMountRef = useRef(false);
-  const [minPrice, setMinPrice] = useState<MinPrice | null>(null);
 
-  useEffect(() => {
-    if (!product.id) return;
+  const baseVariant = product.variants?.[0] ?? null;
+  const basePrice = baseVariant?.calculated_price?.calculated_amount ?? null;
+  const currency_code = (baseVariant?.calculated_price as { currency_code?: string } | null)?.currency_code ?? "eur";
 
-    const optionCount = product.options?.length ?? 0;
-    const selectedEntries = Object.entries(options).filter(([, v]) => v !== undefined);
-    const allSelected = optionCount > 0 && selectedEntries.length === optionCount;
+  const optionCount = product.options?.length ?? 0;
+  const selectedEntries = Object.entries(options).filter(([, v]) => v !== undefined);
+  const allSelected = optionCount === 0 || selectedEntries.length === optionCount;
 
-    // When all options are selected the variant price takes over
-    if (allSelected) return;
+  const calculatedPrice =
+    basePrice == null
+      ? null
+      : basePrice + selectedEntries.reduce((sum, [, raw]) => sum + parseSurcharge(raw!), 0);
 
-    const partialOptions =
-      selectedEntries.length > 0
-        ? (Object.fromEntries(selectedEntries) as Record<string, string>)
-        : undefined;
-
-    getProductMinPrice(product.id, partialOptions).then((p) => setMinPrice(p ?? null));
-  }, [options, product.id, product.options?.length]);
-
-  // Fetch the matching variant whenever the user completes their option selection
-  useEffect(() => {
-    const optionCount = product.options?.length ?? 0;
-    const allSelected =
-      optionCount === 0 ||
-      (Object.keys(options).length === optionCount &&
-        Object.values(options).every((v) => v !== undefined));
-
-    if (!allSelected || !product.id) {
-      setSelectedVariant(null);
-      setVariantNotFound(false);
-      return;
-    }
-
-    let cancelled = false;
-    setVariantLoading(true);
-    setVariantNotFound(false);
-
-    getVariantForOptions({
-      productId: product.id,
-      selectedOptions: options as Record<string, string>,
-    })
-      .then((variant) => {
-        if (cancelled) return;
-        setSelectedVariant(variant);
-        setVariantNotFound(!variant);
-        setVariantLoading(false);
-      })
-      .catch(() => {
-        if (cancelled) return;
-        setSelectedVariant(null);
-        setVariantNotFound(true);
-        setVariantLoading(false);
-      });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [options, product.id, product.options?.length]);
-
-  // Sync option selections and variant ID to URL (skip on initial mount)
+  // Sync option selections to URL (skip on initial mount)
   useEffect(() => {
     if (!didMountRef.current) {
       didMountRef.current = true;
@@ -127,18 +67,10 @@ export default function ProductActions({
       const val = options[opt.id];
       if (val) params.set(opt.id, val);
     }
-    if (selectedVariant?.id) params.set("v_id", selectedVariant.id);
-
     const newSearch = params.toString();
     if (newSearch === searchParams.toString()) return;
     router.replace(pathname + (newSearch ? "?" + newSearch : ""), { scroll: false });
-  }, [selectedVariant, options]);
-
-  const inStock =
-    !!selectedVariant &&
-    (!selectedVariant.manage_inventory ||
-      !!selectedVariant.allow_backorder ||
-      (selectedVariant.inventory_quantity ?? 0) > 0);
+  }, [options]);
 
   useEffect(() => {
     window.fbq?.("track", "ViewContent", {
@@ -152,22 +84,30 @@ export default function ProductActions({
   const inView = useIntersection(actionsRef, "0px");
 
   const handleAddToCart = async () => {
-    if (!selectedVariant?.id) return;
+    if (!allSelected || !baseVariant?.id) return;
     const qty = Math.max(1, parseInt(quantityInput, 10) || 1);
     setIsAdding(true);
-    await addToCart({ variantId: selectedVariant.id, quantity: qty });
+    await addConfiguredItem({
+      variantId: baseVariant.id,
+      quantity: qty,
+      selectedOptions: options as Record<string, string>,
+    });
     window.fbq?.("track", "AddToCart", {
-      content_ids: [selectedVariant.id],
+      content_ids: [baseVariant.id],
       content_name: product.title,
       content_type: "product",
-      value: selectedVariant.calculated_price?.calculated_amount,
-      currency: "EUR",
+      value: calculatedPrice,
+      currency: currency_code.toUpperCase(),
     });
     setIsAdding(false);
   };
 
-  const hasOptions = (product.options?.length ?? 0) > 0;
-  const buttonLabel = getButtonLabel(variantLoading, selectedVariant, variantNotFound, inStock);
+  const hasOptions = optionCount > 0;
+  const buttonLabel = !allSelected
+    ? "Kies alle opties"
+    : isAdding
+      ? "Toevoegen..."
+      : "In winkelwagen";
 
   return (
     <>
@@ -190,7 +130,11 @@ export default function ProductActions({
           </div>
         )}
 
-        <ProductPrice variant={selectedVariant} isLoading={variantLoading} minPrice={minPrice} />
+        <ProductPrice
+          amount={calculatedPrice}
+          currency_code={currency_code}
+          isFrom={!allSelected && calculatedPrice != null}
+        />
 
         <div className="flex items-center gap-3">
           <div className="flex items-center border border-wj-border bg-wj-white self-stretch">
@@ -225,23 +169,23 @@ export default function ProductActions({
             size="lg"
             className="flex-1"
             onClick={handleAddToCart}
-            disabled={
-              !inStock || !selectedVariant || !!disabled || isAdding || variantNotFound
-            }
+            disabled={!allSelected || !!disabled || isAdding}
             data-testid="add-product-button"
           >
-            {isAdding ? "Toevoegen..." : buttonLabel}
+            {buttonLabel}
           </BrandButton>
         </div>
 
         <MobileActions
           product={product}
-          variant={selectedVariant}
+          amount={calculatedPrice}
+          currency_code={currency_code}
+          isFrom={!allSelected && calculatedPrice != null}
           options={options}
           updateOptions={(id, val) =>
             setOptions((prev) => ({ ...prev, [id]: val }))
           }
-          inStock={inStock}
+          allSelected={allSelected}
           handleAddToCart={handleAddToCart}
           isAdding={isAdding}
           show={!inView}

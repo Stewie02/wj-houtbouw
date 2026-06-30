@@ -74,8 +74,10 @@ export const OrderPlacedEmail = (order: OrderEmailProps) => {
               <Row key={item.id} style={styles.itemRow}>
                 <Column>
                   <Text style={styles.itemTitle}>{item.title}</Text>
-                  {item.variant_title && (
-                    <Text style={styles.itemMeta}>{item.variant_title}</Text>
+                  {typeof (item.metadata as Record<string, unknown> | null)?.options_label === "string" && (
+                    (item.metadata as Record<string, string>).options_label.split(", ").map((part, i) => (
+                      <Text key={i} style={styles.itemMeta}>{part}</Text>
+                    ))
                   )}
                   <Text style={styles.itemMeta}>Aantal: {item.quantity}</Text>
                 </Column>

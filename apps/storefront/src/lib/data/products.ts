@@ -118,59 +118,6 @@ export const listProductsWithSort = async ({
   };
 };
 
-export const getVariantForOptions = async ({
-  productId,
-  selectedOptions,
-}: {
-  productId: string;
-  selectedOptions: Record<string, string>;
-}): Promise<HttpTypes.StoreProductVariant | null> => {
-  const region = await getRegion();
-  if (!region) return null;
-
-  const headers = { ...(await getAuthHeaders()) };
-
-  const { variant } = await sdk.client.fetch<{
-    variant: HttpTypes.StoreProductVariant | null;
-  }>(`/store/custom/products/${productId}/variant-lookup`, {
-    method: "GET",
-    query: {
-      region_id: region.id,
-      ...selectedOptions,
-    },
-    headers,
-    cache: "no-store",
-  });
-
-  return variant;
-};
-
-export type MinPrice = {
-  calculated_amount: number;
-  currency_code: string;
-};
-
-export const getProductMinPrice = async (
-  productId: string,
-  partialOptions?: Record<string, string>
-): Promise<MinPrice | null> => {
-  const region = await getRegion();
-  if (!region) return null;
-
-  const headers = { ...(await getAuthHeaders()) };
-
-  const { min_price } = await sdk.client.fetch<{
-    min_price: MinPrice | null;
-  }>(`/store/custom/products/${productId}/min-price`, {
-    method: "GET",
-    query: { region_id: region.id, ...partialOptions },
-    headers,
-    cache: "no-store",
-  });
-
-  return min_price;
-};
-
 export type SimpleProductOption = {
   id: string
   title: string

@@ -23,6 +23,7 @@ export async function GET(req: MedusaRequest, res: MedusaResponse) {
       "tax_total",
       "created_at",
       "items.*",
+      "items.metadata",
       "items.tax_lines.*",
       "billing_address.*",
       "shipping_address.*",

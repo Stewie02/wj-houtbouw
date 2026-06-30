@@ -11,7 +11,7 @@ type ItemProps = {
 
 const Item = ({ item, currencyCode }: ItemProps) => {
   const unitPrice = convertToLocale({
-    amount: item.unit_price ?? 0,
+    amount: (item.total ?? 0) / (item.quantity || 1),
     currency_code: currencyCode,
   });
   const total = convertToLocale({
@@ -36,7 +36,7 @@ const Item = ({ item, currencyCode }: ItemProps) => {
             {item.product_title}
           </p>
           <LineItemOptions
-            variant={item.variant}
+            metadata={item.metadata as Record<string, unknown> | null}
             data-testid="product-variant"
           />
           <p className="font-body text-[13px] text-wj-muted mt-1">
