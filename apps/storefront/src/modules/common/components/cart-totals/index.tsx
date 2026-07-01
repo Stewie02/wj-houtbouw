@@ -12,6 +12,7 @@ type CartTotalsProps = {
     item_subtotal?: number | null;
     shipping_subtotal?: number | null;
     discount_subtotal?: number | null;
+    shipping_methods?: unknown[] | null;
   };
 };
 
@@ -23,7 +24,9 @@ const CartTotals: React.FC<CartTotalsProps> = ({ totals }) => {
     item_subtotal,
     shipping_subtotal,
     discount_subtotal,
+    shipping_methods,
   } = totals;
+  const hasShippingMethod = !!shipping_methods?.length;
 
   return (
     <div>
@@ -37,7 +40,9 @@ const CartTotals: React.FC<CartTotalsProps> = ({ totals }) => {
         <div className="flex items-center justify-between">
           <span>Verzending</span>
           <span data-testid="cart-shipping" data-value={shipping_subtotal || 0}>
-            Wordt berekend bij afrekenen
+            {hasShippingMethod
+              ? convertToLocale({ amount: shipping_subtotal ?? 0, currency_code })
+              : "Wordt berekend bij afrekenen"}
           </span>
         </div>
         {!!discount_subtotal && (
