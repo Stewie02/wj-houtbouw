@@ -105,7 +105,9 @@ class ResendNotificationProviderService extends AbstractNotificationProviderServ
     })
 
     if (error) {
-      throw new Error(`Resend: ${error.message}`)
+      throw new Error(
+        `Resend [${error.name ?? "unknown"}/${(error as { statusCode?: number }).statusCode ?? "?"}]: ${error.message}`
+      )
     }
 
     return { id: result?.id }
