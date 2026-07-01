@@ -1,6 +1,7 @@
 import { MedusaRequest, MedusaResponse } from "@medusajs/framework/http"
 import { MedusaError, Modules } from "@medusajs/framework/utils"
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
+import { updateTaxLinesWorkflow } from "@medusajs/medusa/core-flows"
 
 function parseSurcharge(raw: string): number {
   const match = raw.trim().match(/\+?€([\d]+(?:[.,]\d+)?)\s*$/)
@@ -133,6 +134,8 @@ export async function POST(req: MedusaRequest<AddItemBody>, res: MedusaResponse)
     is_tax_inclusive: isTaxInclusive,
     metadata: { options_label },
   }])
+
+  await updateTaxLinesWorkflow(req.scope).run({ input: { cart_id: cartId } })
 
   res.json({ success: true })
 }
