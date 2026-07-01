@@ -77,12 +77,17 @@ export async function POST(req: MedusaRequest<AddItemBody>, res: MedusaResponse)
 
   const priceSetId = variant?.price_set?.id
   let basePrice = 0
+  let isTaxInclusive = false
   if (priceSetId) {
     const prices = await pricingModule.calculatePrices(
       { id: [priceSetId] },
       { context: { currency_code } }
     )
-    basePrice = (prices[0] as { calculated_amount?: number | null })?.calculated_amount ?? 0
+    const price = prices[0] as
+      | { calculated_amount?: number | null; is_calculated_price_tax_inclusive?: boolean }
+      | undefined
+    basePrice = price?.calculated_amount ?? 0
+    isTaxInclusive = price?.is_calculated_price_tax_inclusive ?? false
   }
 
   // Compute total from surcharges encoded in option value strings
@@ -125,6 +130,7 @@ export async function POST(req: MedusaRequest<AddItemBody>, res: MedusaResponse)
     thumbnail: variant?.product?.thumbnail ?? undefined,
     unit_price: totalPrice,
     is_custom_price: true,
+    is_tax_inclusive: isTaxInclusive,
     metadata: { options_label },
   }])
 
