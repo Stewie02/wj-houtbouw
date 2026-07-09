@@ -33,7 +33,19 @@ purchase the buyer isn't sure anything happened.
   "Verder winkelen" + "Afrekenen". At minimum: a toast confirmation.
 </details>
 
-### 2. Fix broken description — end to end (admin input + storefront render)
+### 2. Fix broken description — end to end (admin input + storefront render)  ✅ DONE
+Format chosen: **markdown, both ends**. Storefront `modules/products/components/product-description`
+renders `description` via `react-markdown` (styled with a `components`→`wj-*` map, no typography
+plugin), then renders `metadata.sections` (`[{title, body}]`) as collapsible accordions below it
+(reuses the FAQ accordion pattern). Verified live: the `> Duurzaam douglas…` blockquote now renders
+as a styled quote, no literal `>`. Admin: section-manager widget (`product.details.after`) with an
+Add/Edit **Drawer** — title + markdown `Textarea` + **live preview + syntax cheatsheet**, saved to
+`product.metadata.sections` via `sdk.admin.product.update`. Sections are added per-product in the UI;
+the old blob content is not auto-parsed (one-time manual re-paste, tiny catalog). `react-markdown` is
+ESM-only, so backend `tsc` now excludes `src/admin` and typechecks it via its bundler-mode config.
+Not driven in the admin UI end-to-end (needs login); follows documented Medusa widget patterns, typecheck/lint green.
+
+<details><summary>original notes</summary>
 `product.description` contains markdown (`> Duurzaam douglas hout …`) rendered as raw
 text — the `>` characters print literally. Looks broken on the best product. Trust killer.
 Root cause: merchant types markdown into a plain textarea, storefront prints it raw.
@@ -47,6 +59,7 @@ Root cause: merchant types markdown into a plain textarea, storefront prints it 
   sections (Specificaties, Levering, Onderhoud).
   **Where:** `modules/products/templates/index.tsx` (currently one `whitespace-pre-wrap`
   block).
+</details>
 
 ### 3. Trust signals + delivery time near the add-to-cart button
 USPs (5 jaar garantie, weerbestendig, Nederlands vakmanschap) live on the homepage/store

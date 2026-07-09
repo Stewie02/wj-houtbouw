@@ -1,0 +1,41 @@
+/* Make MDXEditor follow the Medusa admin theme (light + dark).
+   MDXEditor ships a Radix token scale; we point its base/accent tokens at
+   Medusa's own CSS variables, which the dashboard flips per theme. */
+.mdxeditor {
+  --baseText: var(--fg-base);
+  --baseTextContrast: var(--fg-base);
+  --basePageBg: var(--bg-base);
+  --baseBg: var(--bg-base);
+  --baseBase: var(--bg-base);
+  --baseBgSubtle: var(--bg-subtle);
+  --baseBgHover: var(--bg-base-hover);
+  --baseBgActive: var(--bg-base-pressed);
+  --baseBorder: var(--border-base);
+  --baseBorderHover: var(--border-strong);
+  --baseLine: var(--border-base);
+  --baseSolid: var(--bg-subtle);
+  --baseSolidHover: var(--bg-subtle-hover);
+
+  --accentText: var(--fg-interactive);
+  --accentSolid: var(--fg-interactive);
+  --accentSolidHover: var(--fg-interactive-hover);
+  --accentBg: var(--bg-subtle);
+  --accentBgHover: var(--bg-base-hover);
+  --accentBgActive: var(--bg-base-pressed);
+  --accentBorder: var(--border-interactive);
+  --accentLine: var(--border-base);
+
+  background: var(--bg-base);
+  color: var(--fg-base);
+}
+
+.mdxeditor [role="toolbar"] {
+  background: var(--bg-subtle);
+  border-bottom: 1px solid var(--border-base);
+}
+
+.mdxeditor [contenteditable="true"] {
+  min-height: 160px;
+  padding: 12px 16px;
+  color: var(--fg-base);
+}
