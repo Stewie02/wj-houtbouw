@@ -33,8 +33,6 @@ const Item = ({ item, type = "full", currencyCode }: ItemProps) => {
 
   const maxQuantity = 10;
 
-  console.log(item);
-
   if (type === "preview") {
     return (
       <div className="flex gap-3 items-center py-2" data-testid="product-row">

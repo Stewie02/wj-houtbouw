@@ -5,6 +5,7 @@ import { useState } from "react";
 import { usePathname } from "next/navigation";
 import LocalizedClientLink from "@modules/common/components/localized-client-link";
 import BrandButton from "@modules/common/components/brand-button";
+import { useCartDrawer } from "@modules/cart/components/cart-drawer";
 
 const NAV_LINKS = [
   { href: "/winkel", label: "Winkel" },
@@ -139,30 +140,36 @@ const NavClient = ({ cartCount }: NavClientProps) => {
   );
 };
 
-const CartIcon = ({ count }: { count: number }) => (
-  <LocalizedClientLink
-    href="/winkelwagen"
-    className="relative text-wj-text hover:text-wj-green transition-colors"
-    data-testid="nav-cart-link"
-  >
-    <svg
-      width="22"
-      height="22"
-      viewBox="0 0 22 22"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.6"
+const CartIcon = ({ count }: { count: number }) => {
+  const { open } = useCartDrawer();
+
+  return (
+    <button
+      type="button"
+      onClick={open}
+      aria-label="Winkelwagen openen"
+      className="relative text-wj-text hover:text-wj-green transition-colors"
+      data-testid="nav-cart-link"
     >
-      <path d="M2 3h2.5l2.5 11h9l2-7H7" />
-      <circle cx="9" cy="18" r="1.2" fill="currentColor" stroke="none" />
-      <circle cx="15" cy="18" r="1.2" fill="currentColor" stroke="none" />
-    </svg>
-    {count > 0 && (
-      <div className="absolute -top-1 -right-1.5 w-4 h-4 bg-wj-wood rounded-full font-body font-semibold text-[9px] tracking-[0.08em] text-wj-white flex items-center justify-center">
-        {count}
-      </div>
-    )}
-  </LocalizedClientLink>
-);
+      <svg
+        width="22"
+        height="22"
+        viewBox="0 0 22 22"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.6"
+      >
+        <path d="M2 3h2.5l2.5 11h9l2-7H7" />
+        <circle cx="9" cy="18" r="1.2" fill="currentColor" stroke="none" />
+        <circle cx="15" cy="18" r="1.2" fill="currentColor" stroke="none" />
+      </svg>
+      {count > 0 && (
+        <div className="absolute -top-1 -right-1.5 w-4 h-4 bg-wj-wood rounded-full font-body font-semibold text-[9px] tracking-[0.08em] text-wj-white flex items-center justify-center">
+          {count}
+        </div>
+      )}
+    </button>
+  );
+};
 
 export default NavClient;

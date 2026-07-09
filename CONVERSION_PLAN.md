@@ -1,0 +1,125 @@
+# Conversion improvements — plan
+
+Findings from a live-site + code audit (storefront: Next.js 15, `apps/storefront`).
+No conversions in a week on paid social traffic. Ranked by impact.
+
+**How to use this file:** work one item at a time. When a conversation gets long,
+start a fresh one pointed at this file and the item's "Where" paths. Check off items
+as they ship.
+
+---
+
+## P0 — highest ROI
+
+### 1. Add-to-cart feedback + cart drawer  ✅ DONE
+Built `modules/cart/components/cart-drawer` (headless-ui `Dialog`+`Transition`, house
+style). `CartDrawerProvider` wraps `(main)/layout.tsx` with the server-fetched cart; the
+nav cart icon opens it; `product-actions` opens it after a successful add. Hardened
+`handleAddToCart` with try/finally (was leaving the button stuck on "Toevoegen…" on error).
+Verified live: drawer opens from the cart icon, renders empty state + CTAs, product page
+loads clean, typecheck/lint/knip green. NOT drivable in the local Playwright env — the
+headless browser doesn't persist the cart cookie, so a real add stays empty (see memory
+[[storefront-cart-not-persisting-in-playwright]]). Auto-open-on-add is wired per the Medusa
+starter pattern; confirm with a real add in a normal browser.
+
+<details><summary>original notes</summary>
+The single biggest killer. Clicking "In winkelwagen" gives almost no feedback — the
+button flickers "Toevoegen…" and only a tiny cart-icon badge increments. On a €600+
+purchase the buyer isn't sure anything happened.
+- **Where:** `lib/data/cart.ts:140` (`addConfiguredItem` only revalidates the cart tag),
+  `modules/layout/components/nav-client/index.tsx` (`CartIcon` → `/winkelwagen` full page),
+  `modules/products/components/product-actions/index.tsx` (`handleAddToCart`).
+- **Do:** slide-out drawer that opens on add, showing the added item, subtotal,
+  "Verder winkelen" + "Afrekenen". At minimum: a toast confirmation.
+</details>
+
+### 2. Fix broken description — end to end (admin input + storefront render)
+`product.description` contains markdown (`> Duurzaam douglas hout …`) rendered as raw
+text — the `>` characters print literally. Looks broken on the best product. Trust killer.
+Root cause: merchant types markdown into a plain textarea, storefront prints it raw.
+**Fix both ends or it stays half-broken.** Pick one format and honour it end to end.
+
+- **Admin:** replace the bare-string description field with a real editor.
+  Prefer a **markdown editor** (lighter, stores plain text, no HTML sanitising, content is
+  already markdown) over a full WYSIWYG. WYSIWYG only if the merchant wants zero markdown
+  knowledge. **Where:** `apps/backend/src/admin/…` widget on the product form.
+- **Storefront:** render that markdown properly, then split into collapsible accordion
+  sections (Specificaties, Levering, Onderhoud).
+  **Where:** `modules/products/templates/index.tsx` (currently one `whitespace-pre-wrap`
+  block).
+
+### 3. Trust signals + delivery time near the add-to-cart button
+USPs (5 jaar garantie, weerbestendig, Nederlands vakmanschap) live on the homepage/store
+footer, not where the decision is made. Delivery time ("1 tot 4 weken") is buried at the
+bottom of the description.
+- **Where:** `modules/products/components/product-actions/index.tsx`, `USPS` in `lib/constants`.
+- **Do:** compact trust row + delivery estimate directly under the price/button.
+
+---
+
+## P1
+
+### 4. Visual variant swatches
+Six text dropdowns per product, all reading "Kies een optie". Replace with the right
+control per option — **do NOT turn every dropdown into a button wall.**
+
+**Rule of thumb:**
+- ≤ ~8 values **and** the difference is visual (colour/finish) → colour/image **swatch**.
+- ≤ ~8 values, non-visual or binary (ja/nee, add-ons) → plain **choice buttons**.
+- Long or ordered lists (lengths, dimensions) → keep a **select**. A wall of 15+ buttons
+  pushes the price/add-to-cart button below the fold and hurts conversion.
+
+**Decision for the current Tuintafel options:**
+| Option | Control |
+|--------|---------|
+| Lengtes | select (long + ordered) |
+| Frame coating | colour swatch (zwart / wit gepoedercoat — purely visual) |
+| Bescherming hout | buttons (colour/image swatch only if it visibly tints the wood) |
+| Rugleuning | buttons |
+| Kunststof bescherm doppen | buttons (checkbox if just ja/nee) |
+| Montage | buttons (ja/nee) |
+
+**Consequence — this is not just a storefront change.** Which control an option uses
+(and swatch colours) can't be hardcoded; a merchant adding a product must set it per
+option. Medusa v2 option values are plain strings, so this needs:
+- **Admin UI:** a custom field/widget on the product-option editor to choose display type
+  (`select` | `button` | `color-swatch` | `image-swatch`) and, for colour swatches, the
+  hex/image per value. Store it in option/value `metadata`.
+- **Where (storefront):** `modules/products/components/product-actions/option-select.tsx`
+  (uses `Dropdown`) reads that metadata and renders the matching control.
+- **Where (admin):** `apps/backend/src/admin/…` widget on the product options section.
+  See the `building-admin-dashboard-customizations` skill.
+
+### 5. Related / recommended products
+Nothing below the product description.
+- **Where:** bottom of `modules/products/templates/index.tsx`.
+- **No admin UI needed (unlike #2 and #4).** Do it **automatic**: show other products from
+  the same category/collection — that data already exists (merchant assigns categories
+  today). With this small a catalog "related" ≈ "the other products".
+- **Add manual curation later only if** the catalog grows and automatic picks look wrong.
+  That would need a product-relations admin widget — YAGNI until then.
+
+### 6. Swipeable product images on mobile
+Gallery has a thumbnail grid + lightbox prev/next buttons but no swipe on the main image.
+- **Where:** `modules/products/components/image-gallery/index.tsx`.
+
+### 7. Announcement bar above the nav
+Site-wide bar for shipping/USP/promo messaging.
+- **Where:** `modules/layout/templates/nav`, above `nav-client`.
+
+---
+
+## P2 — polish
+
+- **Dutch price formatting:** prices show `€800.00`; should be `€ 800,00` (comma, space).
+- **Reviews / social proof:** none anywhere; a `StarRating` primitive already exists, unused.
+- **Newsletter capture:** none — paid traffic bounces with no recapture.
+- **Search** in the nav: absent.
+- **Payment-method icons** (iDEAL) in footer/checkout entry: absent.
+- **Store filters:** sort only, no filters (fine for a small catalog).
+- **Nav inconsistency:** hero links `/about`, nav links `/over-ons` (both work).
+
+---
+
+## Already done ✅
+- Fully clickable product cards (`ProductCard` wraps the whole card in a link).

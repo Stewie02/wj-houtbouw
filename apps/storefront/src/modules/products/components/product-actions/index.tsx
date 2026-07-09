@@ -6,6 +6,7 @@ import { HttpTypes } from "@medusajs/types";
 import OptionSelect from "@modules/products/components/product-actions/option-select";
 import ProductPrice from "../product-price";
 import MobileActions from "./mobile-actions";
+import { useCartDrawer } from "@modules/cart/components/cart-drawer";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -30,6 +31,7 @@ export default function ProductActions({
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const { open: openCartDrawer } = useCartDrawer();
 
   const [options, setOptions] = useState<Record<string, string | undefined>>(() => {
     const initial: Record<string, string | undefined> = {};
@@ -87,19 +89,23 @@ export default function ProductActions({
     if (!allSelected || !baseVariant?.id) return;
     const qty = Math.max(1, parseInt(quantityInput, 10) || 1);
     setIsAdding(true);
-    await addConfiguredItem({
-      variantId: baseVariant.id,
-      quantity: qty,
-      selectedOptions: options as Record<string, string>,
-    });
-    window.fbq?.("track", "AddToCart", {
-      content_ids: [baseVariant.id],
-      content_name: product.title,
-      content_type: "product",
-      value: calculatedPrice,
-      currency: currency_code.toUpperCase(),
-    });
-    setIsAdding(false);
+    try {
+      await addConfiguredItem({
+        variantId: baseVariant.id,
+        quantity: qty,
+        selectedOptions: options as Record<string, string>,
+      });
+      window.fbq?.("track", "AddToCart", {
+        content_ids: [baseVariant.id],
+        content_name: product.title,
+        content_type: "product",
+        value: calculatedPrice,
+        currency: currency_code.toUpperCase(),
+      });
+      openCartDrawer();
+    } finally {
+      setIsAdding(false);
+    }
   };
 
   const hasOptions = optionCount > 0;
