@@ -122,6 +122,7 @@ export type SimpleProductOption = {
   id: string
   title: string
   values: string[]
+  metadata: Record<string, unknown> | null
 }
 
 export const getProductOptions = async (

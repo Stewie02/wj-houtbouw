@@ -72,9 +72,23 @@ bottom of the description.
 
 ## P1
 
-### 4. Visual variant swatches
-Six text dropdowns per product, all reading "Kies een optie". Replace with the right
-control per option — **do NOT turn every dropdown into a button wall.**
+### 4. Visual variant swatches  ✅ DONE
+Per-option display type is now merchant-controlled via `product_option.metadata`
+(`{ display, swatches }`), read end to end. Storefront `option-select` renders the matching
+control: `select` (default, Dropdown) for lengtes/dimensions, `button` for ja/nee and add-ons,
+`color-swatch` (square chips, `wj-*` tokens) for visual options. The store route
+`/store/custom/products/[id]/options` now returns each option's metadata; the actions-wrapper
+passes it onto the enriched option. Admin: `product-option-swatches` widget under "Volgorde opties"
+(`product.details.side.after`) with a per-option display `Select` and, for swatches, a native
+colour picker + hex (or image URL) per value, saved via a new raw-SQL route
+`/admin/custom/products/[id]/options/display` (mirrors the reorder route — option metadata isn't
+writable through `sdk.admin.product.update`). Options with no metadata stay dropdowns, so nothing
+breaks until a merchant configures a type. Verified live end to end against picknicktafel-douglas:
+seeded a Frame coating colour swatch, revalidated the `products` tag, confirmed the three chips
+render with the right hex. typecheck/lint green, no new knip findings. NOTE: I seeded a demo colour
+swatch on the "Frame coating" option (wit/zwart/geen) in the local DB so it renders immediately;
+adjust or clear it in the new widget. Swatch keys must exactly match value strings (surcharge text
+included) — the widget guarantees this by listing `option.values`.
 
 **Rule of thumb:**
 - ≤ ~8 values **and** the difference is visual (colour/finish) → colour/image **swatch**.

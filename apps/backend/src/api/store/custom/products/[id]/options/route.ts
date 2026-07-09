@@ -3,6 +3,7 @@ import { MedusaRequest, MedusaResponse } from "@medusajs/framework/http"
 type OptionRow = {
   option_id: string
   option_title: string
+  option_metadata: Record<string, unknown> | null
   created_at: string
   value: string
 }
@@ -18,6 +19,7 @@ export async function GET(req: MedusaRequest, res: MedusaResponse) {
     SELECT
       po.id       AS option_id,
       po.title    AS option_title,
+      po.metadata AS option_metadata,
       po.created_at,
       pov.value
     FROM product_option po
@@ -30,12 +32,21 @@ export async function GET(req: MedusaRequest, res: MedusaResponse) {
     [id]
   )
 
-  const optionMap = new Map<string, { id: string; title: string; values: Set<string> }>()
+  const optionMap = new Map<
+    string,
+    {
+      id: string
+      title: string
+      metadata: Record<string, unknown> | null
+      values: Set<string>
+    }
+  >()
   for (const row of rows) {
     if (!optionMap.has(row.option_id)) {
       optionMap.set(row.option_id, {
         id: row.option_id,
         title: row.option_title,
+        metadata: row.option_metadata,
         values: new Set(),
       })
     }
@@ -45,6 +56,7 @@ export async function GET(req: MedusaRequest, res: MedusaResponse) {
   const options = [...optionMap.values()].map((o) => ({
     id: o.id,
     title: o.title,
+    metadata: o.metadata,
     values: [...o.values].sort((a, b) =>
       a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" })
     ),

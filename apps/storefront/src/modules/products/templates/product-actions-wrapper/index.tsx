@@ -15,6 +15,7 @@ export default async function ProductActionsWrapper({
       id: o.id,
       title: o.title,
       product_id: product.id,
+      metadata: o.metadata,
       values: o.values.map((v) => ({ id: v, value: v, option_id: o.id })),
     })),
   } as HttpTypes.StoreProduct;

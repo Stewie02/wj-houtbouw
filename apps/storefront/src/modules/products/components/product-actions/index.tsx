@@ -11,8 +11,9 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import BrandButton from "@modules/common/components/brand-button";
+import { clx } from "@modules/common/components/ui";
 import { DELIVERY_ESTIMATE, USPS } from "@lib/constants";
-import { TruckFast } from "@medusajs/icons";
+import { TruckFast, ExclamationCircle } from "@medusajs/icons";
 
 type ProductActionsProps = {
   product: HttpTypes.StoreProduct;
@@ -45,6 +46,8 @@ export default function ProductActions({
   });
   const [isAdding, setIsAdding] = useState(false);
   const [quantityInput, setQuantityInput] = useState("1");
+  const [showOptionAlert, setShowOptionAlert] = useState(false);
+  const alertTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const didMountRef = useRef(false);
 
   const baseVariant = product.variants?.[0] ?? null;
@@ -54,6 +57,15 @@ export default function ProductActions({
   const optionCount = product.options?.length ?? 0;
   const selectedEntries = Object.entries(options).filter(([, v]) => v !== undefined);
   const allSelected = optionCount === 0 || selectedEntries.length === optionCount;
+
+  // Hide the alert as soon as every option is chosen
+  useEffect(() => {
+    if (allSelected) setShowOptionAlert(false);
+  }, [allSelected]);
+
+  useEffect(() => () => {
+    if (alertTimer.current) clearTimeout(alertTimer.current);
+  }, []);
 
   const calculatedPrice =
     basePrice == null
@@ -88,7 +100,13 @@ export default function ProductActions({
   const inView = useIntersection(actionsRef, "0px");
 
   const handleAddToCart = async () => {
-    if (!allSelected || !baseVariant?.id) return;
+    if (!allSelected) {
+      setShowOptionAlert(true);
+      if (alertTimer.current) clearTimeout(alertTimer.current);
+      alertTimer.current = setTimeout(() => setShowOptionAlert(false), 5000);
+      return;
+    }
+    if (!baseVariant?.id) return;
     const qty = Math.max(1, parseInt(quantityInput, 10) || 1);
     setIsAdding(true);
     try {
@@ -119,6 +137,22 @@ export default function ProductActions({
 
   return (
     <>
+      <div
+        role="alert"
+        aria-live="assertive"
+        className={clx(
+          "fixed top-4 right-4 z-[80] flex items-start gap-2.5 max-w-[320px] border border-wj-border bg-wj-white px-4 py-3 shadow-lg transition-all duration-300",
+          showOptionAlert && !allSelected
+            ? "opacity-100 translate-y-0"
+            : "opacity-0 -translate-y-2 pointer-events-none"
+        )}
+      >
+        <ExclamationCircle className="text-wj-wood shrink-0 mt-0.5" />
+        <span className="font-body text-[14px] text-wj-text">
+          Selecteer alle opties voordat je toevoegt aan je winkelwagen.
+        </span>
+      </div>
+
       <div ref={actionsRef} className="flex flex-col gap-6 mt-6">
         {hasOptions && (
           <div className="flex flex-col gap-5">
@@ -177,7 +211,7 @@ export default function ProductActions({
             size="lg"
             className="flex-1"
             onClick={handleAddToCart}
-            disabled={!allSelected || !!disabled || isAdding}
+            disabled={!!disabled || isAdding}
             data-testid="add-product-button"
           >
             {buttonLabel}
