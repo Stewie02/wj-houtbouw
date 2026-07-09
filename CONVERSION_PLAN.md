@@ -146,7 +146,7 @@ Nothing below the product description.
   That would need a product-relations admin widget — YAGNI until then.
 </details>
 
-### 6. Swipeable product images on mobile
+### 6. Swipeable product images on mobile  ✅ DONE
 Gallery has a thumbnail grid + lightbox prev/next buttons but no swipe on the main image.
 - **Where:** `modules/products/components/image-gallery/index.tsx`.
 
