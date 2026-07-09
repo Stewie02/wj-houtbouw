@@ -35,39 +35,65 @@ const Item = ({ item, type = "full", currencyCode }: ItemProps) => {
 
   if (type === "preview") {
     return (
-      <div className="flex gap-3 items-center py-2" data-testid="product-row">
-        <div className="w-12 h-12 shrink-0 border border-wj-border overflow-hidden relative">
-          {item.thumbnail ? (
-            <Image
-              src={item.thumbnail}
-              alt={item.product_title ?? ""}
-              fill
-              className="object-cover object-center"
-              sizes="48px"
+      <div className="py-3" data-testid="product-row">
+        <div className="flex gap-3 items-start">
+          <div className="w-12 h-12 shrink-0 border border-wj-border overflow-hidden relative">
+            {item.thumbnail ? (
+              <Image
+                src={item.thumbnail}
+                alt={item.product_title ?? ""}
+                fill
+                className="object-cover object-center"
+                sizes="48px"
+              />
+            ) : (
+              <PlaceholderImage label={item.product_title ?? ""} />
+            )}
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="font-body text-[13px] font-medium text-wj-text truncate">
+              {item.product_title}
+            </p>
+            <LineItemOptions
+              metadata={item.metadata as Record<string, unknown> | null}
+              data-testid="product-variant"
             />
-          ) : (
-            <PlaceholderImage label={item.product_title ?? ""} />
-          )}
+          </div>
+          <div className="text-right shrink-0">
+            <LineItemPrice
+              item={item}
+              style="tight"
+              currencyCode={currencyCode}
+            />
+          </div>
         </div>
-        <div className="flex-1 min-w-0">
-          <p className="font-body text-[13px] font-medium text-wj-text truncate">
-            {item.product_title}
-          </p>
-          <LineItemOptions
-            metadata={item.metadata as Record<string, unknown> | null}
-            data-testid="product-variant"
-          />
+        <div className="flex items-center justify-between mt-2 pl-[60px]">
+          <div className="flex items-center border border-wj-border">
+            <button
+              onClick={() =>
+                item.quantity > 1 && changeQuantity(item.quantity - 1)
+              }
+              disabled={updating || item.quantity <= 1}
+              className="w-7 h-7 flex items-center justify-center font-body text-[13px] text-wj-text hover:bg-wj-surface transition-colors disabled:opacity-40"
+            >
+              −
+            </button>
+            <span className="w-7 h-7 flex items-center justify-center font-body text-[13px] text-wj-text border-x border-wj-border">
+              {updating ? <Spinner /> : item.quantity}
+            </span>
+            <button
+              onClick={() => changeQuantity(item.quantity + 1)}
+              disabled={updating || item.quantity >= maxQuantity}
+              className="w-7 h-7 flex items-center justify-center font-body text-[13px] text-wj-text hover:bg-wj-surface transition-colors disabled:opacity-40"
+            >
+              +
+            </button>
+          </div>
+          <DeleteButton id={item.id} data-testid="product-delete-button" />
         </div>
-        <div className="text-right shrink-0">
-          <p className="font-body text-[12px] text-wj-muted">
-            {item.quantity}×
-          </p>
-          <LineItemPrice
-            item={item}
-            style="tight"
-            currencyCode={currencyCode}
-          />
-        </div>
+        {error && (
+          <ErrorMessage error={error} data-testid="product-error-message" />
+        )}
       </div>
     );
   }
