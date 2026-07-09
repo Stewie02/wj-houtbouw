@@ -118,22 +118,41 @@ export async function POST(req: MedusaRequest<AddItemBody>, res: MedusaResponse)
       .join(", ")
   }
 
-  // Add line item directly — full control over unit_price, is_custom_price, metadata
-  await cartModule.addLineItems(cartId, [{
-    variant_id: variantId,
-    quantity,
-    title: variant?.product?.title ?? variant?.title ?? "Product",
-    product_id: variant?.product_id ?? undefined,
-    product_title: variant?.product?.title ?? undefined,
-    product_handle: variant?.product?.handle ?? undefined,
-    product_description: variant?.product?.description ?? undefined,
-    product_subtitle: variant?.product?.subtitle ?? undefined,
-    thumbnail: variant?.product?.thumbnail ?? undefined,
-    unit_price: totalPrice,
-    is_custom_price: true,
-    is_tax_inclusive: isTaxInclusive,
-    metadata: { options_label },
-  }])
+  // Merge into an existing line with the same variant + identical options
+  // (same config ⇒ same options_label and unit_price), else add a new line.
+  const existingItems = await cartModule.listLineItems(
+    { cart_id: cartId },
+    { select: ["id", "variant_id", "quantity", "metadata"] }
+  )
+  const match = existingItems.find(
+    (li) =>
+      li.variant_id === variantId &&
+      String((li.metadata as Record<string, unknown> | null)?.options_label ?? "") ===
+        options_label
+  )
+
+  if (match) {
+    await cartModule.updateLineItems(match.id, {
+      quantity: Number(match.quantity) + quantity,
+    })
+  } else {
+    // Add line item directly — full control over unit_price, is_custom_price, metadata
+    await cartModule.addLineItems(cartId, [{
+      variant_id: variantId,
+      quantity,
+      title: variant?.product?.title ?? variant?.title ?? "Product",
+      product_id: variant?.product_id ?? undefined,
+      product_title: variant?.product?.title ?? undefined,
+      product_handle: variant?.product?.handle ?? undefined,
+      product_description: variant?.product?.description ?? undefined,
+      product_subtitle: variant?.product?.subtitle ?? undefined,
+      thumbnail: variant?.product?.thumbnail ?? undefined,
+      unit_price: totalPrice,
+      is_custom_price: true,
+      is_tax_inclusive: isTaxInclusive,
+      metadata: { options_label },
+    }])
+  }
 
   await updateTaxLinesWorkflow(req.scope).run({ input: { cart_id: cartId } })
 
