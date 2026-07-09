@@ -11,6 +11,8 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import BrandButton from "@modules/common/components/brand-button";
+import { DELIVERY_ESTIMATE, USPS } from "@lib/constants";
+import { TruckFast } from "@medusajs/icons";
 
 type ProductActionsProps = {
   product: HttpTypes.StoreProduct;
@@ -180,6 +182,27 @@ export default function ProductActions({
           >
             {buttonLabel}
           </BrandButton>
+        </div>
+
+        <div className="flex items-center gap-2.5 border border-wj-border bg-wj-surface px-4 py-3">
+          <TruckFast className="text-wj-green shrink-0" />
+          <span className="font-body text-[14px] text-wj-text">
+            {DELIVERY_ESTIMATE}
+          </span>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-4 border-t border-l border-wj-border">
+          {USPS.map(({ title, icon: Icon }) => (
+            <div
+              key={title}
+              className="flex flex-col items-center gap-2 text-center border-b border-r border-wj-border px-3 py-4"
+            >
+              <Icon className="text-wj-wood" />
+              <span className="font-body font-medium text-[12px] leading-snug text-wj-text">
+                {title}
+              </span>
+            </div>
+          ))}
         </div>
 
         <MobileActions

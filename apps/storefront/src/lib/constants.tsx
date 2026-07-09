@@ -1,14 +1,23 @@
-import { CreditCard } from "@medusajs/icons";
+import {
+  BadgeCheck,
+  CreditCard,
+  ShieldCheck,
+  Sun,
+  Wrench,
+} from "@medusajs/icons";
 
 export const USPS = [
-  { title: "Duurzaam hout", description: "Weerbestand en sterk douglas" },
-  { title: "Op maat gemaakt", description: "Elke order naar jouw wensen" },
-  { title: "5 jaar garantie", description: "Gebouwd om te blijven" },
+  { title: "Duurzame materialen", description: "Weerbestendig en sterk gebouwd", icon: Sun },
+  { title: "Op maat gemaakt", description: "Elke order naar jouw wensen", icon: Wrench },
+  { title: "5 jaar garantie", description: "Gebouwd om te blijven", icon: ShieldCheck },
   {
     title: "Nederlands vakmanschap",
     description: "Gemaakt in eigen werkplaats",
+    icon: BadgeCheck,
   },
 ];
+
+export const DELIVERY_ESTIMATE = "Op maat gemaakt en bij u geleverd in circa 1 tot 3 weken";
 import Bancontact from "@modules/common/icons/bancontact";
 import Ideal from "@modules/common/icons/ideal";
 import PayPal from "@modules/common/icons/paypal";
