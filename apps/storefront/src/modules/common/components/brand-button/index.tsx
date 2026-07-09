@@ -7,6 +7,8 @@ type BrandButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: "solid" | "outline" | "ghost" | "wood" | "dark";
   size?: "sm" | "md" | "lg";
   full?: boolean;
+  // Render as a plain span when the button lives inside a link (no nested interactive elements)
+  as?: "button" | "span";
 };
 
 const sizeClasses = {
@@ -28,12 +30,13 @@ const BrandButton = ({
   variant = "solid",
   size = "md",
   full = false,
+  as: Component = "button",
   className,
   children,
   ...props
 }: BrandButtonProps) => {
   return (
-    <button
+    <Component
       className={clx(
         "inline-flex items-center justify-center font-body font-medium tracking-[0.04em] transition-all duration-[180ms] cursor-pointer border",
         sizeClasses[size],
@@ -44,7 +47,7 @@ const BrandButton = ({
       {...props}
     >
       {children}
-    </button>
+    </Component>
   );
 };
 

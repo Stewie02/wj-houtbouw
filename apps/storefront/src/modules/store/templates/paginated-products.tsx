@@ -29,18 +29,21 @@ function ProductRow({
   const imageFirst = index % 2 === 0;
 
   return (
-    <div className="border border-wj-border bg-wj-white overflow-hidden mb-1">
+    <LocalizedClientLink
+      href={`/producten/${handle}`}
+      className="group block border border-wj-border bg-wj-white overflow-hidden mb-1"
+    >
       <div className="flex flex-col lg:grid lg:grid-cols-2">
         {/* Image */}
         <div
-          className={`relative aspect-[3/2] ${imageFirst ? "lg:order-first" : "lg:order-last"}`}
+          className={`relative aspect-[3/2] overflow-hidden ${imageFirst ? "lg:order-first" : "lg:order-last"}`}
         >
           {thumbnail ? (
             <Image
               src={thumbnail}
               alt={title}
               fill
-              className="object-cover"
+              className="object-cover transition-transform duration-[400ms] group-hover:scale-[1.03]"
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
           ) : (
@@ -69,15 +72,17 @@ function ProductRow({
                 {priceFrom}
               </div>
             </div>
-            <LocalizedClientLink href={`/producten/${handle}`}>
-              <BrandButton size="lg" className="w-full sm:w-auto">
-                Bekijken &amp; bestellen
-              </BrandButton>
-            </LocalizedClientLink>
+            <BrandButton
+              as="span"
+              size="lg"
+              className="w-full sm:w-auto group-hover:bg-wj-green-hover"
+            >
+              Bekijken &amp; bestellen
+            </BrandButton>
           </div>
         </div>
       </div>
-    </div>
+    </LocalizedClientLink>
   );
 }
 
