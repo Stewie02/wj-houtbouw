@@ -59,7 +59,7 @@ const Hero = () => {
                 Bekijk producten
               </BrandButton>
             </LocalizedClientLink>
-            <LocalizedClientLink href="/about">
+            <LocalizedClientLink href="/over-ons">
               <BrandButton
                 size="lg"
                 variant="outline"

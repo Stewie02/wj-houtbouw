@@ -158,13 +158,13 @@ Site-wide bar for shipping/USP/promo messaging.
 
 ## P2 — polish
 
-- **Dutch price formatting:** prices show `€800.00`; should be `€ 800,00` (comma, space).
+- **Dutch price formatting:** prices show `€800.00`; should be `€ 800,00` (comma, space).  ✅ DONE
 - **Reviews / social proof:** none anywhere; a `StarRating` primitive already exists, unused.
 - **Newsletter capture:** none — paid traffic bounces with no recapture.
 - **Search** in the nav: absent.
-- **Payment-method icons** (iDEAL) in footer/checkout entry: absent.
+- **Payment-method icons** (iDEAL) in footer/checkout entry: absent.  ✅ DONE
 - **Store filters:** sort only, no filters (fine for a small catalog).
-- **Nav inconsistency:** hero links `/about`, nav links `/over-ons` (both work).
+- **Nav inconsistency:** hero links `/about`, nav links `/over-ons` (both work).  ✅ DONE
 
 ---
 

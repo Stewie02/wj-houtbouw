@@ -27,6 +27,12 @@ const FOOTER_COLS = [
   },
 ];
 
+const PAYMENT_METHODS = [
+  { label: "iDEAL", src: "/payment/ideal.svg", width: 63, height: 24 },
+  { label: "Creditcard", src: "/payment/card.svg", width: 38, height: 24 },
+  { label: "Klarna", src: "/payment/klarna.svg", width: 38, height: 24 },
+];
+
 const SOCIALS = [
   { label: "Instagram", href: "https://www.instagram.com/wj_houtbouw/" },
   {
@@ -40,7 +46,7 @@ export default function Footer() {
     <footer className="bg-wj-dark text-wj-white">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-8 lg:px-12 pt-16 pb-12 lg:pt-[72px] lg:pb-12">
         {/* Main grid */}
-        <div className="grid grid-cols-2 gap-10 sm:grid-cols-3 lg:grid-cols-[2fr_1fr_1fr_1fr] lg:gap-12 mb-16">
+        <div className="grid grid-cols-2 gap-10 sm:grid-cols-3 lg:grid-cols-[2fr_1fr_1fr_1fr] lg:gap-12 mb-10">
           {/* Brand column */}
           <div className="col-span-2 sm:col-span-3 lg:col-span-1">
             <LocalizedClientLink href="/" className="mb-5 inline-block">
@@ -95,6 +101,24 @@ export default function Footer() {
               </ul>
             </div>
           ))}
+        </div>
+
+        {/* Payment methods */}
+        <div className="mb-6 flex flex-wrap items-center gap-3">
+          <span className="font-body text-[13px] text-[#6B6058]">
+            Veilig betalen met
+          </span>
+          <div className="flex items-center gap-2">
+            {PAYMENT_METHODS.map((p) => (
+              <Image
+                key={p.label}
+                src={p.src}
+                alt={p.label}
+                width={p.width}
+                height={p.height}
+              />
+            ))}
+          </div>
         </div>
 
         {/* Bottom bar */}
