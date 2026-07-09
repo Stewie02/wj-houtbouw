@@ -6,6 +6,7 @@ import ProductActions from "@modules/products/components/product-actions";
 import ProductInfo from "@modules/products/templates/product-info";
 import ProductActionsWrapper from "./product-actions-wrapper";
 import ProductDescription from "@modules/products/components/product-description";
+import RelatedProducts from "@modules/products/components/related-products";
 import Breadcrumb from "@modules/common/components/breadcrumb";
 
 type ProductTemplateProps = {
@@ -67,6 +68,13 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
           </div>
         </div>
       </div>
+
+      {/* Related products */}
+      <RelatedProducts
+        currentProductId={product.id}
+        categoryId={product.categories?.[0]?.id}
+        collectionId={product.collection_id ?? undefined}
+      />
     </div>
   );
 };

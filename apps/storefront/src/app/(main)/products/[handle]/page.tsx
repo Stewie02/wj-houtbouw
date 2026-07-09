@@ -52,7 +52,7 @@ export default async function ProductPage(props: Props) {
   }
 
   const pricedProduct = await listProducts({
-    queryParams: { handle: params.handle, fields: "+images,+metadata,+tags,-variants,-options" },
+    queryParams: { handle: params.handle, fields: "+images,+metadata,+tags,-variants,-options,*categories.id,+collection_id" },
   }).then(({ response }) => response.products[0]);
 
   const images = pricedProduct?.images ?? [];

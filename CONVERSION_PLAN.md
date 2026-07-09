@@ -61,12 +61,20 @@ Root cause: merchant types markdown into a plain textarea, storefront prints it 
   block).
 </details>
 
-### 3. Trust signals + delivery time near the add-to-cart button
+### 3. Trust signals + delivery time near the add-to-cart button  ✅ DONE
+Both live in `modules/products/components/product-actions/index.tsx`, directly under the
+add-to-cart button: a delivery-estimate row (`TruckFast` icon + `DELIVERY_ESTIMATE`, bordered
+`wj-surface` strip) and a 2-up/4-up bordered `USPS` grid (icon + title per cell). Copy lives in
+`lib/constants.tsx` (`USPS`, `DELIVERY_ESTIMATE`) so the merchant edits one place. Dutch copy,
+`wj-*` tokens, square corners.
+
+<details><summary>original notes</summary>
 USPs (5 jaar garantie, weerbestendig, Nederlands vakmanschap) live on the homepage/store
 footer, not where the decision is made. Delivery time ("1 tot 4 weken") is buried at the
 bottom of the description.
 - **Where:** `modules/products/components/product-actions/index.tsx`, `USPS` in `lib/constants`.
 - **Do:** compact trust row + delivery estimate directly under the price/button.
+</details>
 
 ---
 
@@ -117,7 +125,18 @@ option. Medusa v2 option values are plain strings, so this needs:
 - **Where (admin):** `apps/backend/src/admin/…` widget on the product options section.
   See the `building-admin-dashboard-customizations` skill.
 
-### 5. Related / recommended products
+### 5. Related / recommended products  ✅ DONE
+New async server component `modules/products/components/related-products`, rendered below the
+description block in `modules/products/templates/index.tsx`. Fully automatic, no admin UI: it
+reuses `listProductSummaries` (prefers the product's first category, falls back to its
+collection) + the existing `ProductCard` in a 4-up grid, mirroring the home `FeaturedProducts`
+pattern. The product fetch in `app/(main)/products/[handle]/page.tsx` now also requests
+`*categories.id,+collection_id`. Degrades gracefully: no category/collection, or no other
+products after excluding the current one → renders nothing (no empty section). Dutch copy
+("Ontdek meer" / "Vergelijkbare producten"), `wj-*` tokens, square corners. typecheck/lint/knip
+green. Manual curation stays YAGNI until the catalog outgrows "related ≈ the other products".
+
+<details><summary>original notes</summary>
 Nothing below the product description.
 - **Where:** bottom of `modules/products/templates/index.tsx`.
 - **No admin UI needed (unlike #2 and #4).** Do it **automatic**: show other products from
@@ -125,6 +144,7 @@ Nothing below the product description.
   today). With this small a catalog "related" ≈ "the other products".
 - **Add manual curation later only if** the catalog grows and automatic picks look wrong.
   That would need a product-relations admin widget — YAGNI until then.
+</details>
 
 ### 6. Swipeable product images on mobile
 Gallery has a thumbnail grid + lightbox prev/next buttons but no swipe on the main image.
