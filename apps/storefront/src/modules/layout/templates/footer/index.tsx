@@ -124,7 +124,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="border-t border-[#2A2520] pt-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
           <span className="font-body text-[13px] text-[#6B6058]">
-            © {new Date().getFullYear()} W&J Houtbouw B.V. Alle rechten
+            © {new Date().getFullYear()} W&J Houtbouw VOF Alle rechten
             voorbehouden.
           </span>
           <span className="font-body text-[13px] text-[#6B6058]">
