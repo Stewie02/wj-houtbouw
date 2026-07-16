@@ -18,6 +18,7 @@ import { TruckFast, ExclamationCircle } from "@medusajs/icons";
 type ProductActionsProps = {
   product: HttpTypes.StoreProduct;
   disabled?: boolean;
+  discountPercentage?: number | null;
 };
 
 function parseSurcharge(raw: string): number {
@@ -30,6 +31,7 @@ function parseSurcharge(raw: string): number {
 export default function ProductActions({
   product,
   disabled,
+  discountPercentage,
 }: ProductActionsProps) {
   const router = useRouter();
   const pathname = usePathname();
@@ -176,6 +178,7 @@ export default function ProductActions({
           amount={calculatedPrice}
           currency_code={currency_code}
           isFrom={!allSelected && calculatedPrice != null}
+          discountPercentage={discountPercentage}
         />
 
         <div className="flex items-center gap-3">

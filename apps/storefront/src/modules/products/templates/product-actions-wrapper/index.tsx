@@ -4,8 +4,10 @@ import ProductActions from "@modules/products/components/product-actions";
 
 export default async function ProductActionsWrapper({
   product,
+  discountPercentage,
 }: {
   product: HttpTypes.StoreProduct;
+  discountPercentage?: number | null;
 }) {
   const simpleOptions = await getProductOptions(product.id);
 
@@ -20,5 +22,10 @@ export default async function ProductActionsWrapper({
     })),
   } as HttpTypes.StoreProduct;
 
-  return <ProductActions product={enrichedProduct} />;
+  return (
+    <ProductActions
+      product={enrichedProduct}
+      discountPercentage={discountPercentage}
+    />
+  );
 }

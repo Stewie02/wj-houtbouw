@@ -1,5 +1,6 @@
 import { listProductSummaries } from "@lib/data/products";
-import { convertToLocale } from "@lib/util/money";
+import { getActiveDiscount } from "@lib/data/promotions";
+import { formatWithDiscount } from "@lib/util/money";
 import ProductCard from "@modules/common/components/product-card";
 import SectionContainer from "@modules/common/components/section-container";
 
@@ -23,17 +24,20 @@ export default async function RelatedProducts({
     ...(categoryId ? { categoryId } : { collectionId }),
   });
 
+  const discount = await getActiveDiscount();
+
   const cards = products
     .filter((product) => product.id !== currentProductId)
     .slice(0, 4)
     .map((product) => ({
       name: product.title,
-      price: product.min_price
-        ? convertToLocale({
-            amount: product.min_price.calculated_amount,
-            currency_code: product.min_price.currency_code,
-          })
-        : "—",
+      ...(product.min_price
+        ? formatWithDiscount(
+            product.min_price.calculated_amount,
+            product.min_price.currency_code,
+            discount?.percentage
+          )
+        : { price: "—" }),
       material: product.metadata?.material as string | undefined,
       tag: product.metadata?.tag as string | undefined,
       href: `/producten/${product.handle}`,

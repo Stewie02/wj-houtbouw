@@ -10,7 +10,9 @@ import {
   getCacheOptions,
   getCacheTag,
   getCartId,
+  getPromoCode,
   removeCartId,
+  removePromoCode,
   setCartId,
 } from "./cookies";
 import { getRegion } from "./regions";
@@ -151,6 +153,20 @@ export async function addConfiguredItem({
       revalidateTag(fulfillmentCacheTag);
     })
     .catch(medusaError);
+
+  // Ensure the promo lands on carts that were created after the visitor arrived
+  // via a campaign link. Merge with existing codes so a manually entered code
+  // isn't wiped, and skip if it's already applied.
+  const promoCode = await getPromoCode();
+  if (promoCode) {
+    const current = await retrieveCart(cart.id, "id,promotions.code");
+    const codes = (current?.promotions ?? [])
+      .map((p) => p.code)
+      .filter((c): c is string => !!c);
+    if (!codes.includes(promoCode)) {
+      await applyPromotions([...codes, promoCode]);
+    }
+  }
 }
 
 export async function updateLineItem({
@@ -374,7 +390,10 @@ export async function placeOrder(cartId?: string) {
     const orderCacheTag = await getCacheTag("orders");
     revalidateTag(orderCacheTag);
 
-    removeCartId();
+    await removeCartId();
+    // The personal discount is spent once the order is paid: drop the code so
+    // the next visit shows normal prices and it can't reapply to a new cart.
+    await removePromoCode();
     redirect(`/bestelling/${cartRes?.order.id}/bevestigd`);
   }
 

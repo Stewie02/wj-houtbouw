@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { listProductSummaries, ProductSummary } from "@lib/data/products";
-import { convertToLocale } from "@lib/util/money";
+import { getActiveDiscount } from "@lib/data/promotions";
+import { formatWithDiscount } from "@lib/util/money";
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products";
 import PlaceholderImage from "@modules/common/components/placeholder-image";
 import BrandButton from "@modules/common/components/brand-button";
@@ -16,6 +17,7 @@ type ProductRowProps = {
   subtitle: string;
   thumbnail: string | null;
   priceFrom: string;
+  originalPriceFrom?: string;
 };
 
 function ProductRow({
@@ -25,6 +27,7 @@ function ProductRow({
   subtitle,
   thumbnail,
   priceFrom,
+  originalPriceFrom,
 }: ProductRowProps) {
   const imageFirst = index % 2 === 0;
 
@@ -68,8 +71,15 @@ function ProductRow({
               <div className="font-body font-semibold text-[10px] tracking-[0.08em] uppercase text-wj-muted mb-1">
                 Vanaf
               </div>
-              <div className="font-display font-bold text-[32px] sm:text-[34px] text-wj-green tracking-[-0.02em]">
-                {priceFrom}
+              <div className="flex items-baseline gap-2.5">
+                <div className="font-display font-bold text-[32px] sm:text-[34px] text-wj-green tracking-[-0.02em]">
+                  {priceFrom}
+                </div>
+                {originalPriceFrom && (
+                  <div className="font-body font-medium text-[18px] text-wj-muted line-through">
+                    {originalPriceFrom}
+                  </div>
+                )}
               </div>
             </div>
             <BrandButton
@@ -113,19 +123,27 @@ export default async function PaginatedProducts({
 
   if (products.length === 0) return null;
 
-  const rows = products.map((product: ProductSummary, i: number) => ({
-    index: i,
-    handle: product.handle,
-    title: product.title,
-    subtitle: product.subtitle,
-    thumbnail: product.thumbnail ?? null,
-    priceFrom: product.min_price
-      ? convertToLocale({
-          amount: product.min_price.calculated_amount,
-          currency_code: product.min_price.currency_code,
-        })
-      : "—",
-  }));
+  const discount = await getActiveDiscount();
+
+  const rows = products.map((product: ProductSummary, i: number) => {
+    const { price, originalPrice } = product.min_price
+      ? formatWithDiscount(
+          product.min_price.calculated_amount,
+          product.min_price.currency_code,
+          discount?.percentage
+        )
+      : { price: "—", originalPrice: undefined };
+
+    return {
+      index: i,
+      handle: product.handle,
+      title: product.title,
+      subtitle: product.subtitle,
+      thumbnail: product.thumbnail ?? null,
+      priceFrom: price,
+      originalPriceFrom: originalPrice,
+    };
+  });
 
   return (
     <div data-testid="products-list">

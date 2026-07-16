@@ -25,6 +25,12 @@ const NECESSARY_COOKIES = [
       "Unieke identifier voor de caching van paginadata per gebruiker, zodat wijzigingen direct zichtbaar zijn.",
     retention: "24 uur",
   },
+  {
+    name: "wj_promo",
+    purpose:
+      "Bewaart de actieve promotiecode uit de link waarmee je de website hebt geopend, zodat je persoonlijke kortingsprijzen en de toegepaste korting tijdens je bezoek behouden blijven.",
+    retention: "Sessie (tot je de browser sluit)",
+  },
 ];
 
 const META_COOKIES = [

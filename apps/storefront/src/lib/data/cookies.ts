@@ -66,6 +66,28 @@ export const removeAuthToken = async () => {
   });
 };
 
+export const getPromoCode = async () => {
+  const cookies = await nextCookies();
+  return cookies.get("wj_promo")?.value;
+};
+
+export const setPromoCode = async (code: string) => {
+  const cookies = await nextCookies();
+  // Session cookie (no maxAge) — personal discount lasts until the browser closes.
+  cookies.set("wj_promo", code, {
+    httpOnly: true,
+    sameSite: "strict",
+    secure: process.env.NODE_ENV === "production",
+  });
+};
+
+export const removePromoCode = async () => {
+  const cookies = await nextCookies();
+  cookies.set("wj_promo", "", {
+    maxAge: -1,
+  });
+};
+
 export const getCartId = async () => {
   const cookies = await nextCookies();
   return cookies.get("_medusa_cart_id")?.value;

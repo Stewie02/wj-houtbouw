@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { HttpTypes } from "@medusajs/types";
 import ImageGallery from "@modules/products/components/image-gallery";
@@ -8,17 +8,17 @@ import ProductActionsWrapper from "./product-actions-wrapper";
 import ProductDescription from "@modules/products/components/product-description";
 import RelatedProducts from "@modules/products/components/related-products";
 import Breadcrumb from "@modules/common/components/breadcrumb";
+import { getActiveDiscount } from "@lib/data/promotions";
 
 type ProductTemplateProps = {
   product: HttpTypes.StoreProduct;
   images: HttpTypes.StoreProductImage[];
 };
 
-const ProductTemplate: React.FC<ProductTemplateProps> = ({
-  product,
-  images,
-}) => {
+const ProductTemplate = async ({ product, images }: ProductTemplateProps) => {
   if (!product?.id) return notFound();
+
+  const discount = await getActiveDiscount();
 
   return (
     <div className="bg-wj-bg">
@@ -48,10 +48,17 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
           <ProductInfo product={product} />
           <Suspense
             fallback={
-              <ProductActions disabled product={product} />
+              <ProductActions
+                disabled
+                product={product}
+                discountPercentage={discount?.percentage}
+              />
             }
           >
-            <ProductActionsWrapper product={product} />
+            <ProductActionsWrapper
+              product={product}
+              discountPercentage={discount?.percentage}
+            />
           </Suspense>
         </div>
       </div>

@@ -26,6 +26,10 @@ export type InvoiceOrderItem = {
   quantity: unknown
   unit_price: unknown
   total: unknown
+  // Regular price incl. BTW, before any promotion. Prices are tax inclusive, so
+  // this is the amount the customer saw on the website. Lines stay at this price
+  // and the promotion is subtracted once, as its own "Korting" row.
+  original_total: unknown
   tax_lines?: Array<{ rate: unknown; total: unknown }> | null
 }
 
@@ -46,8 +50,11 @@ export type InvoiceOrder = {
   currency_code: string
   subtotal: unknown
   item_subtotal: unknown
+  // Sum of the items' original_total: regular prices incl. BTW, pre-discount.
+  original_item_total: unknown
   tax_total: unknown
   shipping_total: unknown
+  discount_total: unknown
   total: unknown
   created_at?: string | Date | null
   items?: InvoiceOrderItem[] | null
@@ -383,10 +390,13 @@ export const InvoicePDF = ({ order }: { order: InvoiceOrder }) => {
                 {String(toNum(item.quantity))}
               </Text>
               <Text style={[styles.cellText, styles.colUnitPrice]}>
-                {formatCurrency(toNum(item.total) / toNum(item.quantity), currency)}
+                {formatCurrency(
+                  toNum(item.original_total) / toNum(item.quantity),
+                  currency
+                )}
               </Text>
               <Text style={[styles.cellText, styles.colTotal]}>
-                {formatCurrency(toNum(item.total), currency)}
+                {formatCurrency(toNum(item.original_total), currency)}
               </Text>
             </View>
           ))}
@@ -395,11 +405,19 @@ export const InvoicePDF = ({ order }: { order: InvoiceOrder }) => {
           <View style={styles.totalsSection}>
             <View style={styles.totalsBox}>
               <View style={styles.totalRow}>
-                <Text style={styles.totalLabel}>Subtotaal excl. BTW</Text>
+                <Text style={styles.totalLabel}>Subtotaal incl. BTW</Text>
                 <Text style={styles.totalValue}>
-                  {formatCurrency(toNum(order.item_subtotal), currency)}
+                  {formatCurrency(toNum(order.original_item_total), currency)}
                 </Text>
               </View>
+              {toNum(order.discount_total) > 0 && (
+                <View style={styles.totalRow}>
+                  <Text style={styles.totalLabel}>Korting</Text>
+                  <Text style={styles.totalValue}>
+                    {`- ${formatCurrency(toNum(order.discount_total), currency)}`}
+                  </Text>
+                </View>
+              )}
               {toNum(order.shipping_total) > 0 && (
                 <View style={styles.totalRow}>
                   <Text style={styles.totalLabel}>Verzendkosten</Text>
@@ -408,10 +426,20 @@ export const InvoicePDF = ({ order }: { order: InvoiceOrder }) => {
                   </Text>
                 </View>
               )}
+              <View style={styles.totalRowBorder}>
+                <Text style={styles.totalLabelBold}>Totaal incl. BTW</Text>
+                <Text style={styles.totalValueBold}>
+                  {formatCurrency(toNum(order.total), currency)}
+                </Text>
+              </View>
+              {/* Prices are tax inclusive, so BTW is shown as part of the total
+                  rather than added to it. */}
               {taxGroups.length > 0
                 ? taxGroups.map(({ rate, total }) => (
                     <View key={rate} style={styles.totalRow}>
-                      <Text style={styles.totalLabel}>BTW {String(rate)}%</Text>
+                      <Text style={styles.totalLabel}>
+                        waarvan BTW {String(rate)}%
+                      </Text>
                       <Text style={styles.totalValue}>
                         {formatCurrency(total, currency)}
                       </Text>
@@ -419,18 +447,12 @@ export const InvoicePDF = ({ order }: { order: InvoiceOrder }) => {
                   ))
                 : toNum(order.tax_total) > 0 && (
                     <View style={styles.totalRow}>
-                      <Text style={styles.totalLabel}>BTW</Text>
+                      <Text style={styles.totalLabel}>waarvan BTW</Text>
                       <Text style={styles.totalValue}>
                         {formatCurrency(toNum(order.tax_total), currency)}
                       </Text>
                     </View>
                   )}
-              <View style={styles.totalRowBorder}>
-                <Text style={styles.totalLabelBold}>Totaal incl. BTW</Text>
-                <Text style={styles.totalValueBold}>
-                  {formatCurrency(toNum(order.total), currency)}
-                </Text>
-              </View>
             </View>
           </View>
 
