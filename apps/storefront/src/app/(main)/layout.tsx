@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(getBaseURL()),
 };
 
-const ANNOUNCEMENT_BAR_ENABLED = false;
+const ANNOUNCEMENT_BAR_ENABLED = true;
 
 export default async function PageLayout(props: { children: React.ReactNode }) {
   const customer = await retrieveCustomer();
