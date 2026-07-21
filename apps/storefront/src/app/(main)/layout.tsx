@@ -40,10 +40,10 @@ export default async function PageLayout(props: { children: React.ReactNode }) {
         <div className="bg-wj-dark text-wj-white">
           <div className="max-w-[1280px] mx-auto px-4 sm:px-8 lg:px-12 py-2 text-center font-body text-[13px]">
             Welkom op onze website, krijg nu 10% korting met kortingscode{" "}
-            <span className="font-semibold">ZOMER10</span>. Direct de prijzen
+            <span className="font-semibold">WELKOM10</span>. Direct de prijzen
             zien?{" "}
             <LocalizedClientLink
-              href="/?promo=ZOMER10"
+              href="/?promo=WELKOM10"
               className="group font-semibold underline underline-offset-2 inline-flex items-center gap-1"
             >
               Klik hier!
