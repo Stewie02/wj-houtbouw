@@ -100,10 +100,15 @@ export async function GET(req: MedusaRequest, res: MedusaResponse) {
       : {}),
   });
 
+  // category_id may be a comma-separated list; a product matches on any of them.
+  const categoryIds = category_id ? category_id.split(",") : [];
+
   const products = (
     rawProducts as unknown as (RawProduct & { categories?: { id: string }[] })[]
   ).filter(
-    (p) => !category_id || p.categories?.some((c) => c.id === category_id)
+    (p) =>
+      !categoryIds.length ||
+      p.categories?.some((c) => categoryIds.includes(c.id))
   );
 
   if (products.length === 0) {

@@ -79,7 +79,7 @@ const ProductTemplate = async ({ product, images }: ProductTemplateProps) => {
       {/* Related products */}
       <RelatedProducts
         currentProductId={product.id}
-        categoryId={product.categories?.[0]?.id}
+        categoryIds={product.categories?.map((c) => c.id)}
         collectionId={product.collection_id ?? undefined}
       />
     </div>

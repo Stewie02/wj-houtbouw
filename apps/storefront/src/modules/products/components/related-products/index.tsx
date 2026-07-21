@@ -6,22 +6,24 @@ import SectionContainer from "@modules/common/components/section-container";
 
 type RelatedProductsProps = {
   currentProductId: string;
-  categoryId?: string;
+  categoryIds?: string[];
   collectionId?: string;
 };
 
 export default async function RelatedProducts({
   currentProductId,
-  categoryId,
+  categoryIds,
   collectionId,
 }: RelatedProductsProps) {
-  if (!categoryId && !collectionId) return null;
+  if (!categoryIds?.length && !collectionId) return null;
 
-  // Prefer category; fall back to collection. Fetch one extra to keep 4 after
+  // Prefer categories; fall back to collection. Fetch one extra to keep 4 after
   // dropping the current product.
   const { products } = await listProductSummaries({
     limit: 5,
-    ...(categoryId ? { categoryId } : { collectionId }),
+    ...(categoryIds?.length
+      ? { categoryId: categoryIds.join(",") }
+      : { collectionId }),
   });
 
   const discount = await getActiveDiscount();
