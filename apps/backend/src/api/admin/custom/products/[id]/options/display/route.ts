@@ -3,17 +3,34 @@ import { MedusaError } from "@medusajs/framework/utils"
 
 type DisplayType = "select" | "button" | "color-swatch"
 
+type Protection = "yes" | "no"
+
 type DisplayBody = {
   option_id: string
   display: DisplayType
   swatches?: Record<string, string>
+  protection?: Record<string, Protection>
 }
 
 const DISPLAY_TYPES: DisplayType[] = ["select", "button", "color-swatch"]
 
+const sanitizeProtection = (
+  input: Record<string, unknown>
+): Record<string, Protection> =>
+  Object.fromEntries(
+    Object.entries(input).filter(
+      ([, v]) => v === "yes" || v === "no"
+    ) as [string, Protection][]
+  )
+
 export async function POST(req: MedusaRequest, res: MedusaResponse) {
   const { id } = req.params
-  const { option_id, display, swatches = {} } = req.body as DisplayBody
+  const {
+    option_id,
+    display,
+    swatches = {},
+    protection = {},
+  } = req.body as DisplayBody
 
   if (!option_id || !DISPLAY_TYPES.includes(display)) {
     throw new MedusaError(
@@ -26,11 +43,21 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
     raw: (sql: string, bindings?: unknown[]) => Promise<{ rowCount: number }>
   }
 
+  const isSwatch = display === "color-swatch"
+
   const { rowCount } = await pgConnection.raw(
     `UPDATE product_option
      SET metadata = COALESCE(metadata, '{}') || ?::jsonb
      WHERE id = ? AND product_id = ? AND deleted_at IS NULL`,
-    [JSON.stringify({ display, swatches }), option_id, id]
+    [
+      JSON.stringify({
+        display,
+        swatches: isSwatch ? swatches : {},
+        protection: isSwatch ? sanitizeProtection(protection) : {},
+      }),
+      option_id,
+      id,
+    ]
   )
 
   if (!rowCount) {

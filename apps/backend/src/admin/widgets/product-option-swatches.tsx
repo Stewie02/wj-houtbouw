@@ -13,7 +13,11 @@ type ProductOption = {
   values?: { value: string }[]
 }
 
-type Config = { display: DisplayType; swatches: Record<string, string> }
+type Config = {
+  display: DisplayType
+  swatches: Record<string, string>
+  protection: Record<string, string>
+}
 
 type WidgetProps = { data: { id: string } }
 
@@ -23,11 +27,22 @@ const DISPLAY_LABELS: Record<DisplayType, string> = {
   "color-swatch": "Kleurstalen",
 }
 
+// "none" is de UI-waarde voor "geen badge"; die slaan we op als afwezige sleutel.
+const PROTECTION_LABELS: Record<string, string> = {
+  none: "Geen badge",
+  yes: "Beschermd",
+  no: "Onbehandeld",
+}
+
 const readConfig = (metadata?: Record<string, unknown> | null): Config => {
   const display = metadata?.display
   const swatches =
     metadata?.swatches && typeof metadata.swatches === "object"
       ? (metadata.swatches as Record<string, string>)
+      : {}
+  const protection =
+    metadata?.protection && typeof metadata.protection === "object"
+      ? (metadata.protection as Record<string, string>)
       : {}
   const valid: DisplayType[] = ["select", "button", "color-swatch"]
   return {
@@ -35,6 +50,7 @@ const readConfig = (metadata?: Record<string, unknown> | null): Config => {
       ? (display as DisplayType)
       : "select",
     swatches,
+    protection,
   }
 }
 
@@ -83,6 +99,7 @@ const ProductOptionSwatchesWidget = ({ data }: WidgetProps) => {
           option_id: optionId,
           display: cfg.display,
           swatches: cfg.display === "color-swatch" ? cfg.swatches : {},
+          protection: cfg.display === "color-swatch" ? cfg.protection : {},
         },
       }),
     onSuccess: (_res, { optionId }) => {
@@ -106,6 +123,19 @@ const ProductOptionSwatchesWidget = ({ data }: WidgetProps) => {
         swatches: { ...c[optionId].swatches, [value]: color },
       },
     }))
+    setDirty((d) => ({ ...d, [optionId]: true }))
+  }
+
+  const setProtection = (optionId: string, value: string, level: string) => {
+    setConfig((c) => {
+      const next = { ...(c[optionId].protection ?? {}) }
+      if (level === "none") {
+        delete next[value]
+      } else {
+        next[value] = level
+      }
+      return { ...c, [optionId]: { ...c[optionId], protection: next } }
+    })
     setDirty((d) => ({ ...d, [optionId]: true }))
   }
 
@@ -155,30 +185,48 @@ const ProductOptionSwatchesWidget = ({ data }: WidgetProps) => {
             </Select>
 
             {isSwatch && (
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-3">
                 {(option.values ?? []).map(({ value }) => (
-                  <div key={value} className="flex items-center gap-2">
-                    <input
-                      type="color"
-                      value={cfg.swatches[value] || "#cccccc"}
-                      onChange={(e) => setSwatch(option.id, value, e.target.value)}
-                      className="h-8 w-8 shrink-0 cursor-pointer border border-ui-border-base bg-ui-bg-base p-0"
-                      aria-label={`Kleur voor ${value}`}
-                    />
-                    <Input
-                      size="small"
-                      className="flex-1 min-w-0"
-                      value={cfg.swatches[value] ?? ""}
-                      onChange={(e) => setSwatch(option.id, value, e.target.value)}
-                      placeholder="Hex"
-                    />
+                  <div key={value} className="flex flex-col gap-1.5">
                     <Text
                       size="small"
-                      className="text-ui-fg-subtle shrink-0 max-w-[45%] truncate"
+                      className="text-ui-fg-subtle truncate"
                       title={value}
                     >
                       {value}
                     </Text>
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="color"
+                        value={cfg.swatches[value] || "#cccccc"}
+                        onChange={(e) => setSwatch(option.id, value, e.target.value)}
+                        className="h-8 w-8 shrink-0 cursor-pointer border border-ui-border-base bg-ui-bg-base p-0"
+                        aria-label={`Kleur voor ${value}`}
+                      />
+                      <Input
+                        size="small"
+                        className="flex-1 min-w-0"
+                        value={cfg.swatches[value] ?? ""}
+                        onChange={(e) => setSwatch(option.id, value, e.target.value)}
+                        placeholder="Hex"
+                      />
+                    </div>
+                    <Select
+                      size="small"
+                      value={cfg.protection?.[value] ?? "none"}
+                      onValueChange={(v) => setProtection(option.id, value, v)}
+                    >
+                      <Select.Trigger aria-label={`Bescherming voor ${value}`}>
+                        <Select.Value />
+                      </Select.Trigger>
+                      <Select.Content>
+                        {Object.keys(PROTECTION_LABELS).map((p) => (
+                          <Select.Item key={p} value={p}>
+                            {PROTECTION_LABELS[p]}
+                          </Select.Item>
+                        ))}
+                      </Select.Content>
+                    </Select>
                   </div>
                 ))}
               </div>
