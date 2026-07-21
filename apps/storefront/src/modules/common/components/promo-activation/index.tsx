@@ -94,18 +94,14 @@ function WelcomeModal({
                   <X size="20" />
                 </button>
 
-                <p className="font-body font-semibold text-[11px] tracking-[0.08em] uppercase text-wj-wood mb-3">
-                  Persoonlijke korting
-                </p>
-
                 <Dialog.Title className="font-display font-bold text-[26px] sm:text-[30px] text-wj-text tracking-[-0.02em] mb-4">
                   Welkom bij W&amp;J Houtbouw
                 </Dialog.Title>
 
                 <p className="font-body text-[15px] text-wj-muted leading-[1.7] mb-6">
-                  Leuk dat je er bent. Je persoonlijke korting van {percentage}%
-                  is automatisch geactiveerd. Alle prijzen die je op de website
-                  ziet zijn jouw persoonlijke kortingsprijzen.
+                  Leuk dat je er bent. Je korting van {percentage}% is
+                  automatisch geactiveerd. Alle prijzen die je op de website ziet
+                  zijn jouw kortingsprijzen.
                 </p>
 
                 <BrandButton onClick={close} full>

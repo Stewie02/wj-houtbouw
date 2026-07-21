@@ -10,10 +10,13 @@ import Nav from "@modules/layout/templates/nav";
 import FreeShippingPriceNudge from "@modules/shipping/components/free-shipping-price-nudge";
 import { CartDrawerProvider } from "@modules/cart/components/cart-drawer";
 import PromoActivation from "@modules/common/components/promo-activation";
+import LocalizedClientLink from "@modules/common/components/localized-client-link";
 
 export const metadata: Metadata = {
   metadataBase: new URL(getBaseURL()),
 };
+
+const ANNOUNCEMENT_BAR_ENABLED = false;
 
 export default async function PageLayout(props: { children: React.ReactNode }) {
   const customer = await retrieveCustomer();
@@ -29,6 +32,24 @@ export default async function PageLayout(props: { children: React.ReactNode }) {
   return (
     <CartDrawerProvider cart={cart}>
       <PromoActivation />
+      {ANNOUNCEMENT_BAR_ENABLED && (
+        <div className="bg-wj-dark text-wj-white">
+          <div className="max-w-[1280px] mx-auto px-4 sm:px-8 lg:px-12 py-2 text-center font-body text-[13px]">
+            Welkom op onze website, krijg nu 10% korting met kortingscode{" "}
+            <span className="font-semibold">ZOMER10</span>. Direct de prijzen
+            zien?{" "}
+            <LocalizedClientLink
+              href="/?promo=ZOMER10"
+              className="group font-semibold underline underline-offset-2 inline-flex items-center gap-1"
+            >
+              Klik hier!
+              <span className="inline-block animate-nudge group-hover:animate-none group-hover:translate-x-1 transition-transform motion-reduce:animate-none">
+                &rarr;
+              </span>
+            </LocalizedClientLink>
+          </div>
+        </div>
+      )}
       <Nav />
       {customer && cart && (
         <CartMismatchBanner customer={customer} cart={cart} />

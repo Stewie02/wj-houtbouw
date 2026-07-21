@@ -18,6 +18,8 @@ type PromotionLookup = {
 // Looks up a promotion by code via the custom backend endpoint. Cached
 // (the percentage for a code is the same for everyone) and never throws for an
 // unknown code — the endpoint returns { isValid: false }.
+// ponytail: time-bounded, not force-cache. Promotions are edited in admin, so a
+// lookup made while a code was still invalid must not stick forever.
 async function fetchPromotion(code: string): Promise<PromotionLookup> {
   const headers = { ...(await getAuthHeaders()) };
 
@@ -26,8 +28,7 @@ async function fetchPromotion(code: string): Promise<PromotionLookup> {
     {
       method: "GET",
       headers,
-      cache: "force-cache",
-      next: { tags: ["promotions"] },
+      next: { revalidate: 300, tags: ["promotions"] },
     }
   );
 }
