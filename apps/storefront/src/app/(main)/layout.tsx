@@ -11,6 +11,7 @@ import FreeShippingPriceNudge from "@modules/shipping/components/free-shipping-p
 import { CartDrawerProvider } from "@modules/cart/components/cart-drawer";
 import PromoActivation from "@modules/common/components/promo-activation";
 import LocalizedClientLink from "@modules/common/components/localized-client-link";
+import { getActiveDiscount } from "@lib/data/promotions";
 
 export const metadata: Metadata = {
   metadataBase: new URL(getBaseURL()),
@@ -21,6 +22,9 @@ const ANNOUNCEMENT_BAR_ENABLED = false;
 export default async function PageLayout(props: { children: React.ReactNode }) {
   const customer = await retrieveCustomer();
   const cart = await retrieveCart();
+  // Visitors who already activated the promo see their discounted prices, so
+  // the bar has nothing left to offer them.
+  const discount = await getActiveDiscount();
   let shippingOptions: StoreCartShippingOption[] = [];
 
   if (cart) {
@@ -32,7 +36,7 @@ export default async function PageLayout(props: { children: React.ReactNode }) {
   return (
     <CartDrawerProvider cart={cart}>
       <PromoActivation />
-      {ANNOUNCEMENT_BAR_ENABLED && (
+      {ANNOUNCEMENT_BAR_ENABLED && !discount && (
         <div className="bg-wj-dark text-wj-white">
           <div className="max-w-[1280px] mx-auto px-4 sm:px-8 lg:px-12 py-2 text-center font-body text-[13px]">
             Welkom op onze website, krijg nu 10% korting met kortingscode{" "}
