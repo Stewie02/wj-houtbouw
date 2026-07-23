@@ -62,7 +62,7 @@ const ProductOptionSwatchesWidget = ({ data }: WidgetProps) => {
   const initialized = useRef(false)
 
   const { data: productData, isLoading } = useQuery({
-    queryKey: ["product-options", productId],
+    queryKey: ["product-option-swatches", productId],
     queryFn: () =>
       sdk.client.fetch<{ product: { options: ProductOption[] } }>(
         `/admin/products/${productId}`,
@@ -104,7 +104,7 @@ const ProductOptionSwatchesWidget = ({ data }: WidgetProps) => {
       }),
     onSuccess: (_res, { optionId }) => {
       setDirty((d) => ({ ...d, [optionId]: false }))
-      queryClient.invalidateQueries({ queryKey: ["product-options", productId] })
+      queryClient.invalidateQueries({ queryKey: ["product-option-swatches", productId] })
       toast.success("Weergave opgeslagen")
     },
     onError: () => toast.error("Er is iets misgegaan"),
@@ -198,7 +198,7 @@ const ProductOptionSwatchesWidget = ({ data }: WidgetProps) => {
                     <div className="flex items-center gap-2">
                       <input
                         type="color"
-                        value={cfg.swatches[value] || "#cccccc"}
+                        value={cfg.swatches?.[value] || "#cccccc"}
                         onChange={(e) => setSwatch(option.id, value, e.target.value)}
                         className="h-8 w-8 shrink-0 cursor-pointer border border-ui-border-base bg-ui-bg-base p-0"
                         aria-label={`Kleur voor ${value}`}
@@ -206,7 +206,7 @@ const ProductOptionSwatchesWidget = ({ data }: WidgetProps) => {
                       <Input
                         size="small"
                         className="flex-1 min-w-0"
-                        value={cfg.swatches[value] ?? ""}
+                        value={cfg.swatches?.[value] ?? ""}
                         onChange={(e) => setSwatch(option.id, value, e.target.value)}
                         placeholder="Hex"
                       />
