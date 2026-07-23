@@ -39,11 +39,11 @@ export default async function PageLayout(props: { children: React.ReactNode }) {
       {ANNOUNCEMENT_BAR_ENABLED && !discount && (
         <div className="bg-wj-dark text-wj-white">
           <div className="max-w-[1280px] mx-auto px-4 sm:px-8 lg:px-12 py-2 text-center font-body text-[13px]">
-            Welkom op onze website, krijg nu 10% korting met kortingscode{" "}
-            <span className="font-semibold">WELKOM10</span>. Direct de prijzen
+            Welkom op onze website, krijg nu 15% korting met kortingscode{" "}
+            <span className="font-semibold">WELKOM15</span>. Direct de prijzen
             zien?{" "}
             <LocalizedClientLink
-              href="/?promo=WELKOM10"
+              href="/?promo=WELKOM15"
               className="group font-semibold underline underline-offset-2 inline-flex items-center gap-1"
             >
               Klik hier!
